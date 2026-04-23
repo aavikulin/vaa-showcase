@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'JetBrains Mono', monospace; background: #FAFAF9; padding: 20px 24px; }
+  .block { margin-bottom: 14px; }
+  .meta { font-size: 10px; color: #ABABAA; margin-bottom: 6px; }
+  pre {
+    background: #F2F2F0;
+    border: 1px solid #E2E2E0;
+    border-radius: 4px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #111110;
+    line-height: 1.8;
+    overflow-x: auto;
+  }
+  .kw  { color: #1C64F2; }
+  .str { color: #059669; }
+  .cmt { color: #ABABAA; font-style: italic; }
+  code {
+    background: #F2F2F0;
+    border: 1px solid #E2E2E0;
+    border-radius: 2px;
+    padding: 1px 5px;
+    font-size: 13px;
+    color: #111110;
+  }
+  .inline-demo { font-size: 15px; color: #111110; line-height: 2; }
+</style>
+</head>
+<body>
+  <div class="block">
+    <div class="meta">code block</div>
+    <pre><span class="kw">def</span> embed(text: str) -> list[float]:
+    <span class="cmt"># encode with sentence-transformers</span>
+    <span class="kw">return</span> model.encode(text).tolist()</pre>
+  </div>
+  <div class="block">
+    <div class="meta">inline code</div>
+    <p class="inline-demo">Use <code>embed()</code> to get a <code>list[float]</code> vector.</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'JetBrains Mono', monospace; background: #FAFAF9; padding: 20px 24px; }
+  .row { display: flex; align-items: baseline; gap: 16px; padding: 8px 0; border-bottom: 1px solid #E2E2E0; }
+  .row:last-child { border-bottom: none; }
+  .meta { min-width: 120px; flex-shrink: 0; }
+  .token { font-size: 10px; color: #ABABAA; letter-spacing: 0.04em; display: block; }
+  .spec  { font-size: 10px; color: #6B6B69; display: block; margin-top: 2px; }
+  .sample { color: #111110; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="meta"><span class="token">--text-xl</span><span class="spec">40px / 500</span></div>
+    <span class="sample" style="font-size:40px;font-weight:500;line-height:1.2;letter-spacing:-0.01em">AI Engineer</span>
+  </div>
+  <div class="row">
+    <div class="meta"><span class="token">--text-lg</span><span class="spec">24px / 500</span></div>
+    <span class="sample" style="font-size:24px;font-weight:500;line-height:1.2;letter-spacing:-0.01em">Selected Work</span>
+  </div>
+  <div class="row">
+    <div class="meta"><span class="token">--text-md</span><span class="spec">18px / 400</span></div>
+    <span class="sample" style="font-size:18px;font-weight:400">RAG pipeline for enterprise search</span>
+  </div>
+  <div class="row">
+    <div class="meta"><span class="token">--text-base</span><span class="spec">16px / 400</span></div>
+    <span class="sample" style="font-size:16px">I build systems at the intersection of language models and software engineering.</span>
+  </div>
+  <div class="row">
+    <div class="meta"><span class="token">--text-sm</span><span class="spec">14px / 400</span></div>
+    <span class="sample" style="font-size:14px;color:#6B6B69">Jan 2024 · 4 min read</span>
+  </div>
+  <div class="row">
+    <div class="meta"><span class="token">--text-xs</span><span class="spec">12px / 400</span></div>
+    <span class="sample" style="font-size:12px;color:#ABABAA">© 2024 · built with care</span>
+  </div>
+</body>
+</html>

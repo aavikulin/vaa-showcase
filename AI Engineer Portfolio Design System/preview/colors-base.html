@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'JetBrains Mono', monospace; background: #FAFAF9; padding: 20px; }
+  .row { display: flex; gap: 6px; margin-bottom: 10px; align-items: center; }
+  .swatch { width: 48px; height: 48px; border-radius: 3px; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.07); }
+  .info { display: flex; flex-direction: column; gap: 2px; }
+  .name { font-size: 11px; font-weight: 500; color: #111110; }
+  .hex  { font-size: 10px; color: #6B6B69; }
+  .section-title { font-size: 10px; letter-spacing: 0.06em; color: #ABABAA; text-transform: uppercase; margin-bottom: 8px; margin-top: 4px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+</style>
+</head>
+<body>
+<div class="section-title">Backgrounds</div>
+<div class="grid" style="margin-bottom:14px">
+  <div class="row"><div class="swatch" style="background:#FAFAF9"></div><div class="info"><span class="name">--bg</span><span class="hex">#FAFAF9</span></div></div>
+  <div class="row"><div class="swatch" style="background:#F2F2F0"></div><div class="info"><span class="name">--bg-2</span><span class="hex">#F2F2F0</span></div></div>
+  <div class="row"><div class="swatch" style="background:#E8E8E6"></div><div class="info"><span class="name">--bg-3</span><span class="hex">#E8E8E6</span></div></div>
+</div>
+<div class="section-title">Foregrounds</div>
+<div class="grid" style="margin-bottom:14px">
+  <div class="row"><div class="swatch" style="background:#111110"></div><div class="info"><span class="name">--fg</span><span class="hex">#111110</span></div></div>
+  <div class="row"><div class="swatch" style="background:#6B6B69"></div><div class="info"><span class="name">--fg-2</span><span class="hex">#6B6B69</span></div></div>
+  <div class="row"><div class="swatch" style="background:#ABABAA"></div><div class="info"><span class="name">--fg-3</span><span class="hex">#ABABAA</span></div></div>
+</div>
+<div class="section-title">Border</div>
+<div class="grid">
+  <div class="row"><div class="swatch" style="background:#E2E2E0"></div><div class="info"><span class="name">--border</span><span class="hex">#E2E2E0</span></div></div>
+  <div class="row"><div class="swatch" style="background:#CECECE"></div><div class="info"><span class="name">--border-2</span><span class="hex">#CECECE</span></div></div>
+</div>
+</body>
+</html>

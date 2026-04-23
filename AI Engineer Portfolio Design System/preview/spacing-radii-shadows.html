@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'JetBrains Mono', monospace; background: #FAFAF9; padding: 20px 24px; }
+  .row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .box { background: #F2F2F0; border: 1px solid #E2E2E0; display: flex; align-items: center; justify-content: center; }
+  .token { font-size: 10px; color: #ABABAA; min-width: 90px; }
+  .val   { font-size: 10px; color: #6B6B69; }
+  .shadow-demo { background: #FAFAF9; border: 1px solid #E2E2E0; width: 80px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #6B6B69; }
+</style>
+</head>
+<body>
+  <div style="font-size:10px;color:#ABABAA;letter-spacing:.04em;text-transform:uppercase;margin-bottom:12px">Border Radius</div>
+  <div class="row">
+    <span class="token">--radius-sm · 2px</span>
+    <div class="box" style="width:48px;height:32px;border-radius:2px"></div>
+    <span class="val">tags, badges</span>
+  </div>
+  <div class="row">
+    <span class="token">--radius · 4px</span>
+    <div class="box" style="width:48px;height:32px;border-radius:4px"></div>
+    <span class="val">cards, inputs</span>
+  </div>
+  <div class="row">
+    <span class="token">--radius-lg · 6px</span>
+    <div class="box" style="width:48px;height:32px;border-radius:6px"></div>
+    <span class="val">modals</span>
+  </div>
+  <div class="row">
+    <span class="token">0px</span>
+    <div class="box" style="width:48px;height:32px;border-radius:0"></div>
+    <span class="val">terminal feel</span>
+  </div>
+
+  <div style="font-size:10px;color:#ABABAA;letter-spacing:.04em;text-transform:uppercase;margin:16px 0 12px">Shadows</div>
+  <div class="row">
+    <span class="token">--shadow-sm</span>
+    <div class="shadow-demo" style="box-shadow:0 1px 3px rgba(0,0,0,.06)">sm</div>
+  </div>
+  <div class="row">
+    <span class="token">--shadow-md</span>
+    <div class="shadow-demo" style="box-shadow:0 4px 12px rgba(0,0,0,.08)">md</div>
+  </div>
+  <div class="row">
+    <span class="token">none</span>
+    <div class="shadow-demo">flat</div>
+    <span class="val">default</span>
+  </div>
+</body>
+</html>

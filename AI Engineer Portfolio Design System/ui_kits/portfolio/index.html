@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio UI Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --font: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+    --bg: #FAFAF9; --bg-2: #F2F2F0; --bg-3: #E8E8E6;
+    --fg: #111110; --fg-2: #6B6B69; --fg-3: #ABABAA;
+    --border: #E2E2E0; --border-2: #CECECE;
+    --accent: #1C64F2; --accent-hover: #1A56DB; --accent-subtle: #EFF6FF;
+    --green: #059669; --green-subtle: #ECFDF5;
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --radius: 4px; --radius-sm: 2px;
+  }
+  [data-theme="dark"] {
+    --bg: #111110; --bg-2: #1C1C1B; --bg-3: #282826;
+    --fg: #F0F0EE; --fg-2: #8A8A88; --fg-3: #555554;
+    --border: #2A2A28; --border-2: #3A3A38;
+    --accent: #3B82F6; --accent-hover: #60A5FA; --accent-subtle: #1E3A5F;
+    --green: #34D399; --green-subtle: #064E3B;
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  html, body, #root { height: 100%; }
+  body { font-family: var(--font); background: var(--bg); color: var(--fg); -webkit-font-smoothing: antialiased; transition: background 200ms, color 200ms; }
+  * { font-family: var(--font); }
+  a { color: inherit; }
+  button { font-family: var(--font); }
+  ::selection { background: #BFDBFE; }
+
+  /* Tweaks panel */
+  #tweaks-panel {
+    display: none; position: fixed; bottom: 24px; right: 24px;
+    background: var(--bg-2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 16px; width: 220px;
+    box-shadow: var(--shadow-md); z-index: 1000; font-size: 12px; color: var(--fg-2);
+  }
+  #tweaks-panel.visible { display: block; }
+  #tweaks-panel label { display: block; margin-bottom: 10px; }
+  #tweaks-panel span { display: block; margin-bottom: 4px; color: var(--fg-3); font-size: 11px; }
+  #tweaks-panel select, #tweaks-panel input[type=text] {
+    width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 3px;
+    padding: 5px 8px; color: var(--fg); font-size: 12px; font-family: var(--font);
+  }
+  #tweaks-panel input[type=checkbox] { margin-right: 6px; }
+  .tweaks-title { font-size: 11px; font-weight: 500; color: var(--fg); margin-bottom: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div id="tweaks-panel">
+  <div class="tweaks-title">Tweaks</div>
+  <label><span>Name</span><input type="text" id="tweak-name" value="alex chen"></label>
+  <label><span>Mode</span>
+    <select id="tweak-theme">
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </label>
+  <label><span>Active page</span>
+    <select id="tweak-page">
+      <option value="about">about</option>
+      <option value="work">work</option>
+      <option value="writing">writing</option>
+      <option value="contact">contact</option>
+    </select>
+  </label>
+</div>
+
+<script type="text/babel" src="Components.jsx"></script>
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+const PROJECTS = [
+  { title:"RAG pipeline for enterprise search", year:"2024", description:"Retrieval-augmented generation over internal docs using pgvector, re-ranking, and structured outputs.", tags:["python","rag","postgres"], external:false },
+  { title:"LLM eval harness", year:"2024", description:"Framework for running evals across model checkpoints. Supports custom metrics, dataset versioning, and CI integration.", tags:["python","evals","llm"], external:false },
+  { title:"fine-tune-llama", year:"2023", description:"Open-source toolkit for LoRA fine-tuning on consumer GPUs. 1.2k GitHub stars.", tags:["pytorch","lora","open source"], external:true },
+  { title:"semantic search API", year:"2023", description:"Production-ready embedding API with caching, batching, and multi-model support. Handles 10k req/day.", tags:["fastapi","embeddings","vector"], external:false },
+];
+
+const POSTS = [
+  { title:"Fine-tuning Llama 3 on domain data without losing general capability", date:"Mar 2024", readTime:"8 min read", tags:["llm","lora"] },
+  { title:"Building reliable evals: what I learned after 6 months", date:"Jan 2024", readTime:"6 min read", tags:["evals"] },
+  { title:"pgvector vs Pinecone: a practical comparison for RAG", date:"Nov 2023", readTime:"5 min read", tags:["rag","vector db"] },
+  { title:"Why I stopped using LangChain", date:"Sep 2023", readTime:"4 min read", tags:["opinion"] },
+];
+
+function AboutPage({ name }) {
+  return (
+    <div style={{maxWidth:720,margin:'0 auto',padding:'0 48px'}}>
+      <Section title="about">
+        <div style={{marginBottom:48}}>
+          <h1 style={{fontSize:36,fontWeight:500,lineHeight:1.2,letterSpacing:'-0.01em',color:'var(--fg)',marginBottom:24}}>
+            {name}
+          </h1>
+          <p style={{fontSize:16,color:'var(--fg)',lineHeight:1.7,marginBottom:16,maxWidth:560}}>
+            I build systems at the intersection of language models and software engineering.
+          </p>
+          <p style={{fontSize:15,color:'var(--fg-2)',lineHeight:1.7,marginBottom:16,maxWidth:560}}>
+            Currently focused on retrieval, agents, and making LLMs reliable in production. Previously at a Series B startup building developer tools. Open to interesting problems.
+          </p>
+          <div style={{display:'flex',gap:16,marginTop:24}}>
+            <Button href="#">view work →</Button>
+            <Button variant="secondary">get in touch</Button>
+          </div>
+        </div>
+      </Section>
+
+      <Section title="recent work">
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+          {PROJECTS.slice(0,2).map(p=><ProjectCard key={p.title} {...p}/>)}
+        </div>
+      </Section>
+
+      <Section title="stack">
+        <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
+          {["python","pytorch","transformers","fastapi","postgres","pgvector","redis","docker","k8s"].map(t=>(
+            <Tag key={t}>{t}</Tag>
+          ))}
+        </div>
+      </Section>
+    </div>
+  );
+}
+
+function WorkPage() {
+  return (
+    <div style={{maxWidth:720,margin:'0 auto',padding:'0 48px'}}>
+      <Section title="work">
+        <p style={{fontSize:15,color:'var(--fg-2)',marginBottom:32}}>A few things I've built recently.</p>
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+          {PROJECTS.map(p=><ProjectCard key={p.title} {...p}/>)}
+        </div>
+      </Section>
+    </div>
+  );
+}
+
+function WritingPage() {
+  return (
+    <div style={{maxWidth:720,margin:'0 auto',padding:'0 48px'}}>
+      <Section title="writing">
+        <p style={{fontSize:15,color:'var(--fg-2)',marginBottom:32}}>Notes on what I'm figuring out.</p>
+        <div>
+          {POSTS.map(p=><WritingRow key={p.title} {...p}/>)}
+        </div>
+      </Section>
+    </div>
+  );
+}
+
+function ContactPage() {
+  return (
+    <div style={{maxWidth:720,margin:'0 auto',padding:'0 48px'}}>
+      <Section title="contact">
+        <p style={{fontSize:15,color:'var(--fg-2)',lineHeight:1.7,marginBottom:32,maxWidth:440}}>
+          If you're working on something interesting — a hard retrieval problem, a novel agent architecture, or just want to talk AI engineering — get in touch.
+        </p>
+        <ContactForm/>
+      </Section>
+    </div>
+  );
+}
+
+function App() {
+  const saved = localStorage.getItem('portfolio-page');
+  const [page, setPage] = useState(saved || 'about');
+  const [theme, setTheme] = useState('light');
+  const [name, setName] = useState('alex chen');
+
+  useEffect(() => { localStorage.setItem('portfolio-page', page); }, [page]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  // Tweaks wiring
+  useEffect(() => {
+    const nameEl = document.getElementById('tweak-name');
+    const themeEl = document.getElementById('tweak-theme');
+    const pageEl = document.getElementById('tweak-page');
+    if (nameEl) nameEl.addEventListener('input', e => setName(e.target.value));
+    if (themeEl) themeEl.addEventListener('change', e => setTheme(e.target.value));
+    if (pageEl) pageEl.addEventListener('change', e => setPage(e.target.value));
+
+    window.addEventListener('message', e => {
+      if (e.data?.type === '__activate_edit_mode') document.getElementById('tweaks-panel')?.classList.add('visible');
+      if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks-panel')?.classList.remove('visible');
+    });
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+  }, []);
+
+  const pages = { about: <AboutPage name={name}/>, work: <WorkPage/>, writing: <WritingPage/>, contact: <ContactPage/> };
+
+  return (
+    <div style={{minHeight:'100vh',display:'flex',flexDirection:'column'}}>
+      <Nav name={name} active={page} onNav={p => { setPage(p); document.getElementById('tweak-page').value = p; }}/>
+      <main style={{flex:1,paddingTop:0}}>
+        {pages[page] || pages.about}
+      </main>
+      <Footer name={name}/>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

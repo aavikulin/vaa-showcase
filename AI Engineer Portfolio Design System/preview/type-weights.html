@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'JetBrains Mono', monospace; background: #FAFAF9; padding: 20px 24px; }
+  .row { display: flex; align-items: baseline; gap: 20px; padding: 7px 0; border-bottom: 1px solid #E2E2E0; }
+  .row:last-child { border-bottom: none; }
+  .label { font-size: 10px; color: #ABABAA; min-width: 80px; flex-shrink: 0; }
+  .sample { font-size: 18px; color: #111110; }
+</style>
+</head>
+<body>
+  <div class="row"><span class="label">400 regular</span><span class="sample" style="font-weight:400">The quick brown fox</span></div>
+  <div class="row"><span class="label">500 medium</span><span class="sample" style="font-weight:500">The quick brown fox</span></div>
+  <div class="row"><span class="label">600 semi</span><span class="sample" style="font-weight:600">The quick brown fox</span></div>
+  <div class="row"><span class="label">400 italic</span><span class="sample" style="font-weight:400;font-style:italic">The quick brown fox</span></div>
+  <div class="row"><span class="label">family</span><span style="font-size:11px;color:#6B6B69;line-height:1.6">'JetBrains Mono', Consolas, 'Courier New', monospace</span></div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'JetBrains Mono', monospace; background: #FAFAF9; padding: 20px 24px; }
+  .label { font-size: 10px; color: #ABABAA; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 8px; margin-top: 14px; }
+  .label:first-child { margin-top: 0; }
+
+  .card {
+    background: #F2F2F0;
+    border: 1px solid #E2E2E0;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 10px;
+  }
+  .card-title { font-size: 15px; font-weight: 500; color: #111110; margin-bottom: 4px; }
+  .card-meta  { font-size: 11px; color: #ABABAA; margin-bottom: 10px; }
+  .card-body  { font-size: 13px; color: #6B6B69; line-height: 1.6; margin-bottom: 12px; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .tag { display: inline-block; font-size: 10px; padding: 2px 6px; border-radius: 2px; background: #E8E8E6; color: #6B6B69; margin-right: 4px; }
+  .card-link { font-size: 12px; color: #1C64F2; text-decoration: none; }
+  .card:hover { border-color: #ABABAA; }
+</style>
+</head>
+<body>
+  <div class="label">Project card</div>
+  <div class="card">
+    <div class="card-title">RAG pipeline for enterprise search</div>
+    <div class="card-meta">2024 · personal project</div>
+    <div class="card-body">Retrieval-augmented generation system over internal docs using pgvector, re-ranking, and structured outputs.</div>
+    <div class="card-footer">
+      <div><span class="tag">python</span><span class="tag">rag</span><span class="tag">postgres</span></div>
+      <a class="card-link" href="#">view project →</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Fine-tuning Llama 3 on domain data</div>
+    <div class="card-meta">Jan 2024 · 5 min read</div>
+    <div class="card-body">A practical guide to LoRA fine-tuning with minimal GPU budget.</div>
+    <div class="card-footer">
+      <div><span class="tag">llm</span><span class="tag">lora</span></div>
+      <a class="card-link" href="#">read more →</a>
+    </div>
+  </div>
+</body>
+</html>

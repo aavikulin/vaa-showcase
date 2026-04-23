@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'JetBrains Mono', monospace; background: #FAFAF9; padding: 20px 24px; }
+  .row { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+  .label { font-size: 10px; color: #ABABAA; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 8px; margin-top: 4px; }
+
+  /* Buttons */
+  .btn { font-family: 'JetBrains Mono', monospace; font-size: 13px; padding: 8px 16px; border-radius: 4px; cursor: pointer; border: none; transition: background 150ms ease, color 150ms ease; }
+  .btn-primary { background: #111110; color: #FAFAF9; }
+  .btn-secondary { background: #F2F2F0; color: #111110; border: 1px solid #E2E2E0; }
+  .btn-ghost { background: transparent; color: #1C64F2; padding: 8px 0; }
+  .btn-sm { font-size: 12px; padding: 5px 10px; }
+  .btn-disabled { background: #F2F2F0; color: #ABABAA; border: 1px solid #E2E2E0; cursor: not-allowed; }
+</style>
+</head>
+<body>
+  <div class="label">Primary</div>
+  <div class="row">
+    <button class="btn btn-primary">view project →</button>
+    <button class="btn btn-primary btn-sm">view project →</button>
+  </div>
+  <div class="label">Secondary</div>
+  <div class="row">
+    <button class="btn btn-secondary">read more</button>
+    <button class="btn btn-secondary btn-sm">read more</button>
+  </div>
+  <div class="label">Ghost / Link</div>
+  <div class="row">
+    <button class="btn btn-ghost">get in touch →</button>
+  </div>
+  <div class="label">Disabled</div>
+  <div class="row">
+    <button class="btn btn-disabled" disabled>unavailable</button>
+  </div>
+</body>
+</html>

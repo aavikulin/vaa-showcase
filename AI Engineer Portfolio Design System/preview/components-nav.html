@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'JetBrains Mono', monospace; background: #FAFAF9; }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid #E2E2E0;
+  }
+  .nav-name { font-size: 15px; font-weight: 500; color: #111110; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { font-size: 13px; color: #6B6B69; text-decoration: none; transition: color 150ms; }
+  .nav-links a:hover, .nav-links a.active { color: #111110; }
+
+  nav.dark {
+    background: #111110;
+    border-color: #2A2A28;
+  }
+  nav.dark .nav-name { color: #F0F0EE; }
+  nav.dark .nav-links a { color: #8A8A88; }
+
+  .sep { font-size: 10px; color: #ABABAA; letter-spacing: .04em; text-transform: uppercase; padding: 10px 24px 6px; }
+</style>
+</head>
+<body>
+  <nav>
+    <span class="nav-name">alex chen</span>
+    <div class="nav-links">
+      <a href="#" class="active">about</a>
+      <a href="#">work</a>
+      <a href="#">writing</a>
+      <a href="#">contact</a>
+    </div>
+  </nav>
+
+  <div class="sep">dark variant</div>
+
+  <nav class="dark">
+    <span class="nav-name">alex chen</span>
+    <div class="nav-links">
+      <a href="#" style="color:#F0F0EE">about</a>
+      <a href="#">work</a>
+      <a href="#">writing</a>
+      <a href="#">contact</a>
+    </div>
+  </nav>
+</body>
+</html>
