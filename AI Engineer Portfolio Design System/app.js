@@ -23,6 +23,10 @@ const DATA = {
       brandAria: "Перейти на страницу",
       languageToggle: "Переключить язык",
       themeToggle: "Переключить тему",
+      openProject: "Подробнее",
+      closeProject: "Закрыть описание проекта",
+      projectDetails: "детали проекта",
+      visitProject: "открыть проект ↗",
     },
     about: {
       label: "обо мне",
@@ -134,6 +138,14 @@ const DATA = {
         title: "RAG для внутренней базы знаний",
         year: "2024",
         description: "Система поиска по корпоративным документам на pgvector + reranker. Снизила время поиска с 15 минут до 30 секунд.",
+        role: "AI Engineer",
+        period: "2024",
+        detail: "Проектирование и запуск retrieval-системы для поиска по внутренним документам: ingestion pipeline, разбиение документов, эмбеддинги, hybrid search, reranking и API для продуктовой интеграции.",
+        impact: [
+          "Сократил среднее время поиска информации с 15 минут до 30 секунд.",
+          "Собрал пайплайн обновления индекса и базовую оценку качества выдачи.",
+          "Подготовил FastAPI-сервис для подключения к внутренним инструментам.",
+        ],
         tags: ["python", "rag", "pgvector", "fastapi"],
         href: GITHUB_URL,
         external: true,
@@ -142,6 +154,14 @@ const DATA = {
         title: "Eval harness для LLM-ответов",
         year: "2024",
         description: "Фреймворк для автоматической оценки качества ответов: RAGAS, LLM-as-judge, кастомные метрики.",
+        role: "AI Engineer",
+        period: "2024",
+        detail: "Инструмент для повторяемой оценки LLM-ответов и RAG-пайплайнов: датасеты вопросов, запуск экспериментов, сравнение конфигураций и отчёты по метрикам качества.",
+        impact: [
+          "Добавил RAGAS, LLM-as-judge и доменные проверки в единый сценарий запуска.",
+          "Сделал результаты экспериментов сопоставимыми между версиями промптов и retriever-конфигурациями.",
+          "Упростил регрессионную проверку качества перед выкладкой изменений.",
+        ],
         tags: ["python", "evals", "pytest"],
         href: GITHUB_URL,
         external: true,
@@ -150,6 +170,14 @@ const DATA = {
         title: "AI-ассистент для техподдержки",
         year: "2023",
         description: "Чат-бот на базе GPT-4 с RAG по тикетам и базе знаний. Закрывает около 40% запросов без участия оператора.",
+        role: "AI Engineer",
+        period: "2023",
+        detail: "Ассистент первой линии поддержки, который ищет релевантные ответы в базе знаний и истории тикетов, формирует ответ оператору или пользователю и передаёт сложные случаи человеку.",
+        impact: [
+          "Автоматизировал обработку типовых обращений и снизил нагрузку на операторов.",
+          "Добавил guardrails для отказа от ответа при недостаточной уверенности.",
+          "Подготовил API-интеграцию с существующим helpdesk-процессом.",
+        ],
         tags: ["python", "openai", "rag", "fastapi"],
         href: GITHUB_URL,
         external: true,
@@ -158,6 +186,14 @@ const DATA = {
         title: "Pipeline классификации документов",
         year: "2023",
         description: "Fine-tuned BERT для автоматической маршрутизации входящих документов по 30+ категориям.",
+        role: "ML Engineer",
+        period: "2023",
+        detail: "ML-пайплайн для классификации входящих документов: подготовка размеченного датасета, fine-tuning BERT, валидация качества и сервисная обвязка для маршрутизации.",
+        impact: [
+          "Поддержал классификацию по 30+ категориям документов.",
+          "Собрал воспроизводимый цикл обучения и проверки модели.",
+          "Снизил долю ручной сортировки документов в операционном процессе.",
+        ],
         tags: ["pytorch", "bert", "transformers"],
         href: GITHUB_URL,
         external: true,
@@ -211,6 +247,10 @@ const DATA = {
       brandAria: "Go to page",
       languageToggle: "Toggle language",
       themeToggle: "Toggle theme",
+      openProject: "Details",
+      closeProject: "Close project details",
+      projectDetails: "project details",
+      visitProject: "open project ↗",
     },
     about: {
       label: "about",
@@ -322,6 +362,14 @@ const DATA = {
         title: "RAG for internal knowledge bases",
         year: "2024",
         description: "Enterprise document search on top of pgvector and reranking. Cut lookup time from 15 minutes to 30 seconds.",
+        role: "AI Engineer",
+        period: "2024",
+        detail: "Designed and shipped a retrieval system for internal documents: ingestion, chunking, embeddings, hybrid search, reranking, and an API layer for product integration.",
+        impact: [
+          "Reduced average information lookup time from 15 minutes to 30 seconds.",
+          "Built index refresh flows and baseline retrieval quality checks.",
+          "Packaged the system as a FastAPI service for internal tools.",
+        ],
         tags: ["python", "rag", "pgvector", "fastapi"],
         href: GITHUB_URL,
         external: true,
@@ -330,6 +378,14 @@ const DATA = {
         title: "Eval harness for LLM responses",
         year: "2024",
         description: "Framework for automatic response quality evaluation with RAGAS, LLM-as-judge, and custom metrics.",
+        role: "AI Engineer",
+        period: "2024",
+        detail: "A repeatable evaluation tool for LLM responses and RAG pipelines: question datasets, experiment runs, configuration comparison, and quality reports.",
+        impact: [
+          "Combined RAGAS, LLM-as-judge, and domain checks in one evaluation flow.",
+          "Made prompt and retriever experiments comparable across versions.",
+          "Simplified regression testing before production changes.",
+        ],
         tags: ["python", "evals", "pytest"],
         href: GITHUB_URL,
         external: true,
@@ -338,6 +394,14 @@ const DATA = {
         title: "AI assistant for support teams",
         year: "2023",
         description: "GPT-4 based assistant with RAG over tickets and internal knowledge. Handles around 40% of requests without an operator.",
+        role: "AI Engineer",
+        period: "2023",
+        detail: "A first-line support assistant that retrieves answers from the knowledge base and ticket history, drafts responses, and hands uncertain cases to a human operator.",
+        impact: [
+          "Automated common support requests and reduced operator load.",
+          "Added guardrails for refusing low-confidence answers.",
+          "Prepared API integration with the existing helpdesk workflow.",
+        ],
         tags: ["python", "openai", "rag", "fastapi"],
         href: GITHUB_URL,
         external: true,
@@ -346,6 +410,14 @@ const DATA = {
         title: "Document classification pipeline",
         year: "2023",
         description: "Fine-tuned BERT pipeline for routing inbound documents across 30+ categories.",
+        role: "ML Engineer",
+        period: "2023",
+        detail: "An ML pipeline for inbound document classification: labeled dataset preparation, BERT fine-tuning, validation, and service wrapping for downstream routing.",
+        impact: [
+          "Supported classification across 30+ document categories.",
+          "Built a reproducible train and validation cycle.",
+          "Reduced manual document triage in the operational flow.",
+        ],
         tags: ["pytorch", "bert", "transformers"],
         href: GITHUB_URL,
         external: true,
@@ -493,9 +565,13 @@ function renderTags(tags) {
 }
 
 function renderProjects(projects) {
+  const allProjects = getCopy().projects;
+
   return `
     <div class="card-grid">
-      ${projects.map((project) => `
+      ${projects.map((project) => {
+        const projectIndex = allProjects.indexOf(project);
+        return `
         <article class="card">
           <div class="card-header">
             <div class="card-title">${escapeHtml(project.title)}</div>
@@ -503,9 +579,44 @@ function renderProjects(projects) {
           </div>
           <p class="card-description">${escapeHtml(project.description)}</p>
           <div class="tag-list">${renderTags(project.tags)}</div>
-          <a class="card-link" href="${escapeHtml(project.href)}" ${project.external ? 'target="_blank" rel="noopener noreferrer"' : ""}>↗</a>
+          <div class="card-actions">
+            <a class="card-detail-button" href="#project-${escapeHtml(projectIndex)}">
+              ${escapeHtml(getCopy().ui.openProject)}
+            </a>
+            <a class="card-link" href="${escapeHtml(project.href)}" ${project.external ? 'target="_blank" rel="noopener noreferrer"' : ""} aria-label="${escapeHtml(getCopy().ui.visitProject)}">↗</a>
+          </div>
         </article>
-      `).join("")}
+      `;
+      }).join("")}
+    </div>
+    ${projects.map((project) => renderProjectModal(getCopy(), allProjects.indexOf(project))).join("")}
+  `;
+}
+
+function renderProjectModal(copy, projectIndex) {
+  const project = copy.projects[projectIndex];
+  if (!project) {
+    return "";
+  }
+
+  return `
+    <div class="modal-backdrop" id="project-${escapeHtml(projectIndex)}">
+      <a class="modal-dismiss" href="#work" aria-label="${escapeHtml(copy.ui.closeProject)}"></a>
+      <aside class="project-modal" role="dialog" aria-modal="true" aria-labelledby="project-modal-title-${escapeHtml(projectIndex)}">
+        <a class="modal-close" href="#work" aria-label="${escapeHtml(copy.ui.closeProject)}">×</a>
+        <p class="section-label">${escapeHtml(copy.ui.projectDetails)}</p>
+        <div class="modal-header">
+          <h2 class="modal-title" id="project-modal-title-${escapeHtml(projectIndex)}">${escapeHtml(project.title)}</h2>
+          <span class="meta">${escapeHtml(project.period || project.year)}</span>
+        </div>
+        <p class="modal-role">${escapeHtml(project.role)}</p>
+        <p class="modal-copy">${escapeHtml(project.detail || project.description)}</p>
+        <ul class="modal-list">
+          ${(project.impact || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+        </ul>
+        <div class="tag-list">${renderTags(project.tags)}</div>
+        <a class="button button-secondary modal-link" href="${escapeHtml(project.href)}" ${project.external ? 'target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(copy.ui.visitProject)}</a>
+      </aside>
     </div>
   `;
 }
@@ -637,7 +748,7 @@ function renderAbout(copy) {
 
 function renderWork(copy) {
   return `
-    <section class="section">
+    <section class="section" id="work">
       <p class="section-label">${escapeHtml(copy.work.label)}</p>
       <p class="section-intro">${escapeHtml(copy.work.intro)}</p>
       ${renderProjects(copy.projects)}
