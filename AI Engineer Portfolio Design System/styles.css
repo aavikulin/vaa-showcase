@@ -40,6 +40,8 @@
 
 html {
   background: var(--bg);
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
 }
 
 body {
