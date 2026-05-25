@@ -33,10 +33,9 @@
   body { font-family: var(--font); background: var(--bg); color: var(--fg); -webkit-font-smoothing: antialiased; transition: background 200ms, color 200ms; }
   * { font-family: var(--font); }
   a { color: inherit; }
-  button { font-family: var(--font); }
+  button, select { font-family: var(--font); }
   ::selection { background: #BFDBFE; }
 
-  /* Tweaks panel */
   #tweaks-panel {
     display: none; position: fixed; bottom: 24px; right: 24px;
     background: var(--bg-2); border: 1px solid var(--border);
@@ -50,8 +49,38 @@
     width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 3px;
     padding: 5px 8px; color: var(--fg); font-size: 12px; font-family: var(--font);
   }
-  #tweaks-panel input[type=checkbox] { margin-right: 6px; }
   .tweaks-title { font-size: 11px; font-weight: 500; color: var(--fg); margin-bottom: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  @media (max-width: 800px) {
+    .nav-shell {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px 24px !important;
+    }
+    .nav-links {
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 14px !important;
+    }
+    .page-shell {
+      padding: 0 24px !important;
+    }
+    .grid-two {
+      grid-template-columns: 1fr !important;
+    }
+    .footer-shell {
+      padding: 24px !important;
+      gap: 16px;
+      flex-direction: column;
+      align-items: flex-start !important;
+    }
+    .writing-row {
+      flex-direction: column;
+      align-items: flex-start !important;
+      gap: 10px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -65,6 +94,12 @@
       <option value="dark">Dark</option>
     </select>
   </label>
+  <label><span>Language</span>
+    <select id="tweak-language">
+      <option value="en">English</option>
+      <option value="ru">Russian</option>
+    </select>
+  </label>
   <label><span>Active page</span>
     <select id="tweak-page">
       <option value="about">about</option>
@@ -76,18 +111,216 @@
 </div>
 
 <script type="text/babel">
-/*
- * AI Engineer Portfolio - UI Kit Shared Components
- */
-const { useState } = React;
+const { useState, useEffect } = React;
 
-function ThemeToggle({ theme, onToggle }) {
+const UI = {
+  en: {
+    htmlLang: "en",
+    toggles: {
+      themeToLight: "Switch to light theme",
+      themeToDark: "Switch to dark theme",
+      language: "Switch language",
+    },
+    nav: {
+      about: "about",
+      work: "work",
+      writing: "writing",
+      contact: "contact",
+    },
+    pages: {
+      about: "about",
+      work: "work",
+      writing: "writing",
+      contact: "contact",
+    },
+    sections: {
+      about: "about",
+      recentWork: "recent work",
+      stack: "stack",
+      work: "work",
+      writing: "writing",
+      contact: "contact",
+    },
+    about: {
+      intro: "I build systems at the intersection of language models and software engineering.",
+      summary: "Currently focused on retrieval, agents, and making LLMs reliable in production. Previously at a Series B startup building developer tools. Open to interesting problems.",
+      viewWork: "view work ->",
+      getInTouch: "get in touch",
+    },
+    work: {
+      intro: "A few things I've built recently.",
+    },
+    writing: {
+      intro: "Notes on what I'm figuring out.",
+    },
+    contact: {
+      intro: "If you're working on something interesting - a hard retrieval problem, a novel agent architecture, or just want to talk AI engineering - get in touch.",
+      emailPlaceholder: "your@email.com",
+      messagePlaceholder: "tell me about the project...",
+      send: "send message ->",
+      sent: "message sent ->",
+    },
+    card: {
+      viewProject: "view project ->",
+      viewExternal: "view ->",
+    },
+    footer: {
+      copyright: "©",
+    },
+    tweakPanel: {
+      name: "Name",
+      mode: "Mode",
+      language: "Language",
+      activePage: "Active page",
+      pages: {
+        about: "about",
+        work: "work",
+        writing: "writing",
+        contact: "contact",
+      },
+    },
+  },
+  ru: {
+    htmlLang: "ru",
+    toggles: {
+      themeToLight: "Переключить на светлую тему",
+      themeToDark: "Переключить на тёмную тему",
+      language: "Переключить язык",
+    },
+    nav: {
+      about: "обо мне",
+      work: "проекты",
+      writing: "заметки",
+      contact: "контакты",
+    },
+    pages: {
+      about: "обо мне",
+      work: "проекты",
+      writing: "заметки",
+      contact: "контакты",
+    },
+    sections: {
+      about: "обо мне",
+      recentWork: "свежее",
+      stack: "стек",
+      work: "проекты",
+      writing: "заметки",
+      contact: "контакты",
+    },
+    about: {
+      intro: "Я создаю системы на пересечении языковых моделей и программной инженерии.",
+      summary: "Сейчас фокусируюсь на retrieval-системах, агентах и надёжности LLM в продакшене. Ранее работал в Series B стартапе над инструментами для разработчиков. Открыт к интересным задачам.",
+      viewWork: "смотреть проекты ->",
+      getInTouch: "связаться",
+    },
+    work: {
+      intro: "Несколько вещей, которые я собрал за последнее время.",
+    },
+    writing: {
+      intro: "Заметки о том, что я сейчас исследую.",
+    },
+    contact: {
+      intro: "Если вы делаете что-то интересное - сложную retrieval-задачу, новую агентную архитектуру или просто хотите поговорить про AI engineering - напишите мне.",
+      emailPlaceholder: "your@email.com",
+      messagePlaceholder: "расскажите о проекте...",
+      send: "отправить сообщение ->",
+      sent: "сообщение отправлено ->",
+    },
+    card: {
+      viewProject: "смотреть проект ->",
+      viewExternal: "открыть ->",
+    },
+    footer: {
+      copyright: "©",
+    },
+    tweakPanel: {
+      name: "Имя",
+      mode: "Тема",
+      language: "Язык",
+      activePage: "Текущая страница",
+      pages: {
+        about: "обо мне",
+        work: "проекты",
+        writing: "заметки",
+        contact: "контакты",
+      },
+    },
+  },
+};
+
+const PROJECTS = {
+  en: [
+    { title: "RAG pipeline for enterprise search", year: "2024", description: "Retrieval-augmented generation over internal docs using pgvector, re-ranking, and structured outputs.", tags: ["python", "rag", "postgres"], external: false },
+    { title: "LLM eval harness", year: "2024", description: "Framework for running evals across model checkpoints. Supports custom metrics, dataset versioning, and CI integration.", tags: ["python", "evals", "llm"], external: false },
+    { title: "fine-tune-llama", year: "2023", description: "Open-source toolkit for LoRA fine-tuning on consumer GPUs. 1.2k GitHub stars.", tags: ["pytorch", "lora", "open source"], external: true },
+    { title: "semantic search API", year: "2023", description: "Production-ready embedding API with caching, batching, and multi-model support. Handles 10k req/day.", tags: ["fastapi", "embeddings", "vector"], external: false },
+  ],
+  ru: [
+    { title: "RAG-пайплайн для enterprise search", year: "2024", description: "Retrieval-augmented generation по внутренней документации с pgvector, re-ranking и структурированными ответами.", tags: ["python", "rag", "postgres"], external: false },
+    { title: "Стенд для LLM-оценки", year: "2024", description: "Фреймворк для прогонов evals между чекпоинтами моделей. Поддерживает кастомные метрики, версионирование датасетов и интеграцию с CI.", tags: ["python", "evals", "llm"], external: false },
+    { title: "fine-tune-llama", year: "2023", description: "Open-source toolkit для LoRA fine-tuning на consumer GPU. 1.2k звёзд на GitHub.", tags: ["pytorch", "lora", "open source"], external: true },
+    { title: "API семантического поиска", year: "2023", description: "Production-ready embedding API с кэшированием, batching и поддержкой нескольких моделей. Обрабатывает 10k запросов в день.", tags: ["fastapi", "embeddings", "vector"], external: false },
+  ],
+};
+
+const POSTS = {
+  en: [
+    { title: "Fine-tuning Llama 3 on domain data without losing general capability", date: "Mar 2024", readTime: "8 min read", tags: ["llm", "lora"] },
+    { title: "Building reliable evals: what I learned after 6 months", date: "Jan 2024", readTime: "6 min read", tags: ["evals"] },
+    { title: "pgvector vs Pinecone: a practical comparison for RAG", date: "Nov 2023", readTime: "5 min read", tags: ["rag", "vector db"] },
+    { title: "Why I stopped using LangChain", date: "Sep 2023", readTime: "4 min read", tags: ["opinion"] },
+  ],
+  ru: [
+    { title: "Как дообучать Llama 3 на доменных данных без потери общей способности модели", date: "март 2024", readTime: "8 мин", tags: ["llm", "lora"] },
+    { title: "Как строить надёжные evals: что я понял за 6 месяцев", date: "янв 2024", readTime: "6 мин", tags: ["evals"] },
+    { title: "pgvector vs Pinecone: практическое сравнение для RAG", date: "нояб 2023", readTime: "5 мин", tags: ["rag", "vector db"] },
+    { title: "Почему я перестал использовать LangChain", date: "сен 2023", readTime: "4 мин", tags: ["мнение"] },
+  ],
+};
+
+function ThemeToggle({ theme, onToggle, copy }) {
   const isDark = theme === "dark";
+  const label = isDark ? copy.themeToLight : copy.themeToDark;
+  const icon = isDark ? (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="4" fill="currentColor" />
+      <path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ) : (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M20 15.2A8 8 0 1 1 8.8 4a6.5 6.5 0 0 0 11.2 11.2Z" fill="currentColor" />
+    </svg>
+  );
   return (
     <button
       onClick={onToggle}
-      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-      title={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      aria-label={label}
+      title={label}
+      style={{
+        fontSize: 12,
+        color: "var(--fg-2)",
+        background: "var(--bg-2)",
+        border: "1px solid var(--border)",
+        borderRadius: 999,
+        padding: "6px 10px",
+        cursor: "pointer",
+        lineHeight: 1,
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {icon}
+    </button>
+  );
+}
+
+function LanguageToggle({ language, onToggle, label }) {
+  return (
+    <button
+      onClick={onToggle}
+      aria-label={label}
+      title={label}
       style={{
         fontSize: 12,
         color: "var(--fg-2)",
@@ -99,171 +332,191 @@ function ThemeToggle({ theme, onToggle }) {
         lineHeight: 1,
       }}
     >
-      {isDark ? "light" : "dark"}
+      {language === "ru" ? "ru" : "en"}
     </button>
   );
 }
 
-function Nav({ name="alex chen", links=["about","work","writing","contact"], active="about", onNav, theme="light", onToggleTheme }) {
+function Nav({ name = "alex chen", links, active = "about", onNav, theme = "light", onToggleTheme, language = "en", onToggleLanguage, ui }) {
   return (
-    <nav style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'20px 48px',borderBottom:'1px solid var(--border)',background:'var(--bg)'}}>
-      <span style={{fontSize:15,fontWeight:500,color:'var(--fg)',letterSpacing:'-0.01em'}}>
-        {name}<span style={{display:'inline-block',width:2,height:'1em',background:'var(--accent)',marginLeft:1,verticalAlign:'text-bottom'}}/>
+    <nav className="nav-shell" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 48px", borderBottom: "1px solid var(--border)", background: "var(--bg)" }}>
+      <span style={{ fontSize: 15, fontWeight: 500, color: "var(--fg)", letterSpacing: "-0.01em" }}>
+        {name}<span style={{ display: "inline-block", width: 2, height: "1em", background: "var(--accent)", marginLeft: 1, verticalAlign: "text-bottom" }} />
       </span>
-      <div style={{display:'flex',gap:20,alignItems:'center'}}>
-        {links.map(l=>(
-          <a key={l} href="#" style={{fontSize:13,color:active===l?'var(--fg)':'var(--fg-2)',textDecoration:'none',cursor:'pointer'}}
-             onClick={e=>{e.preventDefault();onNav&&onNav(l)}}>{l}</a>
+      <div className="nav-links" style={{ display: "flex", gap: 20, alignItems: "center" }}>
+        {links.map((link) => (
+          <a
+            key={link.key}
+            href="#"
+            style={{ fontSize: 13, color: active === link.key ? "var(--fg)" : "var(--fg-2)", textDecoration: "none", cursor: "pointer" }}
+            onClick={(e) => {
+              e.preventDefault();
+              onNav && onNav(link.key);
+            }}
+          >
+            {link.label}
+          </a>
         ))}
-        <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+        <LanguageToggle language={language} onToggle={onToggleLanguage} label={ui.toggles.language} />
+        <ThemeToggle theme={theme} onToggle={onToggleTheme} copy={ui.toggles} />
       </div>
     </nav>
   );
 }
 
-function Tag({ children, variant="default" }) {
-  const v = {
-    default:{background:'var(--bg-3)',color:'var(--fg-2)',border:'1px solid var(--border)'},
-    accent: {background:'var(--accent-subtle)',color:'var(--accent)'},
-    green:  {background:'var(--green-subtle)',color:'var(--green)'},
-    dark:   {background:'var(--fg)',color:'var(--bg)'},
+function Tag({ children, variant = "default" }) {
+  const variants = {
+    default: { background: "var(--bg-3)", color: "var(--fg-2)", border: "1px solid var(--border)" },
+    accent: { background: "var(--accent-subtle)", color: "var(--accent)" },
+    green: { background: "var(--green-subtle)", color: "var(--green)" },
+    dark: { background: "var(--fg)", color: "var(--bg)" },
   };
-  return <span style={{display:'inline-block',fontSize:11,padding:'3px 8px',borderRadius:2,...v[variant]}}>{children}</span>;
+  return <span style={{ display: "inline-block", fontSize: 11, padding: "3px 8px", borderRadius: 2, ...variants[variant] }}>{children}</span>;
 }
 
-function Button({ children, variant="primary", size="md", onClick, href }) {
-  const sz = size==='sm'?{fontSize:12,padding:'5px 12px'}:{fontSize:13,padding:'9px 18px'};
-  const vr = {
-    primary:  {background:'var(--fg)',color:'var(--bg)',border:'none'},
-    secondary:{background:'var(--bg-2)',color:'var(--fg)',border:'1px solid var(--border)'},
-    ghost:    {background:'transparent',color:'var(--accent)',border:'none',paddingLeft:0,paddingRight:0},
+function Button({ children, variant = "primary", size = "md", onClick, href }) {
+  const sizeStyles = size === "sm" ? { fontSize: 12, padding: "5px 12px" } : { fontSize: 13, padding: "9px 18px" };
+  const variantStyles = {
+    primary: { background: "var(--fg)", color: "var(--bg)", border: "none" },
+    secondary: { background: "var(--bg-2)", color: "var(--fg)", border: "1px solid var(--border)" },
+    ghost: { background: "transparent", color: "var(--accent)", border: "none", paddingLeft: 0, paddingRight: 0 },
   };
-  const s = {fontFamily:'var(--font)',borderRadius:4,cursor:'pointer',...sz,...vr[variant]};
-  if(href) return <a href={href} style={{...s,textDecoration:'none',display:'inline-block'}}>{children}</a>;
-  return <button style={s} onClick={onClick}>{children}</button>;
+  const style = { fontFamily: "var(--font)", borderRadius: 4, cursor: "pointer", ...sizeStyles, ...variantStyles[variant] };
+  if (href) return <a href={href} style={{ ...style, textDecoration: "none", display: "inline-block" }}>{children}</a>;
+  return <button style={style} onClick={onClick}>{children}</button>;
 }
 
-function ProjectCard({ title, year, description, tags=[], link="#", external=false }) {
-  const [hov,setHov] = useState(false);
+function ProjectCard({ title, year, description, tags = [], link = "#", external = false, ui }) {
+  const [hovered, setHovered] = useState(false);
   return (
-    <div style={{background:'var(--bg-2)',border:`1px solid ${hov?'var(--fg-3)':'var(--border)'}`,borderRadius:4,padding:20,transition:'border-color 150ms'}}
-         onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'baseline',marginBottom:4}}>
-        <span style={{fontSize:15,fontWeight:500,color:'var(--fg)'}}>{title}</span>
-        <span style={{fontSize:11,color:'var(--fg-3)'}}>{year}</span>
+    <div
+      style={{ background: "var(--bg-2)", border: `1px solid ${hovered ? "var(--fg-3)" : "var(--border)"}`, borderRadius: 4, padding: 20, transition: "border-color 150ms" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
+        <span style={{ fontSize: 15, fontWeight: 500, color: "var(--fg)" }}>{title}</span>
+        <span style={{ fontSize: 11, color: "var(--fg-3)" }}>{year}</span>
       </div>
-      <p style={{fontSize:13,color:'var(--fg-2)',lineHeight:1.6,marginBottom:14}}>{description}</p>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-        <div style={{display:'flex',gap:6,flexWrap:'wrap'}}>{tags.map(t=><Tag key={t}>{t}</Tag>)}</div>
-        <a href={link} style={{fontSize:12,color:'var(--accent)',textDecoration:'none'}}>{external?'view ↗':'view project →'}</a>
+      <p style={{ fontSize: 13, color: "var(--fg-2)", lineHeight: 1.6, marginBottom: 14 }}>{description}</p>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>{tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}</div>
+        <a href={link} style={{ fontSize: 12, color: "var(--accent)", textDecoration: "none", flexShrink: 0 }}>
+          {external ? ui.viewExternal : ui.viewProject}
+        </a>
       </div>
     </div>
   );
 }
 
-function WritingRow({ title, date, readTime, tags=[], link="#" }) {
-  const [hov,setHov] = useState(false);
+function WritingRow({ title, date, readTime, tags = [], link = "#" }) {
+  const [hovered, setHovered] = useState(false);
   return (
-    <div style={{padding:'16px 0',borderBottom:'1px solid var(--border)',display:'flex',justifyContent:'space-between',alignItems:'baseline'}}
-         onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}>
+    <div
+      className="writing-row"
+      style={{ padding: "16px 0", borderBottom: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "baseline" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <div>
-        <a href={link} style={{fontSize:14,color:'var(--fg)',textDecoration:hov?'underline':'none'}}>{title}</a>
-        <div style={{marginTop:6,display:'flex',gap:6}}>{tags.map(t=><Tag key={t}>{t}</Tag>)}</div>
+        <a href={link} style={{ fontSize: 14, color: "var(--fg)", textDecoration: hovered ? "underline" : "none" }}>{title}</a>
+        <div style={{ marginTop: 6, display: "flex", gap: 6, flexWrap: "wrap" }}>{tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}</div>
       </div>
-      <span style={{fontSize:11,color:'var(--fg-3)',flexShrink:0,marginLeft:24}}>{date} · {readTime}</span>
+      <span style={{ fontSize: 11, color: "var(--fg-3)", flexShrink: 0, marginLeft: 24 }}>{date} · {readTime}</span>
     </div>
   );
 }
 
 function Section({ title, children, id }) {
   return (
-    <section id={id} style={{padding:'64px 0',borderBottom:'1px solid var(--border)'}}>
-      <h2 style={{fontSize:11,color:'var(--fg-3)',letterSpacing:'0.06em',textTransform:'uppercase',marginBottom:32}}>{title}</h2>
+    <section id={id} style={{ padding: "64px 0", borderBottom: "1px solid var(--border)" }}>
+      <h2 style={{ fontSize: 11, color: "var(--fg-3)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 32 }}>{title}</h2>
       {children}
     </section>
   );
 }
 
-function ContactForm() {
-  const [sent,setSent] = useState(false);
-  const inp = {fontFamily:'var(--font)',fontSize:13,background:'var(--bg)',border:'1px solid var(--border)',borderRadius:4,padding:'9px 12px',color:'var(--fg)',width:'100%',outline:'none',marginBottom:10,display:'block',boxSizing:'border-box'};
-  if(sent) return <p style={{fontSize:14,color:'var(--green)'}}>message sent →</p>;
+function ContactForm({ ui }) {
+  const [sent, setSent] = useState(false);
+  const inputStyle = {
+    fontFamily: "var(--font)",
+    fontSize: 13,
+    background: "var(--bg)",
+    border: "1px solid var(--border)",
+    borderRadius: 4,
+    padding: "9px 12px",
+    color: "var(--fg)",
+    width: "100%",
+    outline: "none",
+    marginBottom: 10,
+    display: "block",
+    boxSizing: "border-box",
+  };
+  if (sent) return <p style={{ fontSize: 14, color: "var(--green)" }}>{ui.sent}</p>;
   return (
-    <div style={{maxWidth:480}}>
-      <input style={inp} placeholder="your@email.com" type="email"/>
-      <textarea style={{...inp,resize:'vertical',minHeight:100}} placeholder="tell me about the project..."/>
-      <Button onClick={()=>setSent(true)}>send message →</Button>
+    <div style={{ maxWidth: 480 }}>
+      <input style={inputStyle} placeholder={ui.emailPlaceholder} type="email" />
+      <textarea style={{ ...inputStyle, resize: "vertical", minHeight: 100 }} placeholder={ui.messagePlaceholder} />
+      <Button onClick={() => setSent(true)}>{ui.send}</Button>
     </div>
   );
 }
 
-function Footer({ name="alex chen" }) {
+function Footer({ name = "alex chen", ui }) {
   const ghIcon = <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>;
   const liIcon = <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>;
   return (
-    <footer style={{padding:'32px 48px',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-      <span style={{fontSize:12,color:'var(--fg-3)'}}>© {new Date().getFullYear()} {name}</span>
-      <div style={{display:'flex',gap:20}}>
-        {[['GitHub',ghIcon],['LinkedIn',liIcon]].map(([label,icon])=>(
-          <a key={label} href="#" title={label} style={{color:'var(--fg-3)',display:'flex'}}
-             onMouseEnter={e=>e.currentTarget.style.color='var(--fg)'}
-             onMouseLeave={e=>e.currentTarget.style.color='var(--fg-3)'}>{icon}</a>
+    <footer className="footer-shell" style={{ padding: "32px 48px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <span style={{ fontSize: 12, color: "var(--fg-3)" }}>{ui.copyright} {new Date().getFullYear()} {name}</span>
+      <div style={{ display: "flex", gap: 20 }}>
+        {[["GitHub", ghIcon], ["LinkedIn", liIcon]].map(([label, icon]) => (
+          <a
+            key={label}
+            href="#"
+            title={label}
+            style={{ color: "var(--fg-3)", display: "flex" }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "var(--fg)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "var(--fg-3)"; }}
+          >
+            {icon}
+          </a>
         ))}
       </div>
     </footer>
   );
 }
 
-Object.assign(window, { Nav, Tag, Button, ProjectCard, WritingRow, Section, ContactForm, Footer });
-</script>
-<script type="text/babel">
-const { useState, useEffect } = React;
-
-const PROJECTS = [
-  { title:"RAG pipeline for enterprise search", year:"2024", description:"Retrieval-augmented generation over internal docs using pgvector, re-ranking, and structured outputs.", tags:["python","rag","postgres"], external:false },
-  { title:"LLM eval harness", year:"2024", description:"Framework for running evals across model checkpoints. Supports custom metrics, dataset versioning, and CI integration.", tags:["python","evals","llm"], external:false },
-  { title:"fine-tune-llama", year:"2023", description:"Open-source toolkit for LoRA fine-tuning on consumer GPUs. 1.2k GitHub stars.", tags:["pytorch","lora","open source"], external:true },
-  { title:"semantic search API", year:"2023", description:"Production-ready embedding API with caching, batching, and multi-model support. Handles 10k req/day.", tags:["fastapi","embeddings","vector"], external:false },
-];
-
-const POSTS = [
-  { title:"Fine-tuning Llama 3 on domain data without losing general capability", date:"Mar 2024", readTime:"8 min read", tags:["llm","lora"] },
-  { title:"Building reliable evals: what I learned after 6 months", date:"Jan 2024", readTime:"6 min read", tags:["evals"] },
-  { title:"pgvector vs Pinecone: a practical comparison for RAG", date:"Nov 2023", readTime:"5 min read", tags:["rag","vector db"] },
-  { title:"Why I stopped using LangChain", date:"Sep 2023", readTime:"4 min read", tags:["opinion"] },
-];
-
-function AboutPage({ name }) {
+function AboutPage({ name, ui, projects }) {
   return (
-    <div style={{maxWidth:720,margin:'0 auto',padding:'0 48px'}}>
-      <Section title="about">
-        <div style={{marginBottom:48}}>
-          <h1 style={{fontSize:36,fontWeight:500,lineHeight:1.2,letterSpacing:'-0.01em',color:'var(--fg)',marginBottom:24}}>
+    <div className="page-shell" style={{ maxWidth: 720, margin: "0 auto", padding: "0 48px" }}>
+      <Section title={ui.sections.about}>
+        <div style={{ marginBottom: 48 }}>
+          <h1 style={{ fontSize: 36, fontWeight: 500, lineHeight: 1.2, letterSpacing: "-0.01em", color: "var(--fg)", marginBottom: 24 }}>
             {name}
           </h1>
-          <p style={{fontSize:16,color:'var(--fg)',lineHeight:1.7,marginBottom:16,maxWidth:560}}>
-            I build systems at the intersection of language models and software engineering.
+          <p style={{ fontSize: 16, color: "var(--fg)", lineHeight: 1.7, marginBottom: 16, maxWidth: 560 }}>
+            {ui.about.intro}
           </p>
-          <p style={{fontSize:15,color:'var(--fg-2)',lineHeight:1.7,marginBottom:16,maxWidth:560}}>
-            Currently focused on retrieval, agents, and making LLMs reliable in production. Previously at a Series B startup building developer tools. Open to interesting problems.
+          <p style={{ fontSize: 15, color: "var(--fg-2)", lineHeight: 1.7, marginBottom: 16, maxWidth: 560 }}>
+            {ui.about.summary}
           </p>
-          <div style={{display:'flex',gap:16,marginTop:24}}>
-            <Button href="#">view work →</Button>
-            <Button variant="secondary">get in touch</Button>
+          <div style={{ display: "flex", gap: 16, marginTop: 24, flexWrap: "wrap" }}>
+            <Button href="#">{ui.about.viewWork}</Button>
+            <Button variant="secondary">{ui.about.getInTouch}</Button>
           </div>
         </div>
       </Section>
 
-      <Section title="recent work">
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
-          {PROJECTS.slice(0,2).map(p=><ProjectCard key={p.title} {...p}/>)}
+      <Section title={ui.sections.recentWork}>
+        <div className="grid-two" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          {projects.slice(0, 2).map((project) => <ProjectCard key={project.title} {...project} ui={ui.card} />)}
         </div>
       </Section>
 
-      <Section title="stack">
-        <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
-          {["python","pytorch","transformers","fastapi","postgres","pgvector","redis","docker","k8s"].map(t=>(
-            <Tag key={t}>{t}</Tag>
+      <Section title={ui.sections.stack}>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {["python", "pytorch", "transformers", "fastapi", "postgres", "pgvector", "redis", "docker", "k8s"].map((tag) => (
+            <Tag key={tag}>{tag}</Tag>
           ))}
         </div>
       </Section>
@@ -271,106 +524,170 @@ function AboutPage({ name }) {
   );
 }
 
-function WorkPage() {
+function WorkPage({ ui, projects }) {
   return (
-    <div style={{maxWidth:720,margin:'0 auto',padding:'0 48px'}}>
-      <Section title="work">
-        <p style={{fontSize:15,color:'var(--fg-2)',marginBottom:32}}>A few things I've built recently.</p>
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
-          {PROJECTS.map(p=><ProjectCard key={p.title} {...p}/>)}
+    <div className="page-shell" style={{ maxWidth: 720, margin: "0 auto", padding: "0 48px" }}>
+      <Section title={ui.sections.work}>
+        <p style={{ fontSize: 15, color: "var(--fg-2)", marginBottom: 32 }}>{ui.work.intro}</p>
+        <div className="grid-two" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          {projects.map((project) => <ProjectCard key={project.title} {...project} ui={ui.card} />)}
         </div>
       </Section>
     </div>
   );
 }
 
-function WritingPage() {
+function WritingPage({ ui, posts }) {
   return (
-    <div style={{maxWidth:720,margin:'0 auto',padding:'0 48px'}}>
-      <Section title="writing">
-        <p style={{fontSize:15,color:'var(--fg-2)',marginBottom:32}}>Notes on what I'm figuring out.</p>
+    <div className="page-shell" style={{ maxWidth: 720, margin: "0 auto", padding: "0 48px" }}>
+      <Section title={ui.sections.writing}>
+        <p style={{ fontSize: 15, color: "var(--fg-2)", marginBottom: 32 }}>{ui.writing.intro}</p>
         <div>
-          {POSTS.map(p=><WritingRow key={p.title} {...p}/>)}
+          {posts.map((post) => <WritingRow key={post.title} {...post} />)}
         </div>
       </Section>
     </div>
   );
 }
 
-function ContactPage() {
+function ContactPage({ ui }) {
   return (
-    <div style={{maxWidth:720,margin:'0 auto',padding:'0 48px'}}>
-      <Section title="contact">
-        <p style={{fontSize:15,color:'var(--fg-2)',lineHeight:1.7,marginBottom:32,maxWidth:440}}>
-          If you're working on something interesting — a hard retrieval problem, a novel agent architecture, or just want to talk AI engineering — get in touch.
+    <div className="page-shell" style={{ maxWidth: 720, margin: "0 auto", padding: "0 48px" }}>
+      <Section title={ui.sections.contact}>
+        <p style={{ fontSize: 15, color: "var(--fg-2)", lineHeight: 1.7, marginBottom: 32, maxWidth: 440 }}>
+          {ui.contact.intro}
         </p>
-        <ContactForm/>
+        <ContactForm ui={ui.contact} />
       </Section>
     </div>
   );
 }
 
 function App() {
-  const saved = localStorage.getItem('portfolio-page');
-  const savedTheme = localStorage.getItem('portfolio-theme');
-  const initialTheme = savedTheme || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-  const [page, setPage] = useState(saved || 'about');
+  const savedPage = localStorage.getItem("portfolio-page");
+  const savedTheme = localStorage.getItem("portfolio-theme");
+  const savedLanguage = localStorage.getItem("portfolio-language");
+  const initialTheme = savedTheme || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const initialLanguage = savedLanguage || "en";
+
+  const [page, setPage] = useState(savedPage || "about");
   const [theme, setTheme] = useState(initialTheme);
-  const [name, setName] = useState('alex chen');
+  const [language, setLanguage] = useState(initialLanguage);
+  const [name, setName] = useState("alex chen");
 
-  useEffect(() => { localStorage.setItem('portfolio-page', page); }, [page]);
-  useEffect(() => { localStorage.setItem('portfolio-theme', theme); }, [theme]);
+  const ui = UI[language];
+  const projects = PROJECTS[language];
+  const posts = POSTS[language];
+  const navLinks = [
+    { key: "about", label: ui.nav.about },
+    { key: "work", label: ui.nav.work },
+    { key: "writing", label: ui.nav.writing },
+    { key: "contact", label: ui.nav.contact },
+  ];
+
+  useEffect(() => { localStorage.setItem("portfolio-page", page); }, [page]);
+  useEffect(() => { localStorage.setItem("portfolio-theme", theme); }, [theme]);
+  useEffect(() => { localStorage.setItem("portfolio-language", language); }, [language]);
+  useEffect(() => { document.documentElement.setAttribute("data-theme", theme); }, [theme]);
+  useEffect(() => { document.documentElement.lang = ui.htmlLang; }, [ui]);
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+    const nameEl = document.getElementById("tweak-name");
+    const themeEl = document.getElementById("tweak-theme");
+    const languageEl = document.getElementById("tweak-language");
+    const pageEl = document.getElementById("tweak-page");
 
-  // Tweaks wiring
-  useEffect(() => {
-    const nameEl = document.getElementById('tweak-name');
-    const themeEl = document.getElementById('tweak-theme');
-    const pageEl = document.getElementById('tweak-page');
-    if (nameEl) nameEl.addEventListener('input', e => setName(e.target.value));
-    if (themeEl) themeEl.addEventListener('change', e => setTheme(e.target.value));
-    if (pageEl) pageEl.addEventListener('change', e => setPage(e.target.value));
+    const handleName = (e) => setName(e.target.value);
+    const handleTheme = (e) => setTheme(e.target.value);
+    const handleLanguage = (e) => setLanguage(e.target.value);
+    const handlePage = (e) => setPage(e.target.value);
 
-    window.addEventListener('message', e => {
-      if (e.data?.type === '__activate_edit_mode') document.getElementById('tweaks-panel')?.classList.add('visible');
-      if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks-panel')?.classList.remove('visible');
-    });
-    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    if (nameEl) nameEl.addEventListener("input", handleName);
+    if (themeEl) themeEl.addEventListener("change", handleTheme);
+    if (languageEl) languageEl.addEventListener("change", handleLanguage);
+    if (pageEl) pageEl.addEventListener("change", handlePage);
 
-    if (themeEl) themeEl.value = initialTheme;
+    const handleMessage = (e) => {
+      if (e.data?.type === "__activate_edit_mode") document.getElementById("tweaks-panel")?.classList.add("visible");
+      if (e.data?.type === "__deactivate_edit_mode") document.getElementById("tweaks-panel")?.classList.remove("visible");
+    };
+
+    window.addEventListener("message", handleMessage);
+    window.parent.postMessage({ type: "__edit_mode_available" }, "*");
+
+    return () => {
+      if (nameEl) nameEl.removeEventListener("input", handleName);
+      if (themeEl) themeEl.removeEventListener("change", handleTheme);
+      if (languageEl) languageEl.removeEventListener("change", handleLanguage);
+      if (pageEl) pageEl.removeEventListener("change", handlePage);
+      window.removeEventListener("message", handleMessage);
+    };
   }, []);
 
-  const pages = { about: <AboutPage name={name}/>, work: <WorkPage/>, writing: <WritingPage/>, contact: <ContactPage/> };
+  useEffect(() => {
+    const nameLabel = document.querySelector('label[for="tweak-name"]');
+    if (nameLabel) nameLabel.textContent = ui.tweakPanel.name;
+  }, [ui]);
+
+  useEffect(() => {
+    const themeEl = document.getElementById("tweak-theme");
+    const languageEl = document.getElementById("tweak-language");
+    const pageEl = document.getElementById("tweak-page");
+
+    if (themeEl) themeEl.value = theme;
+    if (languageEl) languageEl.value = language;
+    if (pageEl) pageEl.value = page;
+
+    const tweakLabels = document.querySelectorAll("#tweaks-panel label span");
+    if (tweakLabels[0]) tweakLabels[0].textContent = ui.tweakPanel.name;
+    if (tweakLabels[1]) tweakLabels[1].textContent = ui.tweakPanel.mode;
+    if (tweakLabels[2]) tweakLabels[2].textContent = ui.tweakPanel.language;
+    if (tweakLabels[3]) tweakLabels[3].textContent = ui.tweakPanel.activePage;
+
+    if (pageEl) {
+      Array.from(pageEl.options).forEach((option) => {
+        option.text = ui.tweakPanel.pages[option.value];
+      });
+    }
+  }, [theme, language, page, ui]);
+
+  const pages = {
+    about: <AboutPage name={name} ui={ui} projects={projects} />,
+    work: <WorkPage ui={ui} projects={projects} />,
+    writing: <WritingPage ui={ui} posts={posts} />,
+    contact: <ContactPage ui={ui} />,
+  };
 
   return (
-    <div style={{minHeight:'100vh',display:'flex',flexDirection:'column'}}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <Nav
         name={name}
+        links={navLinks}
         active={page}
         theme={theme}
+        language={language}
+        ui={ui}
         onToggleTheme={() => {
-          const nextTheme = theme === 'dark' ? 'light' : 'dark';
+          const nextTheme = theme === "dark" ? "light" : "dark";
           setTheme(nextTheme);
-          const themeEl = document.getElementById('tweak-theme');
-          if (themeEl) themeEl.value = nextTheme;
         }}
-        onNav={p => {
-          setPage(p);
-          document.getElementById('tweak-page').value = p;
+        onToggleLanguage={() => {
+          const nextLanguage = language === "en" ? "ru" : "en";
+          setLanguage(nextLanguage);
+        }}
+        onNav={(nextPage) => {
+          setPage(nextPage);
         }}
       />
-      <main style={{flex:1,paddingTop:0}}>
+      <main style={{ flex: 1, paddingTop: 0 }}>
         {pages[page] || pages.about}
       </main>
-      <Footer name={name}/>
+      <Footer name={name} ui={ui.footer} />
     </div>
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 </script>
 </body>
 </html>
