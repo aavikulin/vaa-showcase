@@ -391,6 +391,25 @@ const tweakPage = document.getElementById("tweak-page");
 const tweakLanguage = document.getElementById("tweak-language");
 const tweakTheme = document.getElementById("tweak-theme");
 
+function getPageVisibilityConfig() {
+  return window.PAGE_VISIBILITY_CONFIG || {};
+}
+
+function getVisiblePages(copy) {
+  return Object.entries(copy.nav).filter(([key]) => getPageVisibilityConfig()[key] !== false);
+}
+
+function getDefaultPage(copy) {
+  return getVisiblePages(copy)[0]?.[0] || "about";
+}
+
+function ensureValidPage(copy) {
+  const visiblePages = new Set(getVisiblePages(copy).map(([key]) => key));
+  if (!visiblePages.has(state.page)) {
+    state.page = getDefaultPage(copy);
+  }
+}
+
 function loadValue(key, fallback) {
   const stored = window.localStorage.getItem(key);
   return stored ?? fallback;
@@ -627,6 +646,8 @@ function renderWriting(copy) {
 }
 
 function renderPage(copy) {
+  ensureValidPage(copy);
+
   switch (state.page) {
     case "work":
       return renderWork(copy);
@@ -645,7 +666,8 @@ function renderPage(copy) {
 }
 
 function renderNav(copy) {
-  const navLinks = Object.entries(copy.nav).map(([key, label]) => `
+  const defaultPage = getDefaultPage(copy);
+  const navLinks = getVisiblePages(copy).map(([key, label]) => `
     <button class="nav-link ${state.page === key ? "is-active" : ""}" type="button" data-page="${key}">
       ${escapeHtml(label)}
     </button>
@@ -653,7 +675,7 @@ function renderNav(copy) {
 
   return `
     <nav class="site-nav">
-      <button class="brand-button" type="button" data-page="about" aria-label="Go to about">
+      <button class="brand-button" type="button" data-page="${escapeHtml(defaultPage)}" aria-label="Go to ${escapeHtml(defaultPage)}">
         <span>${escapeHtml(state.name)}</span>
         <span class="brand-caret" aria-hidden="true"></span>
       </button>
@@ -680,10 +702,11 @@ function renderFooter() {
 }
 
 function syncTweaks(copy) {
+  ensureValidPage(copy);
   tweakName.value = state.name;
   tweakLanguage.value = state.language;
   tweakTheme.value = state.theme;
-  tweakPage.innerHTML = Object.entries(copy.nav)
+  tweakPage.innerHTML = getVisiblePages(copy)
     .map(([key, label]) => `<option value="${escapeHtml(key)}">${escapeHtml(label)}</option>`)
     .join("");
   tweakPage.value = state.page;
@@ -694,6 +717,7 @@ function renderApp() {
   persistState();
 
   const copy = getCopy();
+  ensureValidPage(copy);
 
   app.innerHTML = `
     <div class="app-shell">
@@ -710,7 +734,9 @@ function renderApp() {
 }
 
 function setPage(page) {
-  if (!Object.prototype.hasOwnProperty.call(getCopy().nav, page)) {
+  const copy = getCopy();
+  const visiblePages = new Set(getVisiblePages(copy).map(([key]) => key));
+  if (!visiblePages.has(page)) {
     return;
   }
 
@@ -771,8 +797,7 @@ function bindStaticEvents() {
   });
 
   tweakPage.addEventListener("change", (event) => {
-    state.page = event.target.value;
-    renderApp();
+    setPage(event.target.value);
   });
 
   tweakLanguage.addEventListener("change", (event) => {
