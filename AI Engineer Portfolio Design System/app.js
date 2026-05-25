@@ -12,12 +12,17 @@ const DATA = {
     title: "Алексей Викулин — AI Engineer",
     name: "Алексей Викулин",
     nav: {
-      about: "about",
-      work: "work",
-      writing: "writing",
-      now: "now",
+      about: "обо мне",
+      work: "проекты",
+      writing: "заметки",
+      now: "сейчас",
       cv: "cv",
-      contact: "contact",
+      contact: "контакт",
+    },
+    ui: {
+      brandAria: "Перейти на страницу",
+      languageToggle: "Переключить язык",
+      themeToggle: "Переключить тему",
     },
     about: {
       label: "обо мне",
@@ -201,6 +206,11 @@ const DATA = {
       now: "now",
       cv: "cv",
       contact: "contact",
+    },
+    ui: {
+      brandAria: "Go to page",
+      languageToggle: "Toggle language",
+      themeToggle: "Toggle theme",
     },
     about: {
       label: "about",
@@ -666,8 +676,9 @@ function renderPage(copy) {
 }
 
 function renderNav(copy) {
-  const defaultPage = getDefaultPage(copy);
-  const navLinks = getVisiblePages(copy).map(([key, label]) => `
+  const visiblePages = getVisiblePages(copy);
+  const [defaultPage, defaultPageLabel] = visiblePages[0] || ["about", copy.nav.about];
+  const navLinks = visiblePages.map(([key, label]) => `
     <button class="nav-link ${state.page === key ? "is-active" : ""}" type="button" data-page="${key}">
       ${escapeHtml(label)}
     </button>
@@ -675,14 +686,14 @@ function renderNav(copy) {
 
   return `
     <nav class="site-nav">
-      <button class="brand-button" type="button" data-page="${escapeHtml(defaultPage)}" aria-label="Go to ${escapeHtml(defaultPage)}">
+      <button class="brand-button" type="button" data-page="${escapeHtml(defaultPage)}" aria-label="${escapeHtml(copy.ui.brandAria)} ${escapeHtml(defaultPageLabel)}">
         <span>${escapeHtml(state.name)}</span>
         <span class="brand-caret" aria-hidden="true"></span>
       </button>
       <div class="nav-actions">
         ${navLinks}
-        <button class="nav-toggle" type="button" id="language-toggle">${state.language}</button>
-        <button class="nav-toggle" type="button" id="theme-toggle" aria-label="Toggle theme">${iconTheme()}</button>
+        <button class="nav-toggle" type="button" id="language-toggle" aria-label="${escapeHtml(copy.ui.languageToggle)}">${state.language}</button>
+        <button class="nav-toggle" type="button" id="theme-toggle" aria-label="${escapeHtml(copy.ui.themeToggle)}">${iconTheme()}</button>
       </div>
     </nav>
   `;
