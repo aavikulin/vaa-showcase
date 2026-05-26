@@ -504,6 +504,10 @@ button {
   margin: 24px 0 0;
 }
 
+.carousel-frame {
+  position: relative;
+}
+
 .carousel-track {
   display: grid;
   grid-auto-columns: min(100%, 780px);
@@ -538,7 +542,7 @@ button {
 
 .carousel-arrow {
   position: absolute;
-  top: 50%;
+  top: clamp(120px, 28vw, 280px);
   transform: translateY(-50%);
   z-index: 1;
   width: 42px;
@@ -549,6 +553,7 @@ button {
   border-radius: 999px;
   background: rgba(17, 17, 16, 0.72);
   color: #f0f0ee;
+  cursor: pointer;
   font-size: 28px;
   line-height: 1;
   text-decoration: none;
