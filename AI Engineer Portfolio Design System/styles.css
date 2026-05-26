@@ -477,6 +477,20 @@ button {
   line-height: 1.75;
 }
 
+.modal-media {
+  margin: 24px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.modal-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .modal-list {
   margin: 20px 0 24px;
   padding-left: 18px;

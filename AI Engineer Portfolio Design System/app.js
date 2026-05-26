@@ -182,7 +182,11 @@ const DATA = {
           "Включает расширяемый glossary для аббревиатур, нотации, стандартных терминов и protected headers, CLI и Flask Web UI с job queue, SSE progress, authentication, preview и сравнением оригинала с переводом.",
         ],
         tags: ["python", "flask", "pymupdf", "babeldoc", "ollama"],
-        href: GITHUB_URL,
+        media: {
+          src: "./assets/pdf-translator.gif",
+          alt: "Демонстрация интерфейса PDF Translator",
+        },
+        href: "https://pdf-translator.ru/",
         external: true,
       },
       {
@@ -410,7 +414,11 @@ const DATA = {
           "Includes an extensible glossary for abbreviations, notation, standard technical terms, and protected headers, plus CLI and Flask Web UI with job queueing, SSE progress, authentication, preview, and original-vs-translated comparison.",
         ],
         tags: ["python", "flask", "pymupdf", "babeldoc", "ollama"],
-        href: GITHUB_URL,
+        media: {
+          src: "./assets/pdf-translator.gif",
+          alt: "PDF Translator interface demo",
+        },
+        href: "https://pdf-translator.ru/",
         external: true,
       },
       {
@@ -619,6 +627,11 @@ function renderProjectModal(copy, projectIndex) {
         </div>
         <p class="modal-role">${escapeHtml(project.role)}</p>
         <p class="modal-copy">${escapeHtml(project.detail || project.description)}</p>
+        ${project.media ? `
+          <figure class="modal-media">
+            <img src="${escapeHtml(project.media.src)}" alt="${escapeHtml(project.media.alt || project.title)}" loading="lazy" decoding="async">
+          </figure>
+        ` : ""}
         <ul class="modal-list">
           ${(project.impact || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
         </ul>
