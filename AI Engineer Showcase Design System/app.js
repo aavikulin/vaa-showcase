@@ -1,8 +1,8 @@
 const STORAGE_KEYS = {
-  page: "portfolio.page",
-  theme: "portfolio.theme",
-  language: "portfolio.language",
-  name: "portfolio.name",
+  page: "showcase.page",
+  theme: "showcase.theme",
+  language: "showcase.language",
+  name: "showcase.name",
 };
 
 const GITHUB_URL = "https://github.com/Bimo0420";

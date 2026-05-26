@@ -1,10 +1,10 @@
-# AI Engineer Portfolio
+# vaa-showcase
 
 Одна основная версия сайта без UI kit-дубликатов и превью.
 
 ## Структура
 
-- `Portfolio.html` — основной entry point
+- `Showcase.html` — основной entry point
 - `styles.css` — стили сайта
 - `app.js` — данные и логика рендера
 - `page-visibility.config.js` — конфиг видимости страниц
@@ -36,4 +36,4 @@ window.PAGE_VISIBILITY_CONFIG = {
 
 ## Запуск
 
-Откройте `Portfolio.html` напрямую в браузере или поднимите любой статический сервер на папку `AI Engineer Portfolio Design System`.
+Откройте `Showcase.html` напрямую в браузере или поднимите любой статический сервер на папку `AI Engineer Showcase Design System`.
