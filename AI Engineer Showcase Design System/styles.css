@@ -526,10 +526,47 @@ button {
   scroll-snap-align: start;
 }
 
+.carousel-image-wrap {
+  position: relative;
+}
+
 .carousel-slide img {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 999px;
+  background: rgba(17, 17, 16, 0.72);
+  color: #f0f0ee;
+  font-size: 28px;
+  line-height: 1;
+  text-decoration: none;
+  backdrop-filter: blur(6px);
+}
+
+.carousel-arrow:hover,
+.carousel-arrow:focus-visible {
+  background: rgba(17, 17, 16, 0.88);
+  border-color: rgba(240, 240, 238, 0.2);
+}
+
+.carousel-arrow-prev {
+  left: 12px;
+}
+
+.carousel-arrow-next {
+  right: 12px;
 }
 
 .carousel-slide figcaption {

@@ -646,7 +646,7 @@ function renderProjects(projects) {
   `;
 }
 
-function renderProjectMedia(project) {
+function renderProjectMedia(project, projectIndex) {
   const mediaItems = Array.isArray(project.media) ? project.media : project.media ? [project.media] : [];
 
   if (!mediaItems.length) {
@@ -666,15 +666,25 @@ function renderProjectMedia(project) {
   return `
     <section class="modal-carousel" aria-label="${escapeHtml(project.title)} screenshots">
       <div class="carousel-track">
-        ${mediaItems.map((item, index) => `
-          <figure class="carousel-slide">
-            <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt || project.title)}" loading="lazy" decoding="async">
+        ${mediaItems.map((item, index) => {
+          const previousIndex = index === 0 ? mediaItems.length - 1 : index - 1;
+          const nextIndex = index === mediaItems.length - 1 ? 0 : index + 1;
+          const slideId = `project-${projectIndex}-slide-${index}`;
+
+          return `
+          <figure class="carousel-slide" id="${escapeHtml(slideId)}">
+            <div class="carousel-image-wrap">
+              <a class="carousel-arrow carousel-arrow-prev" href="#project-${escapeHtml(String(projectIndex))}-slide-${escapeHtml(String(previousIndex))}" aria-label="Previous screenshot">‹</a>
+              <a class="carousel-arrow carousel-arrow-next" href="#project-${escapeHtml(String(projectIndex))}-slide-${escapeHtml(String(nextIndex))}" aria-label="Next screenshot">›</a>
+              <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt || project.title)}" loading="lazy" decoding="async">
+            </div>
             <figcaption>
               <span>${escapeHtml(String(index + 1).padStart(2, "0"))}</span>
               ${escapeHtml(item.caption || item.alt || project.title)}
             </figcaption>
           </figure>
-        `).join("")}
+        `;
+        }).join("")}
       </div>
       <div class="carousel-dots" aria-hidden="true">
         ${mediaItems.map(() => `<span></span>`).join("")}
@@ -700,7 +710,7 @@ function renderProjectModal(copy, projectIndex) {
         </div>
         <p class="modal-role">${escapeHtml(project.role)}</p>
         <p class="modal-copy">${escapeHtml(project.detail || project.description)}</p>
-        ${renderProjectMedia(project)}
+        ${renderProjectMedia(project, projectIndex)}
         <ul class="modal-list">
           ${(project.impact || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
         </ul>
