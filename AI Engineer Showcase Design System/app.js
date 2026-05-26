@@ -665,17 +665,12 @@ function renderProjectMedia(project, projectIndex) {
 
   return `
     <section class="modal-carousel" aria-label="${escapeHtml(project.title)} screenshots">
-      <div class="carousel-track">
-        ${mediaItems.map((item, index) => {
-          const previousIndex = index === 0 ? mediaItems.length - 1 : index - 1;
-          const nextIndex = index === mediaItems.length - 1 ? 0 : index + 1;
-          const slideId = `project-${projectIndex}-slide-${index}`;
-
-          return `
-          <figure class="carousel-slide" id="${escapeHtml(slideId)}">
+      <div class="carousel-frame">
+        <button class="carousel-arrow carousel-arrow-prev" type="button" data-carousel-direction="prev" aria-label="Previous screenshot">‹</button>
+        <div class="carousel-track" data-carousel-track>
+          ${mediaItems.map((item, index) => `
+          <figure class="carousel-slide" data-carousel-slide>
             <div class="carousel-image-wrap">
-              <a class="carousel-arrow carousel-arrow-prev" href="#project-${escapeHtml(String(projectIndex))}-slide-${escapeHtml(String(previousIndex))}" aria-label="Previous screenshot">‹</a>
-              <a class="carousel-arrow carousel-arrow-next" href="#project-${escapeHtml(String(projectIndex))}-slide-${escapeHtml(String(nextIndex))}" aria-label="Next screenshot">›</a>
               <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt || project.title)}" loading="lazy" decoding="async">
             </div>
             <figcaption>
@@ -683,8 +678,9 @@ function renderProjectMedia(project, projectIndex) {
               ${escapeHtml(item.caption || item.alt || project.title)}
             </figcaption>
           </figure>
-        `;
-        }).join("")}
+        `).join("")}
+        </div>
+        <button class="carousel-arrow carousel-arrow-next" type="button" data-carousel-direction="next" aria-label="Next screenshot">›</button>
       </div>
       <div class="carousel-dots" aria-hidden="true">
         ${mediaItems.map(() => `<span></span>`).join("")}
@@ -1010,6 +1006,32 @@ function bindRuntimeEvents() {
       renderApp();
     });
   }
+  document.querySelectorAll("[data-carousel-direction]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const frame = button.closest(".carousel-frame");
+      const track = frame?.querySelector("[data-carousel-track]");
+      const slides = track ? Array.from(track.querySelectorAll("[data-carousel-slide]")) : [];
+      if (!track || !slides.length) {
+        return;
+      }
+
+      const currentLeft = track.scrollLeft;
+      let activeIndex = 0;
+      let minDistance = Number.POSITIVE_INFINITY;
+
+      slides.forEach((slide, index) => {
+        const distance = Math.abs(slide.offsetLeft - currentLeft);
+        if (distance < minDistance) {
+          minDistance = distance;
+          activeIndex = index;
+        }
+      });
+
+      const direction = button.dataset.carouselDirection === "prev" ? -1 : 1;
+      const nextIndex = (activeIndex + direction + slides.length) % slides.length;
+      track.scrollTo({ left: slides[nextIndex].offsetLeft, behavior: "smooth" });
+    });
+  });
 }
 
 function bindStaticEvents() {
