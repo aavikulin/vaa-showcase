@@ -168,6 +168,23 @@ const DATA = {
           "Данные по моделям обновляются ежедневно, а интерфейс построен как практичный dashboard для принятия инфраструктурных решений до покупки оборудования.",
         ],
         tags: ["next.js", "react", "typescript", "tailwind", "recharts"],
+        media: [
+          {
+            src: assetUrl("assets/cto-estimate-self-hosted-llm.png"),
+            alt: "CTO Estimate self-hosted LLM dashboard",
+            caption: "Self-hosted LLM: catalog, filters, ratings, and model comparison for local deployment planning.",
+          },
+          {
+            src: assetUrl("assets/cto-estimate-gpu-calculator.png"),
+            alt: "CTO Estimate GPU calculator",
+            caption: "GPU Calculator: VRAM, bandwidth, compute, and host requirements for inference scenarios.",
+          },
+          {
+            src: assetUrl("assets/cto-estimate-server-roi.png"),
+            alt: "CTO Estimate server ROI calculator",
+            caption: "Server ROI Calculator: CAPEX, OPEX, electricity, payback period, and local server economics.",
+          },
+        ],
         href: "https://cto-estimate.openweights.space/",
         external: true,
       },
@@ -400,6 +417,23 @@ const DATA = {
           "Model data updates once per day, and the interface is shaped as a practical dashboard for infrastructure decisions before purchasing hardware.",
         ],
         tags: ["next.js", "react", "typescript", "tailwind", "recharts"],
+        media: [
+          {
+            src: assetUrl("assets/cto-estimate-self-hosted-llm.png"),
+            alt: "CTO Estimate self-hosted LLM dashboard",
+            caption: "Self-hosted LLM: catalog, filters, ratings, and model comparison for local deployment planning.",
+          },
+          {
+            src: assetUrl("assets/cto-estimate-gpu-calculator.png"),
+            alt: "CTO Estimate GPU calculator",
+            caption: "GPU Calculator: VRAM, bandwidth, compute, and host requirements for inference scenarios.",
+          },
+          {
+            src: assetUrl("assets/cto-estimate-server-roi.png"),
+            alt: "CTO Estimate server ROI calculator",
+            caption: "Server ROI Calculator: CAPEX, OPEX, electricity, payback period, and local server economics.",
+          },
+        ],
         href: "https://cto-estimate.openweights.space/",
         external: true,
       },
@@ -612,6 +646,42 @@ function renderProjects(projects) {
   `;
 }
 
+function renderProjectMedia(project) {
+  const mediaItems = Array.isArray(project.media) ? project.media : project.media ? [project.media] : [];
+
+  if (!mediaItems.length) {
+    return "";
+  }
+
+  if (mediaItems.length === 1) {
+    const item = mediaItems[0];
+    return `
+      <figure class="modal-media">
+        <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt || project.title)}" loading="lazy" decoding="async">
+        ${item.caption ? `<figcaption>${escapeHtml(item.caption)}</figcaption>` : ""}
+      </figure>
+    `;
+  }
+
+  return `
+    <section class="modal-carousel" aria-label="${escapeHtml(project.title)} screenshots">
+      <div class="carousel-track">
+        ${mediaItems.map((item, index) => `
+          <figure class="carousel-slide">
+            <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt || project.title)}" loading="lazy" decoding="async">
+            <figcaption>
+              <span>${escapeHtml(String(index + 1).padStart(2, "0"))}</span>
+              ${escapeHtml(item.caption || item.alt || project.title)}
+            </figcaption>
+          </figure>
+        `).join("")}
+      </div>
+      <div class="carousel-dots" aria-hidden="true">
+        ${mediaItems.map(() => `<span></span>`).join("")}
+      </div>
+    </section>
+  `;
+}
 function renderProjectModal(copy, projectIndex) {
   const project = copy.projects[projectIndex];
   if (!project) {
@@ -630,11 +700,7 @@ function renderProjectModal(copy, projectIndex) {
         </div>
         <p class="modal-role">${escapeHtml(project.role)}</p>
         <p class="modal-copy">${escapeHtml(project.detail || project.description)}</p>
-        ${project.media ? `
-          <figure class="modal-media">
-            <img src="${escapeHtml(project.media.src)}" alt="${escapeHtml(project.media.alt || project.title)}" loading="lazy" decoding="async">
-          </figure>
-        ` : ""}
+        ${renderProjectMedia(project)}
         <ul class="modal-list">
           ${(project.impact || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
         </ul>
