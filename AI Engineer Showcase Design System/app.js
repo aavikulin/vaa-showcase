@@ -6,6 +6,9 @@ const STORAGE_KEYS = {
 };
 
 const GITHUB_URL = "https://github.com/Bimo0420";
+const SCRIPT_SRC = document.currentScript && document.currentScript.src ? document.currentScript.src : window.location.href;
+const ASSET_ROOT = new URL(".", SCRIPT_SRC);
+const assetUrl = (path) => new URL(path, ASSET_ROOT).href;
 
 const DATA = {
   ru: {
@@ -183,7 +186,7 @@ const DATA = {
         ],
         tags: ["python", "flask", "pymupdf", "babeldoc", "ollama"],
         media: {
-          src: "./assets/pdf-translator.gif",
+          src: assetUrl("assets/pdf-translator.gif"),
           alt: "Демонстрация интерфейса PDF Translator",
         },
         href: "https://pdf-translator.ru/",
@@ -415,7 +418,7 @@ const DATA = {
         ],
         tags: ["python", "flask", "pymupdf", "babeldoc", "ollama"],
         media: {
-          src: "./assets/pdf-translator.gif",
+          src: assetUrl("assets/pdf-translator.gif"),
           alt: "PDF Translator interface demo",
         },
         href: "https://pdf-translator.ru/",

@@ -2,14 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=./AI%20Engineer%20Showcase%20Design%20System/Showcase.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redirecting...</title>
+  <meta name="color-scheme" content="dark light">
+  <title>Alexey Vikulin - AI Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./AI%20Engineer%20Showcase%20Design%20System/styles.css?v=projects-modal-hash">
 </head>
 <body>
-  <p>
-    Redirecting to
-    <a href="./AI%20Engineer%20Showcase%20Design%20System/Showcase.html">Showcase.html</a>.
-  </p>
+  <div id="app"></div>
+
+  <aside id="tweaks-panel" aria-label="Tweaks">
+    <div class="tweaks-title">Tweaks</div>
+    <label class="tweak-field">
+      <span>Name</span>
+      <input id="tweak-name" type="text" value="Alexey Vikulin">
+    </label>
+    <label class="tweak-field">
+      <span>Page</span>
+      <select id="tweak-page"></select>
+    </label>
+    <label class="tweak-field">
+      <span>Language</span>
+      <select id="tweak-language">
+        <option value="ru">Russian</option>
+        <option value="en">English</option>
+      </select>
+    </label>
+    <label class="tweak-field">
+      <span>Theme</span>
+      <select id="tweak-theme">
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+      </select>
+    </label>
+  </aside>
+
+  <script src="./AI%20Engineer%20Showcase%20Design%20System/page-visibility.config.js"></script>
+  <script src="./AI%20Engineer%20Showcase%20Design%20System/app.js?v=projects-modal-hash"></script>
 </body>
 </html>
