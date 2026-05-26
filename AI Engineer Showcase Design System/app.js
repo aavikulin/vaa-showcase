@@ -1007,7 +1007,9 @@ function bindRuntimeEvents() {
     });
   }
   document.querySelectorAll("[data-carousel-direction]").forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
       const frame = button.closest(".carousel-frame");
       const track = frame?.querySelector("[data-carousel-track]");
       const slides = track ? Array.from(track.querySelectorAll("[data-carousel-slide]")) : [];
