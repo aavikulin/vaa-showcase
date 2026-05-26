@@ -1,0 +1,78 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - button "Перейти на страницу обо мне" [ref=e5] [cursor=pointer]:
+      - generic [ref=e6]: Алексей Викулин
+    - generic [ref=e8]:
+      - button "обо мне" [ref=e9] [cursor=pointer]
+      - button "проекты" [ref=e10] [cursor=pointer]
+      - button "заметки" [ref=e11] [cursor=pointer]
+      - button "контакт" [ref=e12] [cursor=pointer]
+      - button "Переключить язык" [ref=e13] [cursor=pointer]: ru
+      - button "Переключить тему" [ref=e14] [cursor=pointer]:
+        - img [ref=e15]
+  - main [ref=e17]:
+    - generic [ref=e18]:
+      - paragraph [ref=e19]: обо мне
+      - heading "Алексей Викулин" [level=1] [ref=e20]
+      - paragraph [ref=e21]: Я создаю системы на пересечении языковых моделей и программной инженерии.
+      - paragraph [ref=e22]: Сейчас фокусируюсь на retrieval-системах, агентах и надёжности LLM в продакшене. Ранее работал в Series B стартапе над инструментами для разработчиков. Открыт к интересным задачам.
+      - generic [ref=e23]:
+        - button "смотреть проекты →" [ref=e24] [cursor=pointer]
+        - button "связаться" [ref=e25] [cursor=pointer]
+    - generic [ref=e26]:
+      - paragraph [ref=e27]: свежее
+      - generic [ref=e28]:
+        - article [ref=e29]:
+          - generic [ref=e30]:
+            - generic [ref=e31]: AI Assistant Core Platform
+            - generic [ref=e32]: "2024"
+          - paragraph [ref=e33]: Модульная RAG-платформа для корпоративных AI-ассистентов, работающих с внутренними знаниями, документацией и неструктурированными данными.
+          - generic [ref=e34]:
+            - generic [ref=e35]: python
+            - generic [ref=e36]: rag
+            - generic [ref=e37]: llamaindex
+            - generic [ref=e38]: pgvector
+            - generic [ref=e39]: ollama
+          - generic [ref=e40]:
+            - link "Подробнее" [ref=e41] [cursor=pointer]:
+              - /url: "#project-0"
+            - link "открыть проект ↗" [ref=e42] [cursor=pointer]:
+              - /url: https://github.com/Bimo0420
+              - text: ↗
+        - article [ref=e43]:
+          - generic [ref=e44]:
+            - generic [ref=e45]: CTO Estimate
+            - generic [ref=e46]: "2024"
+          - paragraph [ref=e47]: "Интерактивный инструмент для оценки self-hosted LLM-инфраструктуры: выбор модели, расчет GPU-требований и экономика локального сервера."
+          - generic [ref=e48]:
+            - generic [ref=e49]: next.js
+            - generic [ref=e50]: react
+            - generic [ref=e51]: typescript
+            - generic [ref=e52]: tailwind
+            - generic [ref=e53]: recharts
+          - generic [ref=e54]:
+            - link "Подробнее" [ref=e55] [cursor=pointer]:
+              - /url: "#project-1"
+            - link "открыть проект ↗" [ref=e56] [cursor=pointer]:
+              - /url: https://cto-estimate.openweights.space/
+              - text: ↗
+    - generic [ref=e57]:
+      - paragraph [ref=e58]: стек
+      - generic [ref=e59]:
+        - generic [ref=e60]: python
+        - generic [ref=e61]: pytorch
+        - generic [ref=e62]: transformers
+        - generic [ref=e63]: fastapi
+        - generic [ref=e64]: langchain
+        - generic [ref=e65]: pgvector
+        - generic [ref=e66]: qdrant
+        - generic [ref=e67]: docker
+        - generic [ref=e68]: postgresql
+        - generic [ref=e69]: redis
+        - generic [ref=e70]: airflow
+        - generic [ref=e71]: mlflow
+  - contentinfo [ref=e72]:
+    - generic [ref=e73]: © 2025 Алексей Викулин
+    - link "GitHub" [ref=e75] [cursor=pointer]:
+      - /url: https://github.com/Bimo0420
+      - img [ref=e76]
