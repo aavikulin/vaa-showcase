@@ -515,9 +515,9 @@ button {
   grid-auto-columns: min(100%, 780px);
   grid-auto-flow: column;
   gap: 16px;
-  overflow-x: auto;
+  overflow-x: hidden;
   overscroll-behavior-x: contain;
-  padding: 0 0 12px;
+  padding: 0;
   scroll-snap-type: x mandatory;
   scrollbar-color: var(--text-subtle) transparent;
 }
