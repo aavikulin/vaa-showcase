@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Алексей Викулин — AI Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css?v=projects-modal-hash">
+</head>
+<body>
+  <div id="app"></div>
+
+  <aside id="tweaks-panel" aria-label="Tweaks">
+    <div class="tweaks-title">Tweaks</div>
+    <label class="tweak-field">
+      <span>Name</span>
+      <input id="tweak-name" type="text" value="Алексей Викулин">
+    </label>
+    <label class="tweak-field">
+      <span>Page</span>
+      <select id="tweak-page"></select>
+    </label>
+    <label class="tweak-field">
+      <span>Language</span>
+      <select id="tweak-language">
+        <option value="ru">Russian</option>
+        <option value="en">English</option>
+      </select>
+    </label>
+    <label class="tweak-field">
+      <span>Theme</span>
+      <select id="tweak-theme">
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+      </select>
+    </label>
+  </aside>
+
+  <script src="./page-visibility.config.js"></script>
+  <script src="./app.js?v=projects-modal-hash"></script>
+</body>
+</html>
