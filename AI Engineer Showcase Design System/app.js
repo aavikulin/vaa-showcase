@@ -217,14 +217,14 @@ const DATA = {
         description: "Document AI-фреймворк для перевода строительных PDF-чертежей с сохранением исходной геометрии, графики, таблиц и технических обозначений.",
         role: "AI Engineer",
         period: "2026",
-        detail: "Разработал PDF Translator для AI-перевода строительной и инженерной документации. Система извлекает текстовые блоки, координаты, bbox, шрифты и геометрию, классифицирует области документа, переводит содержимое через cloud или local LLM и восстанавливает переведенный текст в исходную PDF-разметку без разрушения чертежа.",
+        detail: "Разработал PDF Translator для AI-перевода проектной документации. Система извлекает текстовые блоки, координаты, bbox, шрифты и геометрию, классифицирует области документа, переводит содержимое через cloud или local LLM и восстанавливает переведенный текст в исходную PDF-разметку без разрушения чертежа.",
         impact: [
-          "Сохраняет line-art, таблицы, штампы, боковые штампы, координаты, поворот текста, выравнивание и технические аннотации.",
+          "Сохраняет графику, таблицы, штампы, размеры, поворот текста, выравнивание и технические аннотации.",
           "Использует PyMuPDF для extraction-слоя, классификацию регионов body_text, table, stamp, sidestamp, note, legend и graphic.",
           "Поддерживает гибридный routing между BabelDOC и custom geometry-aware pipeline, а также OpenRouter, Ollama и Mock backend для отладки.",
           "Включает расширяемый glossary для аббревиатур, нотации, стандартных терминов и protected headers, CLI и Flask Web UI с job queue, SSE progress, authentication, preview и сравнением оригинала с переводом.",
         ],
-        tags: ["python", "flask", "pymupdf", "babeldoc", "ollama"],
+        tags: ["python", "flask", "pymupdf", "babeldoc", "ollama", "openrouter"],
         media: {
           src: assetUrl("assets/pdf-translator.gif"),
           alt: "Демонстрация интерфейса PDF Translator",
