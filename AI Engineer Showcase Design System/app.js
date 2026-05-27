@@ -139,10 +139,10 @@ const DATA = {
     projects: [
       {
         title: "AI Assistant Core Platform",
-        year: "2024",
+        year: "2025",
         description: "Модульная RAG-платформа для корпоративных AI-ассистентов, работающих с внутренними знаниями, документацией и неструктурированными данными.",
         role: "AI Engineer",
-        period: "2024",
+        period: "2025",
         detail: "Разработал enterprise-платформу для создания корпоративных ассистентов на базе Retrieval-Augmented Generation. Система индексирует документы, преобразует их в эмбеддинги, извлекает релевантный контекст через гибридный поиск и передает его в LLM-оркестрацию, что повышает фактическую точность ответов и снижает риск галлюцинаций.",
         impact: [
           "Собрал пайплайн обработки документов: preprocessing, семантическая сегментация, генерация эмбеддингов и индексация в PostgreSQL + pgvector.",
@@ -179,10 +179,10 @@ const DATA = {
       },
       {
         title: "CTO Estimate",
-        year: "2024",
+        year: "2026",
         description: "Интерактивный инструмент для оценки self-hosted LLM-инфраструктуры: выбор модели, расчет GPU-требований и экономика локального сервера.",
         role: "AI Engineer",
-        period: "2024",
+        period: "2026",
         detail: "Разработал набор CTO-инструментов для раннего планирования локальной AI-инфраструктуры. Проект помогает понять, какие open-weight модели можно развернуть локально, какие GPU и серверные ресурсы потребуются, и когда покупка собственного inference-сервера становится экономически оправданной по сравнению с cloud API.",
         impact: [
           "Self-hosted LLM Dashboard: каталог open-weight моделей из Artificial Analysis, фильтры, топ-10 рейтинги, параметры архитектуры из Hugging Face и сравнение моделей side-by-side.",
@@ -213,10 +213,10 @@ const DATA = {
       },
       {
         title: "PDF Translator",
-        year: "2023",
+        year: "2026",
         description: "Document AI-фреймворк для перевода строительных PDF-чертежей с сохранением исходной геометрии, графики, таблиц и технических обозначений.",
         role: "AI Engineer",
-        period: "2023",
+        period: "2026",
         detail: "Разработал PDF Translator для AI-перевода строительной и инженерной документации. Система извлекает текстовые блоки, координаты, bbox, шрифты и геометрию, классифицирует области документа, переводит содержимое через cloud или local LLM и восстанавливает переведенный текст в исходную PDF-разметку без разрушения чертежа.",
         impact: [
           "Сохраняет line-art, таблицы, штампы, боковые штампы, координаты, поворот текста, выравнивание и технические аннотации.",
@@ -234,10 +234,10 @@ const DATA = {
       },
       {
         title: "AI/ML Tools",
-        year: "2023",
+        year: "2026",
         description: "Интерактивный каталог open-source AI, ML и MLOps-инструментов с таксономией, поиском, фильтрами и lightweight SPA-интерфейсом.",
         role: "ML Engineer",
-        period: "2023",
+        period: "2026",
         media: {
           src: assetUrl("assets/ai-ml-tools-card.png"),
           alt: "AI/ML Tools dashboard preview",
@@ -257,31 +257,31 @@ const DATA = {
     posts: [
       {
         title: "RAG без боли: как выбрать chunking strategy",
-        date: "Апр 2024",
+        date: "Апр 2026",
         time: "7 мин",
         tags: ["rag", "retrieval"],
       },
       {
-        title: "Как оценивать качество RAG-системы в 2024",
-        date: "Фев 2024",
+        title: "Как оценивать качество RAG-системы в 2026",
+        date: "Фев 2026",
         time: "9 мин",
         tags: ["evals", "rag"],
       },
       {
         title: "FastAPI + Pydantic v2: шаблон для AI-сервисов",
-        date: "Янв 2024",
+        date: "Янв 2026",
         time: "5 мин",
         tags: ["fastapi", "python"],
       },
       {
         title: "Почему LangChain — это не всегда плохо",
-        date: "Дек 2023",
+        date: "Дек 2026",
         time: "4 мин",
         tags: ["opinion", "llm"],
       },
       {
         title: "Embeddings на практике: что влияет на качество",
-        date: "Ноя 2023",
+        date: "Ноя 2026",
         time: "6 мин",
         tags: ["embeddings"],
       },
@@ -332,7 +332,7 @@ const DATA = {
     },
     now: {
       label: "now",
-      date: "April 2025 · Moscow",
+      date: "April 2026 · Moscow",
       items: [
         {
           label: "working on",
@@ -618,7 +618,22 @@ function escapeHtml(value) {
 }
 
 function getCopy() {
-  return DATA[state.language] || DATA.ru;
+  const copy = DATA[state.language] || DATA.ru;
+  const projects = [...copy.projects];
+  const assistantIndex = projects.findIndex((project) => project.title === "AI Assistant Core Platform");
+  const toolsIndex = projects.findIndex((project) => project.title === "AI/ML Tools");
+  const ctoIndex = projects.findIndex((project) => project.title === "CTO Estimate");
+  const pdfTranslatorIndex = projects.findIndex((project) => project.title === "PDF Translator");
+
+  if (assistantIndex !== -1 && toolsIndex !== -1) {
+    [projects[assistantIndex], projects[toolsIndex]] = [projects[toolsIndex], projects[assistantIndex]];
+  }
+
+  if (ctoIndex !== -1 && pdfTranslatorIndex !== -1) {
+    [projects[ctoIndex], projects[pdfTranslatorIndex]] = [projects[pdfTranslatorIndex], projects[ctoIndex]];
+  }
+
+  return { ...copy, projects };
 }
 
 function applyDocumentState() {

@@ -4,5 +4,5 @@ window.PAGE_VISIBILITY_CONFIG = {
   writing: true,
   now: false,
   cv: false,
-  contact: true,
+  contact: false,
 };
