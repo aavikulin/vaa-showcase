@@ -150,7 +150,7 @@ const DATA = {
           "Добавил инфраструктурные компоненты для production-сценариев: Redis, ClickHouse, MinIO, Supabase, n8n, Langfuse, Prometheus и Grafana.",
           "Подготовил масштабируемую архитектуру для интеграции с внутренними базами знаний и мониторинга качества ответов.",
         ],
-        tags: ["python", "rag", "llamaindex", "pgvector", "ollama"],
+        tags: ["enterprise rag", "hybrid search", "self-hosted inference", "knowledge base", "observability"],
         media: [
           {
             src: assetUrl("assets/ai-assistant-core-platform-chat.png"),
@@ -183,29 +183,26 @@ const DATA = {
         description: "Интерактивный инструмент для оценки self-hosted LLM-инфраструктуры: выбор модели, расчет GPU-требований и экономика локального сервера.",
         role: "AI Engineer",
         period: "2026",
-        detail: "Разработал набор CTO-инструментов для раннего планирования локальной AI-инфраструктуры. Проект помогает понять, какие open-weight модели можно развернуть локально, какие GPU и серверные ресурсы потребуются, и когда покупка собственного inference-сервера становится экономически оправданной по сравнению с cloud API.",
+        detail: "Разработал набор CTO-инструментов для раннего планирования локальной AI-инфраструктуры. Проект помогает понять, какие open-weight модели можно развернуть локально, какие GPU и серверные ресурсы потребуются, и когда покупка собственного inference-сервера становится экономически оправданной.",
         impact: [
-          "Self-hosted LLM Dashboard: каталог open-weight моделей из Artificial Analysis, фильтры, топ-10 рейтинги, параметры архитектуры из Hugging Face и сравнение моделей side-by-side.",
-          "GPU Calculator: оценка VRAM, bandwidth, compute, interconnect, fit-анализ для single-GPU и multi-GPU сценариев, базовые требования к CPU и RAM.",
-          "Server ROI Calculator: расчет TCO, CAPEX/OPEX, затрат на электричество, экономии от автоматизации, сценариев загрузки и срока окупаемости.",
           "Данные по моделям обновляются ежедневно, а интерфейс построен как практичный dashboard для принятия инфраструктурных решений до покупки оборудования.",
         ],
-        tags: ["next.js", "react", "typescript", "tailwind", "recharts"],
+        tags: ["self-hosted llm", "gpu calculator", "server roi", "tco", "cloud api compare"],
         media: [
           {
             src: assetUrl("assets/cto-estimate-self-hosted-llm.png"),
             alt: "CTO Estimate self-hosted LLM dashboard",
-            caption: "Self-hosted LLM: catalog, filters, ratings, and model comparison for local deployment planning.",
+            caption: "Self-hosted LLM Dashboard: каталог open-weight моделей из Artificial Analysis, фильтры, топ-10 рейтинги, параметры архитектуры из Hugging Face и сравнение моделей side-by-side.",
           },
           {
             src: assetUrl("assets/cto-estimate-gpu-calculator.png"),
             alt: "CTO Estimate GPU calculator",
-            caption: "GPU Calculator: VRAM, bandwidth, compute, and host requirements for inference scenarios.",
+            caption: "GPU Calculator: оценка VRAM, bandwidth, compute, interconnect, анализ для single-GPU и multi-GPU сценариев, базовые требования к CPU и RAM.",
           },
           {
             src: assetUrl("assets/cto-estimate-server-roi.png"),
             alt: "CTO Estimate server ROI calculator",
-            caption: "Server ROI Calculator: CAPEX, OPEX, electricity, payback period, and local server economics.",
+            caption: "Server ROI Calculator: расчет экономии от автоматизации, сравнение с Cloude API, сценариев загрузки и срока окупаемости с учетом TCO.",
           },
         ],
         href: "https://cto-estimate.openweights.space/",
@@ -224,7 +221,7 @@ const DATA = {
           "Поддерживает гибридный routing между BabelDOC и custom geometry-aware pipeline, а также OpenRouter, Ollama и Mock backend для отладки.",
           "Включает расширяемый glossary для аббревиатур, нотации, стандартных терминов и protected headers, CLI и Flask Web UI с job queue, SSE progress, authentication, preview и сравнением оригинала с переводом.",
         ],
-        tags: ["python", "flask", "pymupdf", "babeldoc", "ollama", "openrouter"],
+        tags: ["pdf translation", "layout preservation", "technical drawings", "geometry-aware pipeline", "translation preview"],
         media: {
           src: assetUrl("assets/pdf-translator.gif"),
           alt: "Демонстрация интерфейса PDF Translator",
@@ -249,7 +246,7 @@ const DATA = {
           "Реализовал сортировку, конфигурируемые колонки таблицы и detail view для каждого инструмента.",
           "Собрал удобный lightweight single-page dashboard для поддержки и расширения каталога.",
         ],
-        tags: ["ai", "ml", "mlops", "catalog", "tools"],
+        tags: ["tool catalog", "taxonomy", "search & filters", "detail view", "runtime discovery"],
         href: "https://ai-tools.openweights.space/",
         external: true,
       },
@@ -426,7 +423,7 @@ const DATA = {
           "Added production infrastructure components: Redis, ClickHouse, MinIO, Supabase, n8n, Langfuse, Prometheus, and Grafana.",
           "Prepared a scalable architecture for integration with internal knowledge bases and response quality monitoring.",
         ],
-        tags: ["python", "rag", "llamaindex", "pgvector", "ollama"],
+        tags: ["enterprise rag", "hybrid search", "self-hosted inference", "knowledge base", "observability"],
         media: [
           {
             src: assetUrl("assets/ai-assistant-core-platform-chat.png"),
@@ -466,7 +463,7 @@ const DATA = {
           "Server ROI Calculator: TCO, CAPEX/OPEX, electricity, automation savings, utilization scenarios, payback period, and optional cloud API cost comparison.",
           "Model data updates once per day, and the interface is shaped as a practical dashboard for infrastructure decisions before purchasing hardware.",
         ],
-        tags: ["next.js", "react", "typescript", "tailwind", "recharts"],
+        tags: ["self-hosted llm", "gpu calculator", "server roi", "tco", "cloud api compare"],
         media: [
           {
             src: assetUrl("assets/cto-estimate-self-hosted-llm.png"),
@@ -500,7 +497,7 @@ const DATA = {
           "Supports hybrid routing between BabelDOC and a custom geometry-aware pipeline, plus OpenRouter, Ollama, and a Mock backend for offline debugging.",
           "Includes an extensible glossary for abbreviations, notation, standard technical terms, and protected headers, plus CLI and Flask Web UI with job queueing, SSE progress, authentication, preview, and original-vs-translated comparison.",
         ],
-        tags: ["python", "flask", "pymupdf", "babeldoc", "ollama"],
+        tags: ["pdf translation", "layout preservation", "technical drawings", "geometry-aware pipeline", "translation preview"],
         media: {
           src: assetUrl("assets/pdf-translator.gif"),
           alt: "PDF Translator interface demo",
@@ -525,7 +522,7 @@ const DATA = {
           "Implemented sorting, configurable table columns, and a detail view for each tool.",
           "Built a lightweight single-page dashboard without a frontend framework, keeping the catalog easy to maintain and extend.",
         ],
-        tags: ["javascript", "html", "css", "mlops", "catalog"],
+        tags: ["tool catalog", "taxonomy", "search & filters", "detail view", "runtime discovery"],
         href: "https://ai-tools.openweights.space/",
         external: true,
       },
