@@ -510,6 +510,10 @@ const DATA = {
         description: "An interactive catalog of open-source AI, ML, and MLOps tools with taxonomy, search, filters, and a lightweight SPA interface.",
         role: "ML Engineer",
         period: "2023",
+        preview: {
+          src: assetUrl("assets/ai-ml-tools-card.png"),
+          alt: "AI/ML Tools dashboard preview",
+        },
         detail: "Built a practical knowledge base for open-source AI/ML/MLOps tools by turning a raw project list into a structured dashboard for AI engineers. The catalog helps navigate tools across LLMs, RAG, vector databases, model serving, monitoring, data engineering, governance, training, and infrastructure.",
         impact: [
           "Structured 312 open-source tools into 58 technical categories and 7 high-level groups.",
@@ -663,6 +667,18 @@ function renderTags(tags) {
   return tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("");
 }
 
+function renderCardPreview(project) {
+  if (!project.preview) {
+    return "";
+  }
+
+  return `
+    <figure class="card-preview">
+      ${renderMediaElement(project.preview, project.title)}
+    </figure>
+  `;
+}
+
 function getMediaKind(item) {
   if (item?.type) {
     return item.type;
@@ -702,6 +718,7 @@ function renderProjects(projects) {
         const projectIndex = allProjects.indexOf(project);
         return `
         <article class="card">
+          ${renderCardPreview(project)}
           <div class="card-header">
             <div class="card-title">${escapeHtml(project.title)}</div>
             <span class="meta">${escapeHtml(project.year)}</span>
