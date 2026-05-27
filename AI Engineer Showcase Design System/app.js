@@ -13,7 +13,7 @@ const assetUrl = (path) => new URL(path, ASSET_ROOT).href;
 const DATA = {
   ru: {
     title: "Алексей Викулин — AI Engineer",
-    name: "Алексей Викулин",
+    name: "Алексей Викулин | AI Engineer",
     nav: {
       about: "обо мне",
       work: "проекты",
@@ -242,7 +242,7 @@ const DATA = {
           src: assetUrl("assets/ai-ml-tools-card.png"),
           alt: "AI/ML Tools dashboard preview",
         },
-        detail: "Построил практичную базу знаний по open-source AI/ML/MLOps-инструментам, превратив сырой список проектов в структурированный dashboard для AI-инженеров. Каталог помогает быстро ориентироваться в инструментах для LLM, RAG, vector databases, model serving, monitoring, data engineering, governance, training и инфраструктуры.",
+        detail: "Построил практичную базу знаний по open-source AI/ML/MLOps-инструментам. Каталог помогает быстро ориентироваться в инструментах для LLM, RAG, vector databases, model serving, monitoring, data engineering, governance, training и инфраструктуры.",
         impact: [
           "Систематизировал 312 open-source инструментов в 58 технических категорий и 7 высокоуровневых групп.",
           "Добавил поиск по названию, описанию и разработчику, фильтры по категории, группе и runtime/stack.",
@@ -946,14 +946,6 @@ function renderAbout(copy) {
         <button class="button button-primary" type="button" data-page-target="work">${escapeHtml(copy.about.primaryCta)}</button>
         <button class="button button-secondary" type="button" data-page-target="contact">${escapeHtml(copy.about.secondaryCta)}</button>
       </div>
-    </section>
-    <section class="section">
-      <p class="section-label">${escapeHtml(copy.recent.label)}</p>
-      ${renderProjects(copy.projects.slice(0, 2))}
-    </section>
-    <section class="section">
-      <p class="section-label">${escapeHtml(copy.stack.label)}</p>
-      <div class="tag-list">${renderTags(copy.cv.skills)}</div>
     </section>
   `;
 }
