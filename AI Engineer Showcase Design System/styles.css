@@ -326,25 +326,6 @@ button {
   line-height: 1.7;
 }
 
-.card-preview {
-  margin: -20px -20px 6px;
-  overflow: hidden;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg);
-}
-
-.card-preview img,
-.card-preview video {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-}
-
-.card-preview video {
-  background: #000;
-}
-
 .section-intro {
   margin: 0 0 28px;
 }

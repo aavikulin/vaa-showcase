@@ -1,4 +1,4 @@
-const STORAGE_KEYS = {
+﻿const STORAGE_KEYS = {
   page: "showcase.page",
   theme: "showcase.theme",
   language: "showcase.language",
@@ -238,6 +238,10 @@ const DATA = {
         description: "Интерактивный каталог open-source AI, ML и MLOps-инструментов с таксономией, поиском, фильтрами и lightweight SPA-интерфейсом.",
         role: "ML Engineer",
         period: "2023",
+        media: {
+          src: assetUrl("assets/ai-ml-tools-card.png"),
+          alt: "AI/ML Tools dashboard preview",
+        },
         detail: "Построил практичную базу знаний по open-source AI/ML/MLOps-инструментам, превратив сырой список проектов в структурированный dashboard для AI-инженеров. Каталог помогает быстро ориентироваться в инструментах для LLM, RAG, vector databases, model serving, monitoring, data engineering, governance, training и инфраструктуры.",
         impact: [
           "Систематизировал 312 open-source инструментов в 58 технических категорий и 7 высокоуровневых групп.",
@@ -510,7 +514,7 @@ const DATA = {
         description: "An interactive catalog of open-source AI, ML, and MLOps tools with taxonomy, search, filters, and a lightweight SPA interface.",
         role: "ML Engineer",
         period: "2023",
-        preview: {
+        media: {
           src: assetUrl("assets/ai-ml-tools-card.png"),
           alt: "AI/ML Tools dashboard preview",
         },
@@ -667,18 +671,6 @@ function renderTags(tags) {
   return tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("");
 }
 
-function renderCardPreview(project) {
-  if (!project.preview) {
-    return "";
-  }
-
-  return `
-    <figure class="card-preview">
-      ${renderMediaElement(project.preview, project.title)}
-    </figure>
-  `;
-}
-
 function getMediaKind(item) {
   if (item?.type) {
     return item.type;
@@ -718,7 +710,6 @@ function renderProjects(projects) {
         const projectIndex = allProjects.indexOf(project);
         return `
         <article class="card">
-          ${renderCardPreview(project)}
           <div class="card-header">
             <div class="card-title">${escapeHtml(project.title)}</div>
             <span class="meta">${escapeHtml(project.year)}</span>
