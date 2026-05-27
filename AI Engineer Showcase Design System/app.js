@@ -14,7 +14,7 @@ const assetUrl = (path) => new URL(path, ASSET_ROOT).href;
 const DATA = {
   ru: {
     title: "Алексей Викулин — AI Engineer",
-    name: "Алексей Викулин | AI Engineer",
+    name: "Алексей Викулин",
     nav: {
       about: "обо мне",
       work: "проекты",
@@ -312,8 +312,8 @@ const DATA = {
     about: {
       label: "about",
       title: "Alexey Vikulin",
-      intro: "I design and build AI systems across enterprise RAG, self-hosted LLM infrastructure, Document AI, and internal engineering tools.",
-      summary: "Recently I built a RAG platform for enterprise assistants, CTO Estimate for local LLM infrastructure planning, PDF Translator for technical drawing workflows, and the AI/ML Tools catalog. My focus is production-grade LLM applications, retrieval, infrastructure decisions, and reliable model-centered pipelines.",
+      intro: "I design and build AI systems, from internal engineering tools to enterprise RAG and self-hosted LLM infrastructure.",
+      summary: "Recently I built a RAG platform for enterprise assistants, CTO Estimate for planning local LLM stacks, PDF Translator for technical drawing PDFs, and the AI/ML Tools catalog. I focus on LLM applications, infrastructure, and reliable pipelines around models.",
       primaryCta: "view projects →",
       secondaryCta: "get in touch",
     },
@@ -568,11 +568,26 @@ const DATA = {
   },
 };
 
+function getDefaultName(language) {
+  return (DATA[language] || DATA.ru).name;
+}
+
+function getInitialName(language) {
+  const storedName = loadValue(STORAGE_KEYS.name, "");
+  if (!storedName || storedName === DATA.ru.name || storedName === DATA.en.name) {
+    return getDefaultName(language);
+  }
+
+  return storedName;
+}
+
+const initialLanguage = loadValue(STORAGE_KEYS.language, "ru");
+
 const state = {
   page: loadValue(STORAGE_KEYS.page, "about"),
   theme: loadValue(STORAGE_KEYS.theme, getSystemTheme()),
-  language: loadValue(STORAGE_KEYS.language, "ru"),
-  name: loadValue(STORAGE_KEYS.name, DATA.ru.name),
+  language: initialLanguage,
+  name: getInitialName(initialLanguage),
   contactSent: false,
 };
 
@@ -637,6 +652,18 @@ function getCopy() {
   }
 
   return { ...copy, projects };
+}
+
+function setLanguage(nextLanguage) {
+  const previousDefaultName = getDefaultName(state.language);
+  const nextDefaultName = getDefaultName(nextLanguage);
+  const usesDefaultName =
+    !state.name || state.name === previousDefaultName || state.name === DATA.ru.name || state.name === DATA.en.name;
+
+  state.language = nextLanguage;
+  if (usesDefaultName) {
+    state.name = nextDefaultName;
+  }
 }
 
 function applyDocumentState() {
@@ -1029,6 +1056,7 @@ function renderNav(copy) {
       <button class="brand-button" type="button" data-page="${escapeHtml(defaultPage)}" aria-label="${escapeHtml(copy.ui.brandAria)} ${escapeHtml(defaultPageLabel)}">
         <span>${escapeHtml(state.name)}</span>
         <span class="brand-caret" aria-hidden="true"></span>
+        <span class="brand-role">AI Engineer</span>
       </button>
       <div class="nav-actions">
         ${navLinks}
@@ -1120,7 +1148,7 @@ function bindRuntimeEvents() {
   const languageToggle = document.getElementById("language-toggle");
   if (languageToggle) {
     languageToggle.addEventListener("click", () => {
-      state.language = state.language === "ru" ? "en" : "ru";
+      setLanguage(state.language === "ru" ? "en" : "ru");
       state.contactSent = false;
       renderApp();
     });
@@ -1180,7 +1208,7 @@ function bindStaticEvents() {
   });
 
   tweakLanguage.addEventListener("change", (event) => {
-    state.language = event.target.value;
+    setLanguage(event.target.value);
     state.contactSent = false;
     renderApp();
   });
