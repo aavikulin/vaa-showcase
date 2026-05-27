@@ -5,7 +5,10 @@
   name: "showcase.name",
 };
 
-const GITHUB_URL = "https://github.com/Bimo0420";
+const TELEGRAM_URL = "https://t.me/mvill22";
+const LINKEDIN_URL = "https://www.linkedin.com/in/alexey-vikulin/";
+const GITHUB_URL = "https://github.com/aavikulin";
+const YOUTUBE_URL = "https://www.youtube.com/@ai-asst";
 const AI_ASST_CORE_URL = "https://github.com/aavikulin/ai-asst-core";
 const SCRIPT_SRC = document.currentScript && document.currentScript.src ? document.currentScript.src : window.location.href;
 const ASSET_ROOT = new URL(".", SCRIPT_SRC);
@@ -257,6 +260,14 @@ const DATA = {
       },
     ],
     posts: [
+      {
+        title: "Пост в AI & Machine Learning Community — группе с 2 млн подписчиков",
+        date: "27 мая 2026",
+        time: "LinkedIn",
+        tags: ["ai community", "machine learning", "linkedin"],
+        href: "https://www.linkedin.com/feed/update/urn:li:groupPost:961087-7465431538709454848?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAABh70K4BI4mzbMceEyRYhaw-IOxFTXfVdPY",
+        external: true,
+      },
       {
         title: "Автообновление моделей и автопостинг в Telegram для CTO Estimate",
         date: "20 мая 2026",
@@ -529,6 +540,14 @@ const DATA = {
     ],
     posts: [
       {
+        title: "Post in AI & Machine Learning Community, a group with 2M subscribers",
+        date: "May 27, 2026",
+        time: "LinkedIn",
+        tags: ["ai community", "machine learning", "linkedin"],
+        href: "https://www.linkedin.com/feed/update/urn:li:groupPost:961087-7465431538709454848?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAABh70K4BI4mzbMceEyRYhaw-IOxFTXfVdPY",
+        external: true,
+      },
+      {
         title: "Added automatic model updates and Telegram autoposting to CTO Estimate",
         date: "May 20, 2026",
         time: "LinkedIn",
@@ -577,6 +596,7 @@ const state = {
   language: initialLanguage,
   name: getInitialName(initialLanguage),
   contactSent: false,
+  telegramPulsePending: false,
 };
 
 const app = document.getElementById("app");
@@ -696,6 +716,30 @@ function iconGithub() {
   return `
     <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"></path>
+    </svg>
+  `;
+}
+
+function iconTelegram() {
+  return `
+    <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M21.944 4.665c.307-1.478-.555-2.058-1.844-1.589L3.226 9.577c-1.152.444-1.136 1.087-.21 1.372l4.328 1.351 1.673 5.183c.204.63.103.88.776.88.519 0 .748-.237 1.037-.518l2.488-2.42 5.172 3.819c.953.526 1.64.254 1.877-.884l3.577-16.695zM8.03 11.989l9.748-6.153c.486-.295.931-.136.566.188l-8.349 7.537-.325 3.441-1.64-5.013z"></path>
+    </svg>
+  `;
+}
+
+function iconLinkedin() {
+  return `
+    <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6.94 8.5H3.56V20h3.38V8.5zM5.25 3C4.15 3 3.25 3.9 3.25 5s.9 2 2 2 2-.9 2-2-.9-2-2-2zm15.5 9.88c0-3.47-1.85-5.08-4.32-5.08-1.99 0-2.88 1.09-3.37 1.86V8.5H9.68c.04.77 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.12-.92.27-.68.88-1.39 1.91-1.39 1.35 0 1.89 1.03 1.89 2.54V20H20.4v-6.12z"></path>
+    </svg>
+  `;
+}
+
+function iconYoutube() {
+  return `
+    <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M21.58 7.19a2.987 2.987 0 0 0-2.1-2.11C17.62 4.5 12 4.5 12 4.5s-5.62 0-7.48.58A2.987 2.987 0 0 0 2.42 7.2C1.84 9.05 1.84 12 1.84 12s0 2.95.58 4.81a2.987 2.987 0 0 0 2.1 2.11C6.38 19.5 12 19.5 12 19.5s5.62 0 7.48-.58a2.987 2.987 0 0 0 2.1-2.11c.58-1.86.58-4.81.58-4.81s0-2.95-.58-4.81zM10.2 14.98V9.02L15.4 12l-5.2 2.98z"></path>
     </svg>
   `;
 }
@@ -990,7 +1034,7 @@ function renderAbout(copy) {
       <p class="body-copy">${escapeHtml(copy.about.summary)}</p>
       <div class="cta-row">
         <button class="button button-primary" type="button" data-page-target="work">${escapeHtml(copy.about.primaryCta)}</button>
-        <button class="button button-secondary" type="button" data-page-target="contact">${escapeHtml(copy.about.secondaryCta)}</button>
+        <button class="button button-secondary" type="button" data-page-target="contact" data-telegram-pulse="true">${escapeHtml(copy.about.secondaryCta)}</button>
       </div>
     </section>
   `;
@@ -1066,8 +1110,17 @@ function renderFooter() {
     <footer class="site-footer">
       <span class="footer-copy">© 2025 ${escapeHtml(state.name)}</span>
       <div class="footer-links">
+        <a class="social-link" href="${escapeHtml(TELEGRAM_URL)}" target="_blank" rel="noopener noreferrer" aria-label="Telegram" data-footer-telegram>
+          ${iconTelegram()}
+        </a>
+        <a class="social-link" href="${escapeHtml(LINKEDIN_URL)}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          ${iconLinkedin()}
+        </a>
         <a class="social-link" href="${escapeHtml(GITHUB_URL)}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
           ${iconGithub()}
+        </a>
+        <a class="social-link" href="${escapeHtml(YOUTUBE_URL)}" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+          ${iconYoutube()}
         </a>
       </div>
     </footer>
@@ -1104,6 +1157,26 @@ function renderApp() {
 
   syncTweaks(copy);
   bindRuntimeEvents();
+  runPendingEffects();
+}
+
+function runPendingEffects() {
+  if (!state.telegramPulsePending) {
+    return;
+  }
+
+  state.telegramPulsePending = false;
+  const telegramLink = document.querySelector("[data-footer-telegram]");
+  if (!telegramLink) {
+    return;
+  }
+
+  telegramLink.classList.remove("social-link-pulse");
+  void telegramLink.offsetWidth;
+  telegramLink.classList.add("social-link-pulse");
+  telegramLink.addEventListener("animationend", () => {
+    telegramLink.classList.remove("social-link-pulse");
+  }, { once: true });
 }
 
 function setPage(page) {
@@ -1127,6 +1200,7 @@ function bindRuntimeEvents() {
 
   document.querySelectorAll("[data-page-target]").forEach((element) => {
     element.addEventListener("click", () => {
+      state.telegramPulsePending = element.dataset.telegramPulse === "true";
       setPage(element.dataset.pageTarget);
     });
   });
