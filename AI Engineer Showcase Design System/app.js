@@ -6,6 +6,7 @@
 };
 
 const GITHUB_URL = "https://github.com/Bimo0420";
+const AI_ASST_CORE_URL = "https://github.com/aavikulin/ai-asst-core";
 const SCRIPT_SRC = document.currentScript && document.currentScript.src ? document.currentScript.src : window.location.href;
 const ASSET_ROOT = new URL(".", SCRIPT_SRC);
 const assetUrl = (path) => new URL(path, ASSET_ROOT).href;
@@ -143,19 +144,23 @@ const DATA = {
         description: "Модульная RAG-платформа для корпоративных AI-ассистентов, работающих с внутренними знаниями, документацией и неструктурированными данными.",
         role: "AI Engineer",
         period: "2025",
-        detail: "Разработал enterprise-платформу для создания корпоративных ассистентов на базе Retrieval-Augmented Generation. Система индексирует документы, преобразует их в эмбеддинги, извлекает релевантный контекст через гибридный поиск и передает его в LLM-оркестрацию, что повышает фактическую точность ответов и снижает риск галлюцинаций.",
+        detail: "Разработал платформу для создания корпоративных ассистентов на базе Retrieval-Augmented Generation. Система индексирует документы, преобразует их в эмбеддинги и извлекает релевантный контекст через гибридный поиск, что повышает фактическую точность ответов и снижает риск галлюцинаций.",
         impact: [
-          "Собрал пайплайн обработки документов: preprocessing, семантическая сегментация, генерация эмбеддингов и индексация в PostgreSQL + pgvector.",
-          "Реализовал RAG-контур с hybrid search, LLM-оркестрацией, self-hosted inference через Ollama и пользовательским интерфейсом Open WebUI.",
-          "Добавил инфраструктурные компоненты для production-сценариев: Redis, ClickHouse, MinIO, Supabase, n8n, Langfuse, Prometheus и Grafana.",
-          "Подготовил масштабируемую архитектуру для интеграции с внутренними базами знаний и мониторинга качества ответов.",
+          "Собрал пайплайн обработки документов: семантическая сегментация, генерация эмбеддингов и индексация в PostgreSQL + pgvector.",
+          "Реализовал RAG-контур с hybrid search и reranking, self-hosted inference через Ollama и пользовательским интерфейсом Open WebUI.",
+          "Добавил инфраструктурные компоненты для production-сценариев: Redis, ClickHouse, MinIO, Supabase, Langfuse, Prometheus и Grafana.",
+          {
+            text: "Проект открытый и доступен на ",
+            linkLabel: "GitHub",
+            href: AI_ASST_CORE_URL,
+          },
         ],
         tags: ["enterprise rag", "hybrid search", "self-hosted inference", "knowledge base", "observability"],
         media: [
           {
             src: assetUrl("assets/ai-assistant-core-platform-chat.png"),
             alt: "Привычный чат-интерфейс AI Assistant Core Platform",
-            caption: "Привычный чат-интерфейс с корпоративным ассистентом.",
+            caption: "Чат-интерфейс с корпоративным ассистентом.",
           },
           {
             src: assetUrl("assets/ai-assistant-core-platform-monitoring.png"),
@@ -174,7 +179,7 @@ const DATA = {
           alt: "Демо AI Assistant Core Platform",
           caption: "Демо интерфейса AI Assistant Core Platform.",
         },
-        href: GITHUB_URL,
+        href: AI_ASST_CORE_URL,
         external: true,
       },
       {
@@ -447,7 +452,7 @@ const DATA = {
           alt: "AI Assistant Core Platform demo",
           caption: "AI Assistant Core Platform demo.",
         },
-        href: GITHUB_URL,
+        href: AI_ASST_CORE_URL,
         external: true,
       },
       {
@@ -800,6 +805,28 @@ function renderProjectPostMedia(project) {
   `).join("");
 }
 
+function renderProjectImpactItem(item) {
+  if (typeof item === "string") {
+    return `<li>${escapeHtml(item)}</li>`;
+  }
+
+  if (!item || typeof item !== "object") {
+    return "";
+  }
+
+  const text = escapeHtml(item.text || "");
+  const linkLabel = escapeHtml(item.linkLabel || item.href || "");
+  const href = escapeHtml(item.href || "");
+  const suffix = escapeHtml(item.suffix || "");
+  const target = item.external === false ? "" : ' target="_blank" rel="noopener noreferrer"';
+
+  if (!href) {
+    return `<li>${text}${linkLabel}${suffix}</li>`;
+  }
+
+  return `<li>${text}<a href="${href}"${target}>${linkLabel}</a>${suffix}</li>`;
+}
+
 function renderProjectModal(copy, projectIndex) {
   const project = copy.projects[projectIndex];
   if (!project) {
@@ -821,7 +848,7 @@ function renderProjectModal(copy, projectIndex) {
         ${renderProjectMedia(project, projectIndex)}
         ${renderProjectPostMedia(project)}
         <ul class="modal-list">
-          ${(project.impact || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+          ${(project.impact || []).map((item) => renderProjectImpactItem(item)).join("")}
         </ul>
         <div class="tag-list">${renderTags(project.tags)}</div>
         <a class="button button-secondary modal-link" href="${escapeHtml(project.href)}" ${project.external ? 'target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(copy.ui.visitProject)}</a>
