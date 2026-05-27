@@ -263,9 +263,9 @@ const DATA = {
       {
         title: "Пост в AI & Machine Learning Community — группе с 2 млн подписчиков",
         date: "27 мая 2026",
-        time: "LinkedIn",
+        time: "LinkedIn Group",
         tags: ["ai community", "machine learning", "linkedin"],
-        href: "https://www.linkedin.com/feed/update/urn:li:groupPost:961087-7465431538709454848?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAABh70K4BI4mzbMceEyRYhaw-IOxFTXfVdPY",
+        href: "https://www.linkedin.com/feed/update/urn:li:activity:7465435615707361280/",
         external: true,
       },
       {
@@ -540,11 +540,11 @@ const DATA = {
     ],
     posts: [
       {
-        title: "Post in AI & Machine Learning Community, a group with 2M subscribers",
+        title: "Post published in AI & Machine Learning Community, a group with 2M subscribers",
         date: "May 27, 2026",
-        time: "LinkedIn",
+        time: "LinkedIn Group",
         tags: ["ai community", "machine learning", "linkedin"],
-        href: "https://www.linkedin.com/feed/update/urn:li:groupPost:961087-7465431538709454848?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAABh70K4BI4mzbMceEyRYhaw-IOxFTXfVdPY",
+        href: "https://www.linkedin.com/feed/update/urn:li:activity:7465435615707361280/",
         external: true,
       },
       {
