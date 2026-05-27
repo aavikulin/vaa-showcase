@@ -121,10 +121,18 @@ button {
   letter-spacing: -0.01em;
 }
 
+.brand-role {
+  color: var(--text-muted);
+  font-size: 0.95em;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
 .brand-caret {
   width: 2px;
   height: 0.95em;
   background: var(--accent);
+  margin-left: 2px;
 }
 
 .nav-actions {
