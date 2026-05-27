@@ -151,6 +151,29 @@ const DATA = {
           "Подготовил масштабируемую архитектуру для интеграции с внутренними базами знаний и мониторинга качества ответов.",
         ],
         tags: ["python", "rag", "llamaindex", "pgvector", "ollama"],
+        media: [
+          {
+            src: assetUrl("assets/ai-assistant-core-platform-chat.png"),
+            alt: "Привычный чат-интерфейс AI Assistant Core Platform",
+            caption: "Привычный чат-интерфейс с корпоративным ассистентом.",
+          },
+          {
+            src: assetUrl("assets/ai-assistant-core-platform-monitoring.png"),
+            alt: "Мониторинг инфраструктуры AI Assistant Core Platform",
+            caption: "Мониторинг инфраструктуры и состояния сервисов.",
+          },
+          {
+            src: assetUrl("assets/ai-assistant-core-platform-tracing.png"),
+            alt: "Трейсинг и контроль качества AI Assistant Core Platform",
+            caption: "Трейсинг запросов и контроль качества ответов AI.",
+          },
+        ],
+        postMedia: {
+          type: "video",
+          src: assetUrl("assets/ai-assistant-core-platform-demo.mp4"),
+          alt: "Демо AI Assistant Core Platform",
+          caption: "Демо интерфейса AI Assistant Core Platform.",
+        },
         href: GITHUB_URL,
         external: true,
       },
@@ -400,6 +423,29 @@ const DATA = {
           "Prepared a scalable architecture for integration with internal knowledge bases and response quality monitoring.",
         ],
         tags: ["python", "rag", "llamaindex", "pgvector", "ollama"],
+        media: [
+          {
+            src: assetUrl("assets/ai-assistant-core-platform-chat.png"),
+            alt: "AI Assistant Core Platform chat interface",
+            caption: "Familiar chat interface for the corporate assistant.",
+          },
+          {
+            src: assetUrl("assets/ai-assistant-core-platform-monitoring.png"),
+            alt: "AI Assistant Core Platform infrastructure monitoring",
+            caption: "Infrastructure monitoring and service health.",
+          },
+          {
+            src: assetUrl("assets/ai-assistant-core-platform-tracing.png"),
+            alt: "AI Assistant Core Platform tracing and quality monitoring",
+            caption: "Tracing and answer quality monitoring.",
+          },
+        ],
+        postMedia: {
+          type: "video",
+          src: assetUrl("assets/ai-assistant-core-platform-demo.mp4"),
+          alt: "AI Assistant Core Platform demo",
+          caption: "AI Assistant Core Platform demo.",
+        },
         href: GITHUB_URL,
         external: true,
       },
@@ -617,6 +663,36 @@ function renderTags(tags) {
   return tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("");
 }
 
+function getMediaKind(item) {
+  if (item?.type) {
+    return item.type;
+  }
+
+  const src = String(item?.src || "").toLowerCase();
+  if (/\.(mp4|webm|ogg)(?:[?#]|$)/.test(src)) {
+    return "video";
+  }
+
+  return "image";
+}
+
+function renderMediaElement(item, fallbackAlt) {
+  const src = escapeHtml(item.src);
+  const alt = escapeHtml(item.alt || fallbackAlt);
+
+  if (getMediaKind(item) === "video") {
+    const mimeType = item.mimeType || (String(item.src).toLowerCase().endsWith(".webm") ? "video/webm" : "video/mp4");
+    const poster = item.poster ? ` poster="${escapeHtml(item.poster)}"` : "";
+    return `
+      <video controls preload="metadata" playsinline${poster}>
+        <source src="${src}" type="${escapeHtml(mimeType)}">
+      </video>
+    `;
+  }
+
+  return `<img src="${src}" alt="${alt}" loading="lazy" decoding="async">`;
+}
+
 function renderProjects(projects) {
   const allProjects = getCopy().projects;
 
@@ -657,21 +733,21 @@ function renderProjectMedia(project, projectIndex) {
     const item = mediaItems[0];
     return `
       <figure class="modal-media">
-        <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt || project.title)}" loading="lazy" decoding="async">
+        ${renderMediaElement(item, project.title)}
         ${item.caption ? `<figcaption>${escapeHtml(item.caption)}</figcaption>` : ""}
       </figure>
     `;
   }
 
   return `
-    <section class="modal-carousel" aria-label="${escapeHtml(project.title)} screenshots">
+    <section class="modal-carousel" aria-label="${escapeHtml(project.title)} media">
       <div class="carousel-frame">
-        <button class="carousel-arrow carousel-arrow-prev" type="button" data-carousel-direction="prev" aria-label="Previous screenshot">‹</button>
+        <button class="carousel-arrow carousel-arrow-prev" type="button" data-carousel-direction="prev" aria-label="Previous media item">‹</button>
         <div class="carousel-track" data-carousel-track>
           ${mediaItems.map((item, index) => `
           <figure class="carousel-slide" data-carousel-slide>
-            <div class="carousel-image-wrap">
-              <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt || project.title)}" loading="lazy" decoding="async">
+            <div class="carousel-media">
+              ${renderMediaElement(item, project.title)}
             </div>
             <figcaption>
               <span>${escapeHtml(String(index + 1).padStart(2, "0"))}</span>
@@ -680,7 +756,7 @@ function renderProjectMedia(project, projectIndex) {
           </figure>
         `).join("")}
         </div>
-        <button class="carousel-arrow carousel-arrow-next" type="button" data-carousel-direction="next" aria-label="Next screenshot">›</button>
+        <button class="carousel-arrow carousel-arrow-next" type="button" data-carousel-direction="next" aria-label="Next media item">›</button>
       </div>
       <div class="carousel-dots" aria-hidden="true">
         ${mediaItems.map(() => `<span></span>`).join("")}
@@ -688,6 +764,22 @@ function renderProjectMedia(project, projectIndex) {
     </section>
   `;
 }
+
+function renderProjectPostMedia(project) {
+  const mediaItems = Array.isArray(project.postMedia) ? project.postMedia : project.postMedia ? [project.postMedia] : [];
+
+  if (!mediaItems.length) {
+    return "";
+  }
+
+  return mediaItems.map((item) => `
+    <figure class="modal-media modal-media-post">
+      ${renderMediaElement(item, project.title)}
+      ${item.caption ? `<figcaption>${escapeHtml(item.caption)}</figcaption>` : ""}
+    </figure>
+  `).join("");
+}
+
 function renderProjectModal(copy, projectIndex) {
   const project = copy.projects[projectIndex];
   if (!project) {
@@ -707,6 +799,7 @@ function renderProjectModal(copy, projectIndex) {
         <p class="modal-role">${escapeHtml(project.role)}</p>
         <p class="modal-copy">${escapeHtml(project.detail || project.description)}</p>
         ${renderProjectMedia(project, projectIndex)}
+        ${renderProjectPostMedia(project)}
         <ul class="modal-list">
           ${(project.impact || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
         </ul>

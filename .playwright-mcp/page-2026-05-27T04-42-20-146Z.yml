@@ -1,0 +1,127 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - button "Перейти на страницу обо мне" [ref=e5] [cursor=pointer]:
+      - generic [ref=e6]: Алексей Викулин
+    - generic [ref=e8]:
+      - button "обо мне" [ref=e9] [cursor=pointer]
+      - button "проекты" [ref=e10] [cursor=pointer]
+      - button "заметки" [ref=e11] [cursor=pointer]
+      - button "контакт" [ref=e12] [cursor=pointer]
+      - button "Переключить язык" [ref=e13] [cursor=pointer]: ru
+      - button "Переключить тему" [ref=e14] [cursor=pointer]:
+        - img [ref=e15]
+  - main [ref=e17]:
+    - generic [ref=e18]:
+      - paragraph [ref=e19]: обо мне
+      - heading "Алексей Викулин" [level=1] [ref=e20]
+      - paragraph [ref=e21]: Я создаю системы на пересечении языковых моделей и программной инженерии.
+      - paragraph [ref=e22]: Сейчас фокусируюсь на retrieval-системах, агентах и надёжности LLM в продакшене. Ранее работал в Series B стартапе над инструментами для разработчиков. Открыт к интересным задачам.
+      - generic [ref=e23]:
+        - button "смотреть проекты →" [ref=e24] [cursor=pointer]
+        - button "связаться" [ref=e25] [cursor=pointer]
+    - generic [ref=e26]:
+      - paragraph [ref=e27]: свежее
+      - generic [ref=e28]:
+        - article [ref=e29]:
+          - generic [ref=e30]:
+            - generic [ref=e31]: AI Assistant Core Platform
+            - generic [ref=e32]: "2024"
+          - paragraph [ref=e33]: Модульная RAG-платформа для корпоративных AI-ассистентов, работающих с внутренними знаниями, документацией и неструктурированными данными.
+          - generic [ref=e34]:
+            - generic [ref=e35]: python
+            - generic [ref=e36]: rag
+            - generic [ref=e37]: llamaindex
+            - generic [ref=e38]: pgvector
+            - generic [ref=e39]: ollama
+          - generic [ref=e40]:
+            - link "Подробнее" [ref=e41] [cursor=pointer]:
+              - /url: "#project-0"
+            - link "открыть проект ↗" [ref=e42] [cursor=pointer]:
+              - /url: https://github.com/Bimo0420
+              - text: ↗
+        - article [ref=e43]:
+          - generic [ref=e44]:
+            - generic [ref=e45]: CTO Estimate
+            - generic [ref=e46]: "2024"
+          - paragraph [ref=e47]: "Интерактивный инструмент для оценки self-hosted LLM-инфраструктуры: выбор модели, расчет GPU-требований и экономика локального сервера."
+          - generic [ref=e48]:
+            - generic [ref=e49]: next.js
+            - generic [ref=e50]: react
+            - generic [ref=e51]: typescript
+            - generic [ref=e52]: tailwind
+            - generic [ref=e53]: recharts
+          - generic [ref=e54]:
+            - link "Подробнее" [ref=e55] [cursor=pointer]:
+              - /url: "#project-1"
+            - link "открыть проект ↗" [ref=e56] [cursor=pointer]:
+              - /url: https://cto-estimate.openweights.space/
+              - text: ↗
+      - generic [ref=e57]:
+        - link "Закрыть описание проекта" [ref=e58] [cursor=pointer]:
+          - /url: "#work"
+        - dialog "AI Assistant Core Platform" [ref=e59]:
+          - link "Закрыть описание проекта" [ref=e60] [cursor=pointer]:
+            - /url: "#work"
+            - text: ×
+          - paragraph [ref=e61]: детали проекта
+          - generic [ref=e62]:
+            - heading "AI Assistant Core Platform" [level=2] [ref=e63]
+            - generic [ref=e64]: "2024"
+          - paragraph [ref=e65]: AI Engineer
+          - paragraph [ref=e66]: Разработал enterprise-платформу для создания корпоративных ассистентов на базе Retrieval-Augmented Generation. Система индексирует документы, преобразует их в эмбеддинги, извлекает релевантный контекст через гибридный поиск и передает его в LLM-оркестрацию, что повышает фактическую точность ответов и снижает риск галлюцинаций.
+          - region "AI Assistant Core Platform media" [ref=e67]:
+            - generic [ref=e68]:
+              - button "Previous media item" [ref=e69] [cursor=pointer]: ‹
+              - generic [ref=e70]:
+                - figure "01 Привычный чат-интерфейс с корпоративным ассистентом." [ref=e71]:
+                  - img "Привычный чат-интерфейс AI Assistant Core Platform" [ref=e73]
+                  - generic [ref=e74]:
+                    - generic [ref=e75]: "01"
+                    - text: Привычный чат-интерфейс с корпоративным ассистентом.
+                - figure "02 Мониторинг инфраструктуры и состояния сервисов." [ref=e76]:
+                  - img "Мониторинг инфраструктуры AI Assistant Core Platform" [ref=e78]
+                  - generic [ref=e79]:
+                    - generic [ref=e80]: "02"
+                    - text: Мониторинг инфраструктуры и состояния сервисов.
+                - figure "03 Трейсинг запросов и контроль качества ответов AI." [ref=e81]:
+                  - generic:
+                    - img "Трейсинг и контроль качества AI Assistant Core Platform"
+                  - generic [ref=e82]:
+                    - generic [ref=e83]: "03"
+                    - text: Трейсинг запросов и контроль качества ответов AI.
+              - button "Next media item" [ref=e84] [cursor=pointer]: ›
+          - figure "Демо интерфейса AI Assistant Core Platform." [ref=e89]:
+            - generic [ref=e91]: Демо интерфейса AI Assistant Core Platform.
+          - list [ref=e92]:
+            - listitem [ref=e93]: "Собрал пайплайн обработки документов: preprocessing, семантическая сегментация, генерация эмбеддингов и индексация в PostgreSQL + pgvector."
+            - listitem [ref=e94]: Реализовал RAG-контур с hybrid search, LLM-оркестрацией, self-hosted inference через Ollama и пользовательским интерфейсом Open WebUI.
+            - listitem [ref=e95]: "Добавил инфраструктурные компоненты для production-сценариев: Redis, ClickHouse, MinIO, Supabase, n8n, Langfuse, Prometheus и Grafana."
+            - listitem [ref=e96]: Подготовил масштабируемую архитектуру для интеграции с внутренними базами знаний и мониторинга качества ответов.
+          - generic [ref=e97]:
+            - generic [ref=e98]: python
+            - generic [ref=e99]: rag
+            - generic [ref=e100]: llamaindex
+            - generic [ref=e101]: pgvector
+            - generic [ref=e102]: ollama
+          - link "открыть проект ↗" [ref=e103] [cursor=pointer]:
+            - /url: https://github.com/Bimo0420
+    - generic [ref=e104]:
+      - paragraph [ref=e105]: стек
+      - generic [ref=e106]:
+        - generic [ref=e107]: python
+        - generic [ref=e108]: pytorch
+        - generic [ref=e109]: transformers
+        - generic [ref=e110]: fastapi
+        - generic [ref=e111]: langchain
+        - generic [ref=e112]: pgvector
+        - generic [ref=e113]: qdrant
+        - generic [ref=e114]: docker
+        - generic [ref=e115]: postgresql
+        - generic [ref=e116]: redis
+        - generic [ref=e117]: airflow
+        - generic [ref=e118]: mlflow
+  - contentinfo [ref=e119]:
+    - generic [ref=e120]: © 2025 Алексей Викулин
+    - link "GitHub" [ref=e122] [cursor=pointer]:
+      - /url: https://github.com/Bimo0420
+      - img [ref=e123]

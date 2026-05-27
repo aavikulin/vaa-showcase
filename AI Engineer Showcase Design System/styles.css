@@ -492,6 +492,11 @@ button {
   height: auto;
 }
 
+.modal-media video {
+  display: block;
+  width: 100%;
+  background: #000;
+}
 
 .modal-media figcaption {
   padding: 10px 12px 12px;
@@ -512,7 +517,7 @@ button {
 
 .carousel-track {
   display: grid;
-  grid-auto-columns: min(100%, 780px);
+  grid-auto-columns: 100%;
   grid-auto-flow: column;
   gap: 16px;
   overflow-x: hidden;
@@ -536,10 +541,16 @@ button {
   position: relative;
 }
 
+.carousel-media img,
+.carousel-media video,
 .carousel-slide img {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.carousel-media video {
+  background: #000;
 }
 
 .carousel-arrow {
