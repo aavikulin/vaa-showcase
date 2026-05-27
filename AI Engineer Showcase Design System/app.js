@@ -258,34 +258,28 @@ const DATA = {
     ],
     posts: [
       {
-        title: "RAG без боли: как выбрать chunking strategy",
-        date: "Апр 2026",
-        time: "7 мин",
-        tags: ["rag", "retrieval"],
+        title: "Автообновление моделей и автопостинг в Telegram для CTO Estimate",
+        date: "20 мая 2026",
+        time: "LinkedIn",
+        tags: ["cto estimate", "automation", "telegram"],
+        href: "https://www.linkedin.com/feed/update/urn:li:activity:7462803540986662913/",
+        external: true,
       },
       {
-        title: "Как оценивать качество RAG-системы в 2026",
-        date: "Фев 2026",
-        time: "9 мин",
-        tags: ["evals", "rag"],
+        title: "PDF Translator опубликовали в отраслевых Telegram-каналах и на сайте",
+        date: "20 мая 2026",
+        time: "LinkedIn",
+        tags: ["pdf-translator", "release"],
+        href: "https://www.linkedin.com/feed/update/urn:li:activity:7462844191304421377/",
+        external: true,
       },
       {
-        title: "FastAPI + Pydantic v2: шаблон для AI-сервисов",
-        date: "Янв 2026",
-        time: "5 мин",
-        tags: ["fastapi", "python"],
-      },
-      {
-        title: "Почему LangChain — это не всегда плохо",
-        date: "Дек 2026",
-        time: "4 мин",
-        tags: ["opinion", "llm"],
-      },
-      {
-        title: "Embeddings на практике: что влияет на качество",
-        date: "Ноя 2026",
-        time: "6 мин",
-        tags: ["embeddings"],
+        title: "Какой AI внедрить в Enterprise и не остановить бизнес",
+        date: "17 мар 2026",
+        time: "Habr",
+        tags: ["enterprise ai", "on-prem"],
+        href: "https://habr.com/ru/articles/1011438/",
+        external: true,
       },
     ],
   },
@@ -535,34 +529,28 @@ const DATA = {
     ],
     posts: [
       {
-        title: "RAG without pain: choosing the right chunking strategy",
-        date: "Apr 2024",
-        time: "7 min",
-        tags: ["rag", "retrieval"],
+        title: "Added automatic model updates and Telegram autoposting to CTO Estimate",
+        date: "May 20, 2026",
+        time: "LinkedIn",
+        tags: ["cto estimate", "automation", "telegram"],
+        href: "https://www.linkedin.com/feed/update/urn:li:activity:7462803540986662913/",
+        external: true,
       },
       {
-        title: "How to evaluate a RAG system in 2024",
-        date: "Feb 2024",
-        time: "9 min",
-        tags: ["evals", "rag"],
+        title: "PDF Translator was shared in industry Telegram channels and on the website",
+        date: "May 20, 2026",
+        time: "LinkedIn",
+        tags: ["pdf-translator", "release"],
+        href: "https://www.linkedin.com/feed/update/urn:li:activity:7462844191304421377/",
+        external: true,
       },
       {
-        title: "FastAPI + Pydantic v2: a baseline for AI services",
-        date: "Jan 2024",
-        time: "5 min",
-        tags: ["fastapi", "python"],
-      },
-      {
-        title: "Why LangChain is not always the wrong choice",
-        date: "Dec 2023",
-        time: "4 min",
-        tags: ["opinion", "llm"],
-      },
-      {
-        title: "Embeddings in practice: what actually affects quality",
-        date: "Nov 2023",
-        time: "6 min",
-        tags: ["embeddings"],
+        title: "Which AI to implement in Enterprise without stopping the business",
+        date: "Mar 17, 2026",
+        time: "Habr",
+        tags: ["enterprise ai", "on-prem"],
+        href: "https://habr.com/ru/articles/1011438/",
+        external: true,
       },
     ],
   },
@@ -888,15 +876,21 @@ function renderProjectModal(copy, projectIndex) {
 function renderPosts(posts, separator) {
   return `
     <div class="writing-list">
-      ${posts.map((post) => `
+      ${posts.map((post) => {
+        const linkAttrs = post.href
+          ? `href="${escapeHtml(post.href)}" ${post.external ? 'target="_blank" rel="noopener noreferrer"' : ""}`
+          : `href="#"`;
+
+        return `
         <article class="writing-row">
           <div class="writing-main">
-            <a class="writing-title" href="#">${escapeHtml(post.title)}</a>
+            <a class="writing-title" ${linkAttrs}>${escapeHtml(post.title)}</a>
             <div class="tag-list">${renderTags(post.tags)}</div>
           </div>
           <span class="meta">${escapeHtml(post.date)} ${separator} ${escapeHtml(post.time)}</span>
         </article>
-      `).join("")}
+      `;
+      }).join("")}
     </div>
   `;
 }
