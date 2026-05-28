@@ -589,9 +589,10 @@ function getInitialName(language) {
 }
 
 const initialLanguage = loadValue(STORAGE_KEYS.language, "ru");
+const initialHashPage = getPageFromHash();
 
 const state = {
-  page: loadValue(STORAGE_KEYS.page, "about"),
+  page: initialHashPage || loadValue(STORAGE_KEYS.page, "about"),
   theme: loadValue(STORAGE_KEYS.theme, getSystemTheme()),
   language: initialLanguage,
   name: getInitialName(initialLanguage),
@@ -616,6 +617,10 @@ function getVisiblePages(copy) {
 
 function getDefaultPage(copy) {
   return getVisiblePages(copy)[0]?.[0] || "about";
+}
+
+function getPageFromHash() {
+  return window.location.hash.replace(/^#/, "");
 }
 
 function ensureValidPage(copy) {
@@ -722,8 +727,8 @@ function iconGithub() {
 
 function iconTelegram() {
   return `
-    <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M21.944 4.665c.307-1.478-.555-2.058-1.844-1.589L3.226 9.577c-1.152.444-1.136 1.087-.21 1.372l4.328 1.351 1.673 5.183c.204.63.103.88.776.88.519 0 .748-.237 1.037-.518l2.488-2.42 5.172 3.819c.953.526 1.64.254 1.877-.884l3.577-16.695zM8.03 11.989l9.748-6.153c.486-.295.931-.136.566.188l-8.349 7.537-.325 3.441-1.64-5.013z"></path>
+    <svg class="social-icon social-icon-telegram" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M16.906 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"></path>
     </svg>
   `;
 }
@@ -1033,7 +1038,7 @@ function renderAbout(copy) {
       <p class="lead">${escapeHtml(copy.about.intro)}</p>
       <p class="body-copy">${escapeHtml(copy.about.summary)}</p>
       <div class="cta-row">
-        <button class="button button-primary" type="button" data-page-target="work">${escapeHtml(copy.about.primaryCta)}</button>
+        <a class="button button-primary" href="#work">${escapeHtml(copy.about.primaryCta)}</a>
         <button class="button button-secondary" type="button" data-page-target="contact" data-telegram-pulse="true">${escapeHtml(copy.about.secondaryCta)}</button>
       </div>
     </section>
@@ -1179,7 +1184,8 @@ function runPendingEffects() {
   }, { once: true });
 }
 
-function setPage(page) {
+function setPage(page, options = {}) {
+  const { updateHash = true } = options;
   const copy = getCopy();
   const visiblePages = new Set(getVisiblePages(copy).map(([key]) => key));
   if (!visiblePages.has(page)) {
@@ -1188,7 +1194,19 @@ function setPage(page) {
 
   state.page = page;
   renderApp();
-  window.scrollTo({ top: 0, behavior: "instant" });
+  if (updateHash && window.location.hash.slice(1) !== page) {
+    window.location.hash = page;
+  }
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+
+function syncPageFromHash() {
+  const page = getPageFromHash();
+  if (!page || page === state.page) {
+    return;
+  }
+
+  setPage(page, { updateHash: false });
 }
 
 function bindRuntimeEvents() {
@@ -1294,6 +1312,8 @@ function bindStaticEvents() {
       tweaksPanel.classList.remove("is-visible");
     }
   });
+
+  window.addEventListener("hashchange", syncPageFromHash);
 
   window.parent.postMessage({ type: "__edit_mode_available" }, "*");
 }
