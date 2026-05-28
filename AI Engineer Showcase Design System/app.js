@@ -33,7 +33,7 @@ const DATA = {
       openProject: "Подробнее",
       closeProject: "Закрыть описание проекта",
       projectDetails: "детали проекта",
-      visitProject: "открыть проект ↗",
+      visitProject: "Открыть сайт",
     },
     about: {
       label: "обо мне",
@@ -158,7 +158,7 @@ const DATA = {
             href: AI_ASST_CORE_URL,
           },
         ],
-        tags: ["enterprise rag", "hybrid search", "self-hosted inference", "knowledge base", "observability"],
+        tags: ["rag", "hybrid", "local llm", "kb", "obs"],
         media: [
           {
             src: assetUrl("assets/ai-assistant-core-platform-chat.png"),
@@ -177,12 +177,14 @@ const DATA = {
           },
         ],
         postMedia: {
-          type: "video",
-          src: assetUrl("assets/ai-assistant-core-platform-demo.mp4"),
+          type: "youtube",
+          src: "https://www.youtube.com/watch?v=FwM-2kYdr50&t=6s",
           alt: "Демо AI Assistant Core Platform",
           caption: "Демо интерфейса AI Assistant Core Platform.",
         },
         href: AI_ASST_CORE_URL,
+        cardLinkLabel: "GitHub",
+        cardLinkIcon: "github",
         external: true,
       },
       {
@@ -195,7 +197,7 @@ const DATA = {
         impact: [
           "Данные по моделям обновляются ежедневно, а интерфейс построен как практичный dashboard для принятия инфраструктурных решений до покупки оборудования.",
         ],
-        tags: ["self-hosted llm", "gpu calculator", "server roi", "tco", "cloud api compare"],
+        tags: ["local llm", "gpu", "roi", "tco", "api cost"],
         media: [
           {
             src: assetUrl("assets/cto-estimate-self-hosted-llm.png"),
@@ -229,7 +231,7 @@ const DATA = {
           "Поддерживает гибридный routing между BabelDOC и custom geometry-aware pipeline, а также OpenRouter, Ollama и Mock backend для отладки.",
           "Включает расширяемый glossary для аббревиатур, нотации, стандартных терминов и protected headers, CLI и Flask Web UI с job queue, SSE progress, authentication, preview и сравнением оригинала с переводом.",
         ],
-        tags: ["pdf translation", "layout preservation", "technical drawings", "geometry-aware pipeline", "translation preview"],
+        tags: ["pdf", "layout", "drawings", "geometry", "preview"],
         media: {
           src: assetUrl("assets/pdf-translator.gif"),
           alt: "Демонстрация интерфейса PDF Translator",
@@ -254,7 +256,7 @@ const DATA = {
           "Реализовал сортировку, конфигурируемые колонки таблицы и detail view для каждого инструмента.",
           "Собрал удобный lightweight single-page dashboard для поддержки и расширения каталога.",
         ],
-        tags: ["tool catalog", "taxonomy", "search & filters", "detail view", "runtime discovery"],
+        tags: ["catalog", "taxonomy", "search", "details", "runtime"],
         href: "https://ai-tools.openweights.space/",
         external: true,
       },
@@ -264,7 +266,7 @@ const DATA = {
         title: "Пост в AI & Machine Learning Community — группе с 2 млн подписчиков",
         date: "27 мая 2026",
         time: "LinkedIn Group",
-        tags: ["ai community", "machine learning", "linkedin"],
+        tags: ["ai", "ml", "linkedin"],
         href: "https://www.linkedin.com/feed/update/urn:li:activity:7465435615707361280/",
         external: true,
       },
@@ -272,7 +274,7 @@ const DATA = {
         title: "Автообновление моделей и автопостинг в Telegram для CTO Estimate",
         date: "20 мая 2026",
         time: "LinkedIn",
-        tags: ["cto estimate", "automation", "telegram"],
+        tags: ["cto", "auto", "telegram"],
         href: "https://www.linkedin.com/feed/update/urn:li:activity:7462803540986662913/",
         external: true,
       },
@@ -280,7 +282,7 @@ const DATA = {
         title: "PDF Translator опубликовали в отраслевых Telegram-каналах и на сайте",
         date: "20 мая 2026",
         time: "LinkedIn",
-        tags: ["pdf-translator", "release"],
+        tags: ["pdf", "release"],
         href: "https://www.linkedin.com/feed/update/urn:li:activity:7462844191304421377/",
         external: true,
       },
@@ -288,7 +290,7 @@ const DATA = {
         title: "Какой AI внедрить в Enterprise и не остановить бизнес",
         date: "17 мар 2026",
         time: "Habr",
-        tags: ["enterprise ai", "on-prem"],
+        tags: ["enterprise", "on-prem"],
         href: "https://habr.com/ru/articles/1011438/",
         external: true,
       },
@@ -312,7 +314,7 @@ const DATA = {
       openProject: "Details",
       closeProject: "Close project details",
       projectDetails: "project details",
-      visitProject: "open project ↗",
+      visitProject: "Open website",
     },
     about: {
       label: "about",
@@ -437,7 +439,7 @@ const DATA = {
             href: AI_ASST_CORE_URL,
           },
         ],
-        tags: ["enterprise rag", "hybrid search", "self-hosted inference", "knowledge base", "observability"],
+        tags: ["rag", "hybrid", "local llm", "kb", "obs"],
         media: [
           {
             src: assetUrl("assets/ai-assistant-core-platform-chat.png"),
@@ -456,12 +458,14 @@ const DATA = {
           },
         ],
         postMedia: {
-          type: "video",
-          src: assetUrl("assets/ai-assistant-core-platform-demo.mp4"),
+          type: "youtube",
+          src: "https://www.youtube.com/watch?v=FwM-2kYdr50&t=6s",
           alt: "AI Assistant Core Platform demo",
           caption: "AI Assistant Core Platform demo.",
         },
         href: AI_ASST_CORE_URL,
+        cardLinkLabel: "GitHub",
+        cardLinkIcon: "github",
         external: true,
       },
       {
@@ -474,7 +478,7 @@ const DATA = {
         impact: [
           "Model data updates daily, and the interface is designed as a practical dashboard for infrastructure decisions before hardware is purchased.",
         ],
-        tags: ["self-hosted llm", "gpu calculator", "server roi", "tco", "cloud api compare"],
+        tags: ["local llm", "gpu", "roi", "tco", "api cost"],
         media: [
           {
             src: assetUrl("assets/cto-estimate-self-hosted-llm.png"),
@@ -508,7 +512,7 @@ const DATA = {
           "Supports hybrid routing between BabelDOC and a custom geometry-aware pipeline, as well as OpenRouter, Ollama, and a Mock backend for debugging.",
           "Includes an extensible glossary for abbreviations, notation, standard terms, and protected headers, plus a CLI and Flask Web UI with a job queue, SSE progress, authentication, preview, and side-by-side comparison of the original and translation.",
         ],
-        tags: ["pdf translation", "layout preservation", "technical drawings", "geometry-aware pipeline", "translation preview"],
+        tags: ["pdf", "layout", "drawings", "geometry", "preview"],
         media: {
           src: assetUrl("assets/pdf-translator.gif"),
           alt: "PDF Translator interface demo",
@@ -533,7 +537,7 @@ const DATA = {
           "Implemented sorting, configurable table columns, and a detail view for each tool.",
           "Built a lightweight single-page dashboard that is easy to maintain and extend.",
         ],
-        tags: ["tool catalog", "taxonomy", "search & filters", "detail view", "runtime discovery"],
+        tags: ["catalog", "taxonomy", "search", "details", "runtime"],
         href: "https://ai-tools.openweights.space/",
         external: true,
       },
@@ -543,7 +547,7 @@ const DATA = {
         title: "Post published in AI & Machine Learning Community, a group with 2M subscribers",
         date: "May 27, 2026",
         time: "LinkedIn Group",
-        tags: ["ai community", "machine learning", "linkedin"],
+        tags: ["ai", "ml", "linkedin"],
         href: "https://www.linkedin.com/feed/update/urn:li:activity:7465435615707361280/",
         external: true,
       },
@@ -551,7 +555,7 @@ const DATA = {
         title: "Added automatic model updates and Telegram autoposting to CTO Estimate",
         date: "May 20, 2026",
         time: "LinkedIn",
-        tags: ["cto estimate", "automation", "telegram"],
+        tags: ["cto", "auto", "telegram"],
         href: "https://www.linkedin.com/feed/update/urn:li:activity:7462803540986662913/",
         external: true,
       },
@@ -559,7 +563,7 @@ const DATA = {
         title: "PDF Translator was shared in industry Telegram channels and on the website",
         date: "May 20, 2026",
         time: "LinkedIn",
-        tags: ["pdf-translator", "release"],
+        tags: ["pdf", "release"],
         href: "https://www.linkedin.com/feed/update/urn:li:activity:7462844191304421377/",
         external: true,
       },
@@ -567,7 +571,7 @@ const DATA = {
         title: "Which AI to implement in Enterprise without stopping the business",
         date: "Mar 17, 2026",
         time: "Habr",
-        tags: ["enterprise ai", "on-prem"],
+        tags: ["enterprise", "on-prem"],
         href: "https://habr.com/ru/articles/1011438/",
         external: true,
       },
@@ -749,6 +753,16 @@ function iconYoutube() {
   `;
 }
 
+function iconExternalLink() {
+  return `
+    <svg class="external-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"></path>
+      <path d="M15 4h5v5"></path>
+      <path d="M10 14 20 4"></path>
+    </svg>
+  `;
+}
+
 function iconExpand() {
   return `
     <svg class="expand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -770,6 +784,10 @@ function getMediaKind(item) {
   }
 
   const src = String(item?.src || "").toLowerCase();
+  if (/youtube\.com|youtu\.be/.test(src)) {
+    return "youtube";
+  }
+
   if (/\.(mp4|webm|ogg)(?:[?#]|$)/.test(src)) {
     return "video";
   }
@@ -777,11 +795,80 @@ function getMediaKind(item) {
   return "image";
 }
 
+function parseTimeToSeconds(value) {
+  if (!value) {
+    return 0;
+  }
+
+  const normalized = String(value).trim().toLowerCase();
+  if (/^\d+$/.test(normalized)) {
+    return Number(normalized);
+  }
+
+  const match = normalized.match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?$/);
+  if (!match) {
+    return 0;
+  }
+
+  const hours = Number(match[1] || 0);
+  const minutes = Number(match[2] || 0);
+  const seconds = Number(match[3] || 0);
+  return hours * 3600 + minutes * 60 + seconds;
+}
+
+function getYoutubeEmbedUrl(rawUrl) {
+  try {
+    const url = new URL(rawUrl, window.location.href);
+    const host = url.hostname.replace(/^www\./, "");
+    let videoId = "";
+
+    if (host === "youtu.be") {
+      videoId = url.pathname.replace(/^\/+/, "").split("/")[0];
+    } else if (host === "youtube.com" || host === "m.youtube.com") {
+      if (url.pathname === "/watch") {
+        videoId = url.searchParams.get("v") || "";
+      } else if (url.pathname.startsWith("/embed/") || url.pathname.startsWith("/shorts/")) {
+        videoId = url.pathname.split("/")[2] || "";
+      }
+    }
+
+    if (!videoId) {
+      return rawUrl;
+    }
+
+    const embedUrl = new URL(`https://www.youtube.com/embed/${videoId}`);
+    const start = parseTimeToSeconds(url.searchParams.get("t") || url.searchParams.get("start"));
+
+    if (start > 0) {
+      embedUrl.searchParams.set("start", String(start));
+    }
+
+    embedUrl.searchParams.set("rel", "0");
+    return embedUrl.href;
+  } catch {
+    return rawUrl;
+  }
+}
+
 function renderMediaElement(item, fallbackAlt) {
   const src = escapeHtml(item.src);
   const alt = escapeHtml(item.alt || fallbackAlt);
+  const mediaKind = getMediaKind(item);
 
-  if (getMediaKind(item) === "video") {
+  if (mediaKind === "youtube") {
+    return `
+      <iframe
+        src="${escapeHtml(getYoutubeEmbedUrl(item.src))}"
+        title="${alt}"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    `;
+  }
+
+  if (mediaKind === "video") {
     const mimeType = item.mimeType || (String(item.src).toLowerCase().endsWith(".webm") ? "video/webm" : "video/mp4");
     const poster = item.poster ? ` poster="${escapeHtml(item.poster)}"` : "";
     return `
@@ -807,6 +894,13 @@ function renderProjects(projects) {
         const projectHref = escapeHtml(project.href);
         const openProjectLabel = escapeHtml(`${getCopy().ui.openProject}: ${project.title}`);
         const visitProjectLabel = escapeHtml(getCopy().ui.visitProject);
+        const cardLinkLabel = project.cardLinkLabel ? escapeHtml(project.cardLinkLabel) : "";
+        const cardLinkIcon = project.cardLinkIcon === "github" ? iconGithub() : "";
+        const cardLinkClass = `card-link${cardLinkLabel ? " card-link-labeled" : ""}`;
+        const cardLinkAriaLabel = cardLinkLabel ? escapeHtml(`${cardLinkLabel}: ${project.title}`) : visitProjectLabel;
+        const cardLinkContent = cardLinkLabel
+          ? `${cardLinkIcon}<span>${cardLinkLabel}</span>`
+          : "↗";
         return `
         <article class="card">
           <a class="card-surface-link" href="#project-${escapeHtml(projectIndex)}" aria-label="${openProjectLabel}"></a>
@@ -817,10 +911,12 @@ function renderProjects(projects) {
           <p class="card-description">${projectDescription}</p>
           <div class="tag-list">${renderTags(project.tags)}</div>
           <div class="card-actions">
-            <a class="card-detail-button" href="#project-${escapeHtml(projectIndex)}" aria-label="${openProjectLabel}" title="${openProjectLabel}">
+            <span class="card-expand-indicator" aria-hidden="true">
               ${iconExpand()}
+            </span>
+            <a class="${cardLinkClass}" href="${projectHref}" ${project.external ? 'target="_blank" rel="noopener noreferrer"' : ""} aria-label="${cardLinkAriaLabel}">
+              ${cardLinkContent}
             </a>
-            <a class="card-link" href="${projectHref}" ${project.external ? 'target="_blank" rel="noopener noreferrer"' : ""} aria-label="${visitProjectLabel}">↗</a>
           </div>
         </article>
       `;
@@ -942,7 +1038,10 @@ function renderProjectModal(copy, projectIndex) {
           ${(project.impact || []).map((item) => renderProjectImpactItem(item)).join("")}
         </ul>
         <div class="tag-list">${renderTags(project.tags)}</div>
-        <a class="button button-secondary modal-link" href="${escapeHtml(project.href)}" ${project.external ? 'target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(copy.ui.visitProject)}</a>
+        <a class="button button-secondary modal-link" href="${escapeHtml(project.href)}" ${project.external ? 'target="_blank" rel="noopener noreferrer"' : ""}>
+          <span>${escapeHtml(copy.ui.visitProject)}</span>
+          ${iconExternalLink()}
+        </a>
       </aside>
     </div>
   `;
