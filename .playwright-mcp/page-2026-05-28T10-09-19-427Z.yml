@@ -1,0 +1,66 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - button "Перейти на страницу обо мне" [ref=e5] [cursor=pointer]:
+      - generic [ref=e6]: Алексей Викулин
+      - generic [ref=e8]: AI Engineer
+    - generic [ref=e9]:
+      - button "обо мне" [ref=e10] [cursor=pointer]
+      - button "проекты" [ref=e11] [cursor=pointer]
+      - button "заметки" [ref=e12] [cursor=pointer]
+      - button "Переключить язык" [ref=e13] [cursor=pointer]: ru
+      - button "Переключить тему" [ref=e14] [cursor=pointer]:
+        - img [ref=e15]
+  - main [ref=e17]:
+    - generic [ref=e18]:
+      - paragraph [ref=e19]: заметки
+      - paragraph [ref=e20]: Заметки о том, что выясняю в процессе.
+      - generic [ref=e21]:
+        - article [ref=e22]:
+          - generic [ref=e23]:
+            - link "Пост в AI & Machine Learning Community — группе с 2 млн подписчиков" [ref=e24] [cursor=pointer]:
+              - /url: https://www.linkedin.com/feed/update/urn:li:activity:7465435615707361280/
+            - generic [ref=e25]:
+              - generic [ref=e26]: ai community
+              - generic [ref=e27]: machine learning
+              - generic [ref=e28]: linkedin
+          - generic [ref=e29]: 27 мая 2026 · LinkedIn Group
+        - article [ref=e30]:
+          - generic [ref=e31]:
+            - link "Автообновление моделей и автопостинг в Telegram для CTO Estimate" [ref=e32] [cursor=pointer]:
+              - /url: https://www.linkedin.com/feed/update/urn:li:activity:7462803540986662913/
+            - generic [ref=e33]:
+              - generic [ref=e34]: cto estimate
+              - generic [ref=e35]: automation
+              - generic [ref=e36]: telegram
+          - generic [ref=e37]: 20 мая 2026 · LinkedIn
+        - article [ref=e38]:
+          - generic [ref=e39]:
+            - link "PDF Translator опубликовали в отраслевых Telegram-каналах и на сайте" [ref=e40] [cursor=pointer]:
+              - /url: https://www.linkedin.com/feed/update/urn:li:activity:7462844191304421377/
+            - generic [ref=e41]:
+              - generic [ref=e42]: pdf-translator
+              - generic [ref=e43]: release
+          - generic [ref=e44]: 20 мая 2026 · LinkedIn
+        - article [ref=e45]:
+          - generic [ref=e46]:
+            - link "Какой AI внедрить в Enterprise и не остановить бизнес" [ref=e47] [cursor=pointer]:
+              - /url: https://habr.com/ru/articles/1011438/
+            - generic [ref=e48]:
+              - generic [ref=e49]: enterprise ai
+              - generic [ref=e50]: on-prem
+          - generic [ref=e51]: 17 мар 2026 · Habr
+  - contentinfo [ref=e52]:
+    - generic [ref=e53]: © 2025 Алексей Викулин
+    - generic [ref=e54]:
+      - link "Telegram" [ref=e55] [cursor=pointer]:
+        - /url: https://t.me/mvill22
+        - img [ref=e56]
+      - link "LinkedIn" [ref=e58] [cursor=pointer]:
+        - /url: https://www.linkedin.com/in/alexey-vikulin/
+        - img [ref=e59]
+      - link "GitHub" [ref=e61] [cursor=pointer]:
+        - /url: https://github.com/aavikulin
+        - img [ref=e62]
+      - link "YouTube" [ref=e64] [cursor=pointer]:
+        - /url: https://www.youtube.com/@ai-asst
+        - img [ref=e65]
