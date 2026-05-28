@@ -20,3 +20,5 @@
 [ 4997596ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://static.doubleclick.net/instream/ad_status.js:0
 [ 5103979ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://googleads.g.doubleclick.net/pagead/id:0
 [ 5103979ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://static.doubleclick.net/instream/ad_status.js:0
+[ 5378116ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://googleads.g.doubleclick.net/pagead/id:0
+[ 5378116ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://static.doubleclick.net/instream/ad_status.js:0
