@@ -194,6 +194,17 @@ button {
   stroke-linejoin: round;
 }
 
+.expand-icon {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--duration);
+}
+
 .page-shell {
   width: min(100%, 856px);
   margin: 0 auto;
@@ -286,6 +297,7 @@ button {
 }
 
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -301,6 +313,23 @@ button {
 .card:hover,
 .card:focus-within {
   border-color: var(--text-subtle);
+}
+
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.card-surface-link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+}
+
+.card-surface-link:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: -1px;
 }
 
 .card-header,
@@ -364,20 +393,20 @@ button {
   justify-content: space-between;
   gap: 12px;
   margin-top: auto;
+  z-index: 3;
 }
 
 .card-detail-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 30px;
   min-height: 30px;
-  padding: 0 10px;
+  padding: 0;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   color: var(--text);
   cursor: pointer;
-  font-size: 12px;
-  line-height: 1.4;
   text-decoration: none;
   transition: border-color var(--duration), opacity var(--duration);
 }
@@ -386,6 +415,13 @@ button {
 .card-detail-button:focus-visible {
   border-color: var(--text-subtle);
   opacity: 0.88;
+}
+
+.card-detail-button:hover .expand-icon,
+.card-detail-button:focus-visible .expand-icon,
+.card:hover .expand-icon,
+.card:focus-within .expand-icon {
+  transform: scale(1.08);
 }
 
 .card-link,
@@ -398,6 +434,12 @@ button {
 .card-link {
   align-self: flex-start;
   font-size: 12px;
+}
+
+.card-detail-button,
+.card-link {
+  position: relative;
+  z-index: 4;
 }
 
 .modal-backdrop {
@@ -569,6 +611,7 @@ button {
   z-index: 3;
   width: 42px;
   height: 42px;
+  padding: 0;
   display: grid;
   place-items: center;
   border: 1px solid rgba(0, 0, 0, 0.14);
@@ -576,10 +619,20 @@ button {
   background: rgba(17, 17, 16, 0.72);
   color: #f0f0ee;
   cursor: pointer;
-  font-size: 28px;
-  line-height: 1;
   text-decoration: none;
+  appearance: none;
   backdrop-filter: blur(6px);
+}
+
+.carousel-arrow svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .carousel-arrow:hover,
