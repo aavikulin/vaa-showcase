@@ -745,6 +745,11 @@ button {
   margin-top: 28px;
 }
 
+.modal-link .social-icon {
+  width: 14px;
+  height: 14px;
+}
+
 .card-link:hover,
 .card-link:focus-visible {
   color: var(--text);
@@ -936,6 +941,10 @@ button {
   height: 18px;
   fill: currentColor;
   flex-shrink: 0;
+}
+
+.social-icon-habr {
+  display: block;
 }
 
 .social-icon-telegram {

@@ -1,0 +1,4 @@
+[      48ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://cto-estimate.openweights.space/_next/static/chunks/webpack-589ea4b0a5f0dd2f.js:0
+[     186ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://cto-estimate.openweights.space/_next/static/chunks/main-app-8875882193a83bed.js:0
+[     201ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap:0
+[     563ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://cto-estimate.openweights.space/favicon.ico:0

@@ -1,0 +1,2 @@
+[     364ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ https://pdf-translator.ru/:0
+[     464ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://pdf-translator.ru/favicon.ico:0
