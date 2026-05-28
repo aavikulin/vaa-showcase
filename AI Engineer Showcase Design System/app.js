@@ -179,7 +179,7 @@ const DATA = {
         ],
         postMedia: {
           type: "youtube",
-          src: "https://www.youtube.com/watch?v=FwM-2kYdr50&t=6s",
+          src: "https://www.youtube.com/watch?v=FwM-2kYdr50",
           alt: "Демо AI Assistant Core Platform",
           caption: "Демо интерфейса AI Assistant Core Platform.",
         },
@@ -251,7 +251,7 @@ const DATA = {
           src: assetUrl("assets/ai-ml-tools-card.png"),
           alt: "AI/ML Tools dashboard preview",
         },
-        detail: "Построил практичную базу знаний по open-source AI/ML/MLOps-инструментам. Каталог помогает быстро ориентироваться в инструментах для LLM, RAG, векторные БД, мониторинг, data engineering, обучение и инфраструктуры.",
+        detail: "Построил практичную базу знаний по open-source AI/ML/MLOps-инструментам. Каталог помогает быстро ориентироваться в open-source инструментах для LLM, RAG, векторных БД, мониторинга, data engineering, обучения и инфраструктуры.",
         impact: [
           "Систематизировал 312 open-source инструментов в 58 технических категорий и 7 высокоуровневых групп.",
           "Добавил поиск по названию, описанию и разработчику, фильтры по категории, группе и runtime/stack.",
@@ -461,7 +461,7 @@ const DATA = {
         ],
         postMedia: {
           type: "youtube",
-          src: "https://www.youtube.com/watch?v=FwM-2kYdr50&t=6s",
+          src: "https://www.youtube.com/watch?v=FwM-2kYdr50",
           alt: "AI Assistant Core Platform demo",
           caption: "AI Assistant Core Platform demo.",
         },
