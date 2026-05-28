@@ -51,11 +51,11 @@ const DATA = {
     },
     work: {
       label: "проекты",
-      intro: "Несколько вещей, которые я построил за последнее время.",
+      intro: "AI-системы и инструменты вокруг LLM.",
     },
     writing: {
       label: "публикации",
-      intro: "Посты, статьи и обновления о проектах, AI-инфраструктуре и внедрении LLM.",
+      intro: "Посты, статьи и обновления о проектах.",
       readTimeSeparator: "·",
     },
     now: {
@@ -330,7 +330,7 @@ const DATA = {
     },
     work: {
       label: "work",
-      intro: "A few things I've built recently.",
+      intro: "AI systems and tools around LLMs.",
     },
     writing: {
       label: "writing",
@@ -749,6 +749,17 @@ function iconYoutube() {
   `;
 }
 
+function iconExpand() {
+  return `
+    <svg class="expand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M9 4H4v5"></path>
+      <path d="M4 4l6 6"></path>
+      <path d="M15 20h5v-5"></path>
+      <path d="M20 20l-6-6"></path>
+    </svg>
+  `;
+}
+
 function renderTags(tags) {
   return tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("");
 }
@@ -790,19 +801,26 @@ function renderProjects(projects) {
     <div class="card-grid">
       ${projects.map((project) => {
         const projectIndex = allProjects.indexOf(project);
+        const projectTitle = escapeHtml(project.title);
+        const projectYear = escapeHtml(project.year);
+        const projectDescription = escapeHtml(project.description);
+        const projectHref = escapeHtml(project.href);
+        const openProjectLabel = escapeHtml(`${getCopy().ui.openProject}: ${project.title}`);
+        const visitProjectLabel = escapeHtml(getCopy().ui.visitProject);
         return `
         <article class="card">
+          <a class="card-surface-link" href="#project-${escapeHtml(projectIndex)}" aria-label="${openProjectLabel}"></a>
           <div class="card-header">
-            <div class="card-title">${escapeHtml(project.title)}</div>
-            <span class="meta">${escapeHtml(project.year)}</span>
+            <div class="card-title">${projectTitle}</div>
+            <span class="meta">${projectYear}</span>
           </div>
-          <p class="card-description">${escapeHtml(project.description)}</p>
+          <p class="card-description">${projectDescription}</p>
           <div class="tag-list">${renderTags(project.tags)}</div>
           <div class="card-actions">
-            <a class="card-detail-button" href="#project-${escapeHtml(projectIndex)}">
-              ${escapeHtml(getCopy().ui.openProject)}
+            <a class="card-detail-button" href="#project-${escapeHtml(projectIndex)}" aria-label="${openProjectLabel}" title="${openProjectLabel}">
+              ${iconExpand()}
             </a>
-            <a class="card-link" href="${escapeHtml(project.href)}" ${project.external ? 'target="_blank" rel="noopener noreferrer"' : ""} aria-label="${escapeHtml(getCopy().ui.visitProject)}">↗</a>
+            <a class="card-link" href="${projectHref}" ${project.external ? 'target="_blank" rel="noopener noreferrer"' : ""} aria-label="${visitProjectLabel}">↗</a>
           </div>
         </article>
       `;
@@ -832,7 +850,11 @@ function renderProjectMedia(project, projectIndex) {
   return `
     <section class="modal-carousel" aria-label="${escapeHtml(project.title)} media">
       <div class="carousel-frame">
-        <button class="carousel-arrow carousel-arrow-prev" type="button" data-carousel-direction="prev" aria-label="Previous media item">‹</button>
+        <button class="carousel-arrow carousel-arrow-prev" type="button" data-carousel-direction="prev" aria-label="Previous media item">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M14.5 5.5 8 12l6.5 6.5" />
+          </svg>
+        </button>
         <div class="carousel-track" data-carousel-track>
           ${mediaItems.map((item, index) => `
           <figure class="carousel-slide" data-carousel-slide>
@@ -846,7 +868,11 @@ function renderProjectMedia(project, projectIndex) {
           </figure>
         `).join("")}
         </div>
-        <button class="carousel-arrow carousel-arrow-next" type="button" data-carousel-direction="next" aria-label="Next media item">›</button>
+        <button class="carousel-arrow carousel-arrow-next" type="button" data-carousel-direction="next" aria-label="Next media item">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="m9.5 5.5 6.5 6.5-6.5 6.5" />
+          </svg>
+        </button>
       </div>
       <div class="carousel-dots" aria-hidden="true">
         ${mediaItems.map(() => `<span></span>`).join("")}
