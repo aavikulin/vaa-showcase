@@ -8,6 +8,7 @@
 const TELEGRAM_URL = "https://t.me/mvill22";
 const LINKEDIN_URL = "https://www.linkedin.com/in/alexey-vikulin/";
 const GITHUB_URL = "https://github.com/aavikulin";
+const HABR_URL = "https://habr.com/ru/users/mVill/";
 const YOUTUBE_URL = "https://www.youtube.com/@ai-asst";
 const AI_ASST_CORE_URL = "https://github.com/aavikulin/ai-asst-core";
 const SCRIPT_SRC = document.currentScript && document.currentScript.src ? document.currentScript.src : window.location.href;
@@ -158,7 +159,7 @@ const DATA = {
             href: AI_ASST_CORE_URL,
           },
         ],
-        tags: ["rag", "hybrid", "local llm", "kb", "obs"],
+        tags: ["RAG systems", "LLM apps", "vector search", "self-hosted AI", "AI observability"],
         media: [
           {
             src: assetUrl("assets/ai-assistant-core-platform-chat.png"),
@@ -197,7 +198,7 @@ const DATA = {
         impact: [
           "Данные по моделям обновляются ежедневно, а интерфейс построен как практичный dashboard для принятия инфраструктурных решений до покупки оборудования.",
         ],
-        tags: ["local llm", "gpu", "roi", "tco", "api cost"],
+        tags: ["LLM inference", "GPU sizing", "AI infrastructure", "model selection", "TCO"],
         media: [
           {
             src: assetUrl("assets/cto-estimate-self-hosted-llm.png"),
@@ -231,7 +232,7 @@ const DATA = {
           "Поддерживает гибридный routing между BabelDOC и custom geometry-aware pipeline, а также OpenRouter, Ollama и Mock backend для отладки.",
           "Включает расширяемый glossary для аббревиатур, нотации, стандартных терминов и protected headers, CLI и Flask Web UI с job queue, SSE progress, authentication, preview и сравнением оригинала с переводом.",
         ],
-        tags: ["pdf", "layout", "drawings", "geometry", "preview"],
+        tags: ["Document AI", "LLM translation", "PDF parsing", "layout-aware AI", "review UI"],
         media: {
           src: assetUrl("assets/pdf-translator.gif"),
           alt: "Демонстрация интерфейса PDF Translator",
@@ -256,7 +257,7 @@ const DATA = {
           "Реализовал сортировку, конфигурируемые колонки таблицы и detail view для каждого инструмента.",
           "Собрал удобный lightweight single-page dashboard для поддержки и расширения каталога.",
         ],
-        tags: ["catalog", "taxonomy", "search", "details", "runtime"],
+        tags: ["AI tooling", "MLOps", "tool discovery", "search UX", "runtime stack"],
         href: "https://ai-tools.openweights.space/",
         external: true,
       },
@@ -265,8 +266,8 @@ const DATA = {
       {
         title: "Пост в AI & Machine Learning Community — группе с 2 млн подписчиков",
         date: "27 мая 2026",
-        time: "LinkedIn Group",
-        tags: ["ai", "ml", "linkedin"],
+        time: "LinkedIn",
+        tags: ["AI engineering", "ML community", "LinkedIn"],
         href: "https://www.linkedin.com/feed/update/urn:li:activity:7465435615707361280/",
         external: true,
       },
@@ -274,7 +275,7 @@ const DATA = {
         title: "Автообновление моделей и автопостинг в Telegram для CTO Estimate",
         date: "20 мая 2026",
         time: "LinkedIn",
-        tags: ["cto", "auto", "telegram"],
+        tags: ["AI infrastructure", "automation", "Telegram"],
         href: "https://www.linkedin.com/feed/update/urn:li:activity:7462803540986662913/",
         external: true,
       },
@@ -282,7 +283,7 @@ const DATA = {
         title: "PDF Translator опубликовали в отраслевых Telegram-каналах и на сайте",
         date: "20 мая 2026",
         time: "LinkedIn",
-        tags: ["pdf", "release"],
+        tags: ["Document AI", "PDF translation", "release"],
         href: "https://www.linkedin.com/feed/update/urn:li:activity:7462844191304421377/",
         external: true,
       },
@@ -290,7 +291,7 @@ const DATA = {
         title: "Какой AI внедрить в Enterprise и не остановить бизнес",
         date: "17 мар 2026",
         time: "Habr",
-        tags: ["enterprise", "on-prem"],
+        tags: ["enterprise AI", "on-prem AI"],
         href: "https://habr.com/ru/articles/1011438/",
         external: true,
       },
@@ -439,7 +440,7 @@ const DATA = {
             href: AI_ASST_CORE_URL,
           },
         ],
-        tags: ["rag", "hybrid", "local llm", "kb", "obs"],
+        tags: ["RAG systems", "LLM apps", "vector search", "self-hosted AI", "AI observability"],
         media: [
           {
             src: assetUrl("assets/ai-assistant-core-platform-chat.png"),
@@ -478,7 +479,7 @@ const DATA = {
         impact: [
           "Model data updates daily, and the interface is designed as a practical dashboard for infrastructure decisions before hardware is purchased.",
         ],
-        tags: ["local llm", "gpu", "roi", "tco", "api cost"],
+        tags: ["LLM inference", "GPU sizing", "AI infrastructure", "model selection", "TCO"],
         media: [
           {
             src: assetUrl("assets/cto-estimate-self-hosted-llm.png"),
@@ -512,7 +513,7 @@ const DATA = {
           "Supports hybrid routing between BabelDOC and a custom geometry-aware pipeline, as well as OpenRouter, Ollama, and a Mock backend for debugging.",
           "Includes an extensible glossary for abbreviations, notation, standard terms, and protected headers, plus a CLI and Flask Web UI with a job queue, SSE progress, authentication, preview, and side-by-side comparison of the original and translation.",
         ],
-        tags: ["pdf", "layout", "drawings", "geometry", "preview"],
+        tags: ["Document AI", "LLM translation", "PDF parsing", "layout-aware AI", "review UI"],
         media: {
           src: assetUrl("assets/pdf-translator.gif"),
           alt: "PDF Translator interface demo",
@@ -537,7 +538,7 @@ const DATA = {
           "Implemented sorting, configurable table columns, and a detail view for each tool.",
           "Built a lightweight single-page dashboard that is easy to maintain and extend.",
         ],
-        tags: ["catalog", "taxonomy", "search", "details", "runtime"],
+        tags: ["AI tooling", "MLOps", "tool discovery", "search UX", "runtime stack"],
         href: "https://ai-tools.openweights.space/",
         external: true,
       },
@@ -546,8 +547,8 @@ const DATA = {
       {
         title: "Post published in AI & Machine Learning Community, a group with 2M subscribers",
         date: "May 27, 2026",
-        time: "LinkedIn Group",
-        tags: ["ai", "ml", "linkedin"],
+        time: "LinkedIn",
+        tags: ["AI engineering", "ML community", "LinkedIn"],
         href: "https://www.linkedin.com/feed/update/urn:li:activity:7465435615707361280/",
         external: true,
       },
@@ -555,7 +556,7 @@ const DATA = {
         title: "Added automatic model updates and Telegram autoposting to CTO Estimate",
         date: "May 20, 2026",
         time: "LinkedIn",
-        tags: ["cto", "auto", "telegram"],
+        tags: ["AI infrastructure", "automation", "Telegram"],
         href: "https://www.linkedin.com/feed/update/urn:li:activity:7462803540986662913/",
         external: true,
       },
@@ -563,7 +564,7 @@ const DATA = {
         title: "PDF Translator was shared in industry Telegram channels and on the website",
         date: "May 20, 2026",
         time: "LinkedIn",
-        tags: ["pdf", "release"],
+        tags: ["Document AI", "PDF translation", "release"],
         href: "https://www.linkedin.com/feed/update/urn:li:activity:7462844191304421377/",
         external: true,
       },
@@ -571,7 +572,7 @@ const DATA = {
         title: "Which AI to implement in Enterprise without stopping the business",
         date: "Mar 17, 2026",
         time: "Habr",
-        tags: ["enterprise", "on-prem"],
+        tags: ["enterprise AI", "on-prem AI"],
         href: "https://habr.com/ru/articles/1011438/",
         external: true,
       },
@@ -749,6 +750,14 @@ function iconYoutube() {
   return `
     <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M21.58 7.19a2.987 2.987 0 0 0-2.1-2.11C17.62 4.5 12 4.5 12 4.5s-5.62 0-7.48.58A2.987 2.987 0 0 0 2.42 7.2C1.84 9.05 1.84 12 1.84 12s0 2.95.58 4.81a2.987 2.987 0 0 0 2.1 2.11C6.38 19.5 12 19.5 12 19.5s5.62 0 7.48-.58a2.987 2.987 0 0 0 2.1-2.11c.58-1.86.58-4.81.58-4.81s0-2.95-.58-4.81zM10.2 14.98V9.02L15.4 12l-5.2 2.98z"></path>
+    </svg>
+  `;
+}
+
+function iconHabr() {
+  return `
+    <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 5h3v5h10V5h3v14h-3v-6H7v6H4V5z"></path>
     </svg>
   `;
 }
@@ -1248,6 +1257,9 @@ function renderFooter() {
         </a>
         <a class="social-link" href="${escapeHtml(GITHUB_URL)}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
           ${iconGithub()}
+        </a>
+        <a class="social-link" href="${escapeHtml(HABR_URL)}" target="_blank" rel="noopener noreferrer" aria-label="Habr">
+          ${iconHabr()}
         </a>
         <a class="social-link" href="${escapeHtml(YOUTUBE_URL)}" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
           ${iconYoutube()}
