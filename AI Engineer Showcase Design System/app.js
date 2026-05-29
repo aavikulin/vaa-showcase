@@ -1179,7 +1179,7 @@ function renderAbout(copy) {
         <p class="body-copy">${escapeHtml(copy.about.summary)}</p>
         <div class="cta-row">
           <a class="button button-primary" href="#work">${escapeHtml(copy.about.primaryCta)}</a>
-          <button class="button button-secondary" type="button" data-page-target="contact" data-telegram-pulse="true">${escapeHtml(copy.about.secondaryCta)}</button>
+          <button class="button button-secondary" type="button" data-telegram-trigger="true">${escapeHtml(copy.about.secondaryCta)}</button>
         </div>
       </div>
       <div class="about-portrait-wrap" aria-hidden="true">
@@ -1317,23 +1317,79 @@ function renderApp() {
   runPendingEffects();
 }
 
-function runPendingEffects() {
-  if (!state.telegramPulsePending) {
-    return;
-  }
+function isCompactViewport() {
+  return window.matchMedia("(max-width: 720px)").matches;
+}
 
-  state.telegramPulsePending = false;
-  const telegramLink = document.querySelector("[data-footer-telegram]");
-  if (!telegramLink) {
-    return;
-  }
-
+function pulseTelegramLink(telegramLink) {
   telegramLink.classList.remove("social-link-pulse");
   void telegramLink.offsetWidth;
   telegramLink.classList.add("social-link-pulse");
   telegramLink.addEventListener("animationend", () => {
     telegramLink.classList.remove("social-link-pulse");
   }, { once: true });
+}
+
+function getClampedScrollTop(targetTop) {
+  const scroller = document.scrollingElement || document.documentElement;
+  const maxScrollTop = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+  return Math.min(maxScrollTop, Math.max(0, targetTop));
+}
+
+function isElementVisible(element) {
+  const rect = element.getBoundingClientRect();
+  return rect.top >= 0 && rect.bottom <= window.innerHeight;
+}
+
+function runAfterScrollSettles(targetTop, callback) {
+  const startedAt = window.performance.now();
+  let previousY = window.scrollY;
+
+  function tick() {
+    const currentY = window.scrollY;
+    const elapsed = window.performance.now() - startedAt;
+    const reachedTarget = Math.abs(currentY - targetTop) < 2;
+    const stoppedMoving = elapsed > 180 && Math.abs(currentY - previousY) < 0.5;
+
+    if (reachedTarget || stoppedMoving || elapsed > 900) {
+      callback();
+      return;
+    }
+
+    previousY = currentY;
+    window.requestAnimationFrame(tick);
+  }
+
+  window.requestAnimationFrame(tick);
+}
+
+function revealTelegramLink() {
+  const telegramLink = document.querySelector("[data-footer-telegram]");
+  if (!telegramLink) {
+    return false;
+  }
+
+  const rect = telegramLink.getBoundingClientRect();
+  const targetTop = getClampedScrollTop(window.scrollY + rect.top - ((window.innerHeight - rect.height) / 2));
+
+  if (isElementVisible(telegramLink) || Math.abs(window.scrollY - targetTop) < 2) {
+    pulseTelegramLink(telegramLink);
+    return true;
+  }
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.scrollTo({ top: targetTop, behavior: prefersReducedMotion ? "auto" : "smooth" });
+  runAfterScrollSettles(targetTop, () => pulseTelegramLink(telegramLink));
+  return true;
+}
+
+function runPendingEffects() {
+  if (!state.telegramPulsePending) {
+    return;
+  }
+
+  state.telegramPulsePending = false;
+  revealTelegramLink();
 }
 
 function setPage(page, options = {}) {
@@ -1344,12 +1400,15 @@ function setPage(page, options = {}) {
     return;
   }
 
+  const shouldRevealTelegram = state.telegramPulsePending;
   state.page = page;
   renderApp();
   if (updateHash && window.location.hash.slice(1) !== page) {
     window.location.hash = page;
   }
-  window.scrollTo({ top: 0, behavior: "auto" });
+  if (!shouldRevealTelegram) {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }
 }
 
 function syncPageFromHash() {
@@ -1362,7 +1421,7 @@ function syncPageFromHash() {
 }
 
 function bindRuntimeEvents() {
-  document.querySelectorAll("[data-page]").forEach((element) => {
+  document.querySelectorAll("button[data-page]").forEach((element) => {
     element.addEventListener("click", () => {
       setPage(element.dataset.page);
     });
@@ -1370,8 +1429,24 @@ function bindRuntimeEvents() {
 
   document.querySelectorAll("[data-page-target]").forEach((element) => {
     element.addEventListener("click", () => {
-      state.telegramPulsePending = element.dataset.telegramPulse === "true";
-      setPage(element.dataset.pageTarget);
+      const targetPage = element.dataset.pageTarget;
+      const wantsTelegramPulse = element.dataset.telegramPulse === "true";
+      const visiblePages = new Set(getVisiblePages(getCopy()).map(([key]) => key));
+
+      if (wantsTelegramPulse && (isCompactViewport() || !visiblePages.has(targetPage))) {
+        revealTelegramLink();
+        return;
+      }
+
+      state.telegramPulsePending = wantsTelegramPulse;
+      setPage(targetPage);
+    });
+  });
+
+  document.querySelectorAll("[data-telegram-trigger]").forEach((element) => {
+    element.addEventListener("click", (event) => {
+      event.preventDefault();
+      revealTelegramLink();
     });
   });
 
