@@ -1179,13 +1179,26 @@ button {
   }
 
   .section-about {
-    min-height: 500px;
+    min-height: 640px;
+  }
+
+  .section-about::after {
+    background:
+      linear-gradient(180deg, transparent 0%, transparent 32%, color-mix(in srgb, var(--bg) 78%, transparent) 58%, var(--bg) 84%, var(--bg) 100%),
+      linear-gradient(90deg, color-mix(in srgb, var(--bg) 88%, transparent) 0%, transparent 24%, transparent 76%, color-mix(in srgb, var(--bg) 92%, transparent) 100%);
+  }
+
+  .about-copy {
+    padding-top: 160px;
   }
 
   .about-portrait-wrap {
-    right: -128px;
-    bottom: 24px;
-    width: min(108.24vw, 475px);
-    opacity: calc(var(--about-portrait-opacity) - 0.08);
+    top: -26px;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(124vw, 520px);
+    opacity: calc(var(--about-portrait-opacity) - 0.02);
   }
 }
