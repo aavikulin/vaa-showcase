@@ -1015,17 +1015,17 @@ button {
 @keyframes telegram-link-pulse {
   0% {
     background: transparent;
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent);
+    box-shadow: none;
   }
 
   28% {
-    background: color-mix(in srgb, var(--accent) 18%, transparent);
-    box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 12%, transparent);
+    background: color-mix(in srgb, var(--text) 10%, transparent);
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--text) 8%, transparent);
   }
 
   100% {
     background: transparent;
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent);
+    box-shadow: none;
   }
 }
 
@@ -1037,7 +1037,7 @@ button {
 
   28% {
     transform: scale(1.82) rotate(-10deg);
-    color: var(--accent);
+    color: var(--text);
   }
 
   52% {
