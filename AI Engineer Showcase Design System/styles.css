@@ -15,8 +15,8 @@
   --radius-sm: 2px;
   --shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
   --duration: 150ms;
-  --about-portrait-opacity: 0.24;
-  --about-portrait-filter: saturate(0.92) contrast(1.04);
+  --about-portrait-opacity: 0.45;
+  --about-portrait-filter: saturate(0.98) contrast(1.06) brightness(1.18);
 }
 
 :root[data-theme="light"] {
@@ -32,8 +32,8 @@
   --success: #059669;
   --success-soft: #ecfdf5;
   --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  --about-portrait-opacity: 0.24;
-  --about-portrait-filter: saturate(1) contrast(1.12) brightness(1.08);
+  --about-portrait-opacity: 0.45;
+  --about-portrait-filter: saturate(1.02) contrast(1.14) brightness(1.18);
 }
 
 *,
