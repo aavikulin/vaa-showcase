@@ -15,6 +15,8 @@
   --radius-sm: 2px;
   --shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
   --duration: 150ms;
+  --about-portrait-opacity: 0.24;
+  --about-portrait-filter: saturate(0.92) contrast(1.04);
 }
 
 :root[data-theme="light"] {
@@ -30,6 +32,8 @@
   --success: #059669;
   --success-soft: #ecfdf5;
   --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --about-portrait-opacity: 0.24;
+  --about-portrait-filter: saturate(1) contrast(1.12) brightness(1.08);
 }
 
 *,
@@ -267,6 +271,48 @@ button {
   flex-wrap: wrap;
   gap: 16px;
   margin-top: 36px;
+}
+
+.section-about {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 560px;
+}
+
+.section-about::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 96%, transparent) 44%, transparent 76%),
+    linear-gradient(180deg, transparent 0%, transparent 72%, color-mix(in srgb, var(--bg) 72%, transparent) 100%);
+  pointer-events: none;
+}
+
+.about-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 660px;
+}
+
+.about-portrait-wrap {
+  position: absolute;
+  right: -112px;
+  bottom: 18px;
+  z-index: 0;
+  width: min(68.64vw, 792px);
+  max-width: 68%;
+  opacity: var(--about-portrait-opacity);
+  pointer-events: none;
+}
+
+.about-portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: var(--about-portrait-filter);
 }
 
 .button {
@@ -1085,6 +1131,27 @@ button {
     flex-direction: column;
     gap: 8px;
   }
+
+  .section-about {
+    min-height: 520px;
+  }
+
+  .section-about::after {
+    background:
+      linear-gradient(180deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 94%, transparent) 46%, transparent 88%),
+      linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 95%, transparent) 54%, transparent 100%);
+  }
+
+  .about-copy {
+    max-width: 100%;
+  }
+
+  .about-portrait-wrap {
+    right: -84px;
+    bottom: 34px;
+    width: min(89.76vw, 555px);
+    max-width: none;
+  }
 }
 
 @media (max-width: 560px) {
@@ -1109,5 +1176,16 @@ button {
   .project-modal {
     max-height: calc(100vh - 24px);
     padding: 24px 20px;
+  }
+
+  .section-about {
+    min-height: 500px;
+  }
+
+  .about-portrait-wrap {
+    right: -128px;
+    bottom: 24px;
+    width: min(108.24vw, 475px);
+    opacity: calc(var(--about-portrait-opacity) - 0.08);
   }
 }
