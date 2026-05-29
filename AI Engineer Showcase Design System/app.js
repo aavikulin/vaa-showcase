@@ -1171,14 +1171,24 @@ function renderContact(copy) {
 
 function renderAbout(copy) {
   return `
-    <section class="section">
-      <p class="section-label">${escapeHtml(copy.about.label)}</p>
-      <h1 class="hero-title">${escapeHtml(state.name)}</h1>
-      <p class="lead">${escapeHtml(copy.about.intro)}</p>
-      <p class="body-copy">${escapeHtml(copy.about.summary)}</p>
-      <div class="cta-row">
-        <a class="button button-primary" href="#work">${escapeHtml(copy.about.primaryCta)}</a>
-        <button class="button button-secondary" type="button" data-page-target="contact" data-telegram-pulse="true">${escapeHtml(copy.about.secondaryCta)}</button>
+    <section class="section section-about">
+      <div class="about-copy">
+        <p class="section-label">${escapeHtml(copy.about.label)}</p>
+        <h1 class="hero-title">${escapeHtml(state.name)}</h1>
+        <p class="lead">${escapeHtml(copy.about.intro)}</p>
+        <p class="body-copy">${escapeHtml(copy.about.summary)}</p>
+        <div class="cta-row">
+          <a class="button button-primary" href="#work">${escapeHtml(copy.about.primaryCta)}</a>
+          <button class="button button-secondary" type="button" data-page-target="contact" data-telegram-pulse="true">${escapeHtml(copy.about.secondaryCta)}</button>
+        </div>
+      </div>
+      <div class="about-portrait-wrap" aria-hidden="true">
+        <img
+          class="about-portrait"
+          src="${escapeHtml(assetUrl("assets/about-portrait-cutout.png?v=about-photo-20260529"))}"
+          alt=""
+          decoding="async"
+        >
       </div>
     </section>
   `;
