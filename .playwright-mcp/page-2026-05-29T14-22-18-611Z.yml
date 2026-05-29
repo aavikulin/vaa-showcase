@@ -1,0 +1,40 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - button "Перейти на страницу обо мне" [ref=e5] [cursor=pointer]:
+      - generic [ref=e6]: Алексей Викулин
+      - generic [ref=e8]: AI Engineer
+    - generic [ref=e9]:
+      - button "обо мне" [ref=e10] [cursor=pointer]
+      - button "проекты" [ref=e11] [cursor=pointer]
+      - button "публикации" [ref=e12] [cursor=pointer]
+      - button "Переключить язык" [ref=e13] [cursor=pointer]: ru
+      - button "Переключить тему" [ref=e14] [cursor=pointer]:
+        - img [ref=e15]
+  - main [ref=e17]:
+    - generic [ref=e19]:
+      - paragraph [ref=e20]: обо мне
+      - heading "Алексей Викулин" [level=1] [ref=e21]
+      - paragraph [ref=e22]: "Проектирую и собираю AI-системы: от внутренних инженерных инструментов до корпоративного RAG и self-hosted LLM-инфраструктуры."
+      - paragraph [ref=e23]: За последнее время сделал RAG-платформу для корпоративных ассистентов, CTO Estimate для расчёта локального LLM-стека, PDF Translator для технических PDF-чертежей и каталог AI/ML Tools. Фокусируюсь на LLM-приложениях, инфраструктуре и надёжных пайплайнах вокруг моделей.
+      - generic [ref=e24]:
+        - link "смотреть проекты →" [ref=e25] [cursor=pointer]:
+          - /url: "#work"
+        - button "связаться" [ref=e26] [cursor=pointer]
+  - contentinfo [ref=e27]:
+    - generic [ref=e28]: © 2025 Алексей Викулин
+    - generic [ref=e29]:
+      - link "Telegram" [ref=e30] [cursor=pointer]:
+        - /url: https://t.me/mvill22
+        - img [ref=e31]
+      - link "LinkedIn" [ref=e33] [cursor=pointer]:
+        - /url: https://www.linkedin.com/in/alexey-vikulin/
+        - img [ref=e34]
+      - link "GitHub" [ref=e36] [cursor=pointer]:
+        - /url: https://github.com/aavikulin
+        - img [ref=e37]
+      - link "Habr" [ref=e39] [cursor=pointer]:
+        - /url: https://habr.com/ru/users/mVill/
+        - img [ref=e40]
+      - link "YouTube" [ref=e42] [cursor=pointer]:
+        - /url: https://www.youtube.com/@ai-asst
+        - img [ref=e43]
