@@ -1170,7 +1170,7 @@ button {
   }
 
   .section-about .lead {
-    max-width: min(620px, calc(100% - 130px));
+    max-width: min(600px, calc(100% - 150px));
   }
 
   .about-portrait-wrap {
