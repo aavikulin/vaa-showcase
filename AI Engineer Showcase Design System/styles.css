@@ -286,7 +286,7 @@ button {
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 96%, transparent) 44%, transparent 76%),
+    linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 97%, transparent) 50%, transparent 82%),
     linear-gradient(180deg, transparent 0%, transparent 72%, color-mix(in srgb, var(--bg) 72%, transparent) 100%);
   pointer-events: none;
 }
@@ -294,7 +294,7 @@ button {
 .about-copy {
   position: relative;
   z-index: 2;
-  max-width: 660px;
+  max-width: min(620px, calc(100% - 260px));
 }
 
 .about-portrait-wrap {
@@ -1106,6 +1106,10 @@ button {
     gap: 14px;
   }
 
+  #language-toggle {
+    margin-left: auto;
+  }
+
   .page-shell,
   .site-footer {
     padding-left: 24px;
@@ -1127,6 +1131,11 @@ button {
     flex-direction: column;
   }
 
+  .footer-links {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
   .modal-header {
     flex-direction: column;
     gap: 8px;
@@ -1143,7 +1152,7 @@ button {
   }
 
   .about-copy {
-    max-width: 100%;
+    max-width: min(560px, calc(100% - 180px));
   }
 
   .about-portrait-wrap {
