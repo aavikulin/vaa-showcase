@@ -1,0 +1,40 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - button "Перейти на страницу обо мне" [ref=e5] [cursor=pointer]:
+      - generic [ref=e6]: Алексей Викулин
+      - generic [ref=e8]: AI Engineer
+    - generic [ref=e9]:
+      - button "обо мне" [ref=e10] [cursor=pointer]
+      - button "проекты" [ref=e11] [cursor=pointer]
+      - button "публикации" [ref=e12] [cursor=pointer]
+      - button "Переключить язык" [ref=e13] [cursor=pointer]: ru
+      - button "Переключить тему" [ref=e14] [cursor=pointer]:
+        - img [ref=e15]
+  - main [ref=e21]:
+    - generic [ref=e23]:
+      - paragraph [ref=e24]: обо мне
+      - heading "Алексей Викулин" [level=1] [ref=e25]
+      - paragraph [ref=e26]: "Проектирую и собираю AI-системы: от внутренних инструментов до enterprise RAG и self-hosted LLM-инфраструктуры."
+      - paragraph [ref=e27]: За последнее время сделал RAG-платформу для корпоративных ассистентов, CTO Estimate для расчёта локального LLM-стека, PDF Translator для технических PDF-чертежей и каталог AI/ML Tools. Фокусируюсь на LLM-приложениях, инфраструктуре и надёжных пайплайнах вокруг моделей.
+      - generic [ref=e28]:
+        - link "смотреть проекты →" [ref=e29] [cursor=pointer]:
+          - /url: "#work"
+        - button "связаться" [ref=e30] [cursor=pointer]
+  - contentinfo [ref=e31]:
+    - generic [ref=e32]: © 2025 Алексей Викулин
+    - generic [ref=e33]:
+      - link "Telegram" [ref=e34] [cursor=pointer]:
+        - /url: https://t.me/mvill22
+        - img [ref=e35]
+      - link "LinkedIn" [ref=e37] [cursor=pointer]:
+        - /url: https://www.linkedin.com/in/alexey-vikulin/
+        - img [ref=e38]
+      - link "GitHub" [ref=e40] [cursor=pointer]:
+        - /url: https://github.com/aavikulin
+        - img [ref=e41]
+      - link "Habr" [ref=e43] [cursor=pointer]:
+        - /url: https://habr.com/ru/users/mVill/
+        - img [ref=e44]
+      - link "YouTube" [ref=e46] [cursor=pointer]:
+        - /url: https://www.youtube.com/@ai-asst
+        - img [ref=e47]
