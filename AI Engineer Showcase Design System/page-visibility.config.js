@@ -5,4 +5,5 @@ window.PAGE_VISIBILITY_CONFIG = {
   now: false,
   cv: false,
   contact: false,
+  downloadCvPdf: false,
 };

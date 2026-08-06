@@ -11,9 +11,12 @@ const GITHUB_URL = "https://github.com/aavikulin";
 const HABR_URL = "https://habr.com/ru/users/mVill/";
 const YOUTUBE_URL = "https://www.youtube.com/@ai-asst";
 const AI_ASST_CORE_URL = "https://github.com/aavikulin/ai-asst-core";
+const HTML2CANVAS_CDN_URL = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+const JSPDF_CDN_URL = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
 const SCRIPT_SRC = document.currentScript && document.currentScript.src ? document.currentScript.src : window.location.href;
 const ASSET_ROOT = new URL(".", SCRIPT_SRC);
 const assetUrl = (path) => new URL(path, ASSET_ROOT).href;
+const externalScriptLoads = new Map();
 
 const DATA = {
   ru: {
@@ -31,6 +34,8 @@ const DATA = {
       brandAria: "Перейти на страницу",
       languageToggle: "Переключить язык",
       themeToggle: "Переключить тему",
+      downloadCvPdf: "Скачать CV PDF",
+      generatingPdf: "Собираю PDF…",
       openProject: "Подробнее",
       closeProject: "Закрыть описание проекта",
       projectDetails: "детали проекта",
@@ -313,6 +318,8 @@ const DATA = {
       brandAria: "Go to page",
       languageToggle: "Toggle language",
       themeToggle: "Toggle theme",
+      downloadCvPdf: "Download CV PDF",
+      generatingPdf: "Building PDF…",
       openProject: "Details",
       closeProject: "Close project details",
       projectDetails: "project details",
@@ -605,6 +612,7 @@ const state = {
   name: getInitialName(initialLanguage),
   contactSent: false,
   telegramPulsePending: false,
+  pdfExportPending: false,
 };
 
 const app = document.getElementById("app");
@@ -616,6 +624,10 @@ const tweakTheme = document.getElementById("tweak-theme");
 
 function getPageVisibilityConfig() {
   return window.PAGE_VISIBILITY_CONFIG || {};
+}
+
+function isDownloadCvPdfVisible() {
+  return getPageVisibilityConfig().downloadCvPdf !== false;
 }
 
 function getVisiblePages(copy) {
@@ -691,6 +703,483 @@ function applyDocumentState() {
   document.documentElement.lang = state.language;
   document.documentElement.dataset.theme = state.theme;
   document.title = copy.title;
+}
+
+function loadScriptOnce(src) {
+  const existingLoad = externalScriptLoads.get(src);
+  if (existingLoad) {
+    return existingLoad;
+  }
+
+  const loadPromise = new Promise((resolve, reject) => {
+    const existingScript = document.querySelector(`script[src="${src}"]`);
+    if (existingScript?.dataset.loaded === "true") {
+      resolve();
+      return;
+    }
+
+    const script = existingScript || document.createElement("script");
+
+    script.src = src;
+    script.async = true;
+    script.crossOrigin = "anonymous";
+
+    const handleLoad = () => {
+      script.dataset.loaded = "true";
+      resolve();
+    };
+
+    const handleError = () => {
+      externalScriptLoads.delete(src);
+      reject(new Error(`Failed to load script: ${src}`));
+    };
+
+    script.addEventListener("load", handleLoad, { once: true });
+    script.addEventListener("error", handleError, { once: true });
+
+    if (!existingScript) {
+      document.head.appendChild(script);
+    }
+  });
+
+  externalScriptLoads.set(src, loadPromise);
+  return loadPromise;
+}
+
+async function ensurePdfDependencies() {
+  await Promise.all([
+    loadScriptOnce(HTML2CANVAS_CDN_URL),
+    loadScriptOnce(JSPDF_CDN_URL),
+  ]);
+
+  if (typeof window.html2canvas !== "function" || !window.jspdf?.jsPDF) {
+    throw new Error("PDF dependencies are unavailable.");
+  }
+}
+
+function getCvPdfFileName() {
+  return `alexey-vikulin-cv-${state.language}.pdf`;
+}
+
+async function savePdfDocument(pdf, fileName) {
+  const pdfBlob = pdf.output("blob");
+
+  if (typeof window.showSaveFilePicker === "function") {
+    const handle = await window.showSaveFilePicker({
+      suggestedName: fileName,
+      startIn: "downloads",
+      types: [
+        {
+          description: "PDF document",
+          accept: {
+            "application/pdf": [".pdf"],
+          },
+        },
+      ],
+    });
+
+    const writable = await handle.createWritable();
+    await writable.write(pdfBlob);
+    await writable.close();
+    return;
+  }
+
+  pdf.save(fileName);
+}
+
+function renderCvPdfChips(items) {
+  return items.map((item) => `<span class="cv-pdf-chip">${escapeHtml(item)}</span>`).join("");
+}
+
+function renderCvPdfProjects(copy) {
+  return copy.projects.map((project) => `
+    <article class="cv-pdf-entry">
+      <div class="cv-pdf-entry-header">
+        <h3>${escapeHtml(project.title)}</h3>
+        <span>${escapeHtml(project.year)}</span>
+      </div>
+      <p>${escapeHtml(project.description)}</p>
+      <div class="cv-pdf-chip-list">${renderCvPdfChips(project.tags || [])}</div>
+    </article>
+  `).join("");
+}
+
+function renderCvPdfPosts(copy) {
+  return copy.posts.map((post) => `
+    <article class="cv-pdf-entry cv-pdf-entry-compact">
+      <div class="cv-pdf-entry-header">
+        <h3>${escapeHtml(post.title)}</h3>
+        <span>${escapeHtml(post.date)}</span>
+      </div>
+      <p>${escapeHtml(post.time)}</p>
+    </article>
+  `).join("");
+}
+
+function renderCvPdfDocument(copy) {
+  const links = [
+    { label: "Telegram", href: TELEGRAM_URL },
+    { label: "LinkedIn", href: LINKEDIN_URL },
+    { label: "GitHub", href: GITHUB_URL },
+    { label: "Habr", href: HABR_URL },
+  ];
+
+  return `
+    <article class="cv-pdf-document">
+      <header class="cv-pdf-header">
+        <div>
+          <p class="cv-pdf-kicker">AI Engineer</p>
+          <h1>${escapeHtml(state.name)}</h1>
+        </div>
+        <div class="cv-pdf-links">
+          ${links.map((link) => `<a href="${escapeHtml(link.href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`).join("")}
+        </div>
+      </header>
+
+      <section class="cv-pdf-section">
+        <h2>${escapeHtml(copy.about.label)}</h2>
+        <p>${escapeHtml(copy.about.intro)}</p>
+        <p>${escapeHtml(copy.about.summary)}</p>
+      </section>
+
+      <section class="cv-pdf-section">
+        <h2>${escapeHtml(copy.cv.sections.experience)}</h2>
+        <div class="cv-pdf-stack">
+          ${copy.cv.experience.map((item) => `
+            <article class="cv-pdf-entry">
+              <div class="cv-pdf-entry-header">
+                <h3>${escapeHtml(item.company)}</h3>
+                <span>${escapeHtml(item.dates)}</span>
+              </div>
+              <p class="cv-pdf-role">${escapeHtml(item.role)}</p>
+              <ul class="cv-pdf-list">
+                ${item.items.map((point) => `<li>${escapeHtml(point)}</li>`).join("")}
+              </ul>
+            </article>
+          `).join("")}
+        </div>
+      </section>
+
+      <section class="cv-pdf-grid">
+        <div class="cv-pdf-section">
+          <h2>${escapeHtml(copy.cv.sections.education)}</h2>
+          <div class="cv-pdf-stack">
+            ${copy.cv.education.map((item) => `
+              <article class="cv-pdf-entry cv-pdf-entry-compact">
+                <div class="cv-pdf-entry-header">
+                  <h3>${escapeHtml(item.institution)}</h3>
+                  <span>${escapeHtml(item.year)}</span>
+                </div>
+                <p>${escapeHtml(item.degree)}</p>
+              </article>
+            `).join("")}
+          </div>
+        </div>
+
+        <div class="cv-pdf-section">
+          <h2>${escapeHtml(copy.cv.sections.skills)}</h2>
+          <div class="cv-pdf-chip-list">${renderCvPdfChips(copy.cv.skills)}</div>
+        </div>
+      </section>
+
+      <section class="cv-pdf-section">
+        <h2>${escapeHtml(copy.work.label)}</h2>
+        <div class="cv-pdf-stack">
+          ${renderCvPdfProjects(copy)}
+        </div>
+      </section>
+
+      <section class="cv-pdf-section">
+        <h2>${escapeHtml(copy.writing.label)}</h2>
+        <div class="cv-pdf-stack">
+          ${renderCvPdfPosts(copy)}
+        </div>
+      </section>
+    </article>
+  `;
+}
+
+function getCvPdfPrintStyles() {
+  return `
+    :root {
+      color-scheme: light;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "JetBrains Mono", Consolas, "Courier New", monospace;
+      background: #f6f0e3;
+      color: #171717;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .cv-pdf-document {
+      width: min(100%, 794px);
+      margin: 0 auto;
+      padding: 40px 44px 48px;
+      background: #f6f0e3;
+    }
+
+    .cv-pdf-header,
+    .cv-pdf-entry-header,
+    .cv-pdf-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .cv-pdf-header {
+      align-items: flex-start;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #d7cfc2;
+    }
+
+    .cv-pdf-kicker,
+    .cv-pdf-section h2,
+    .cv-pdf-entry-header span {
+      margin: 0;
+      color: #6c665e;
+      font-size: 11px;
+      line-height: 1.5;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .cv-pdf-header h1,
+    .cv-pdf-entry h3 {
+      margin: 0;
+      color: #171717;
+      font-weight: 600;
+    }
+
+    .cv-pdf-header h1 {
+      font-size: 34px;
+      line-height: 1.1;
+      margin-top: 8px;
+    }
+
+    .cv-pdf-section {
+      margin-top: 28px;
+    }
+
+    .cv-pdf-section p,
+    .cv-pdf-list li {
+      margin: 0;
+      color: #242424;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .cv-pdf-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .cv-pdf-entry {
+      padding-top: 18px;
+      border-top: 1px solid #d7cfc2;
+    }
+
+    .cv-pdf-entry-compact {
+      padding-top: 14px;
+    }
+
+    .cv-pdf-entry h3 {
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .cv-pdf-role {
+      margin-top: 6px !important;
+      color: #6c665e !important;
+    }
+
+    .cv-pdf-list {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .cv-pdf-chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .cv-pdf-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 0 8px;
+      border: 1px solid #d7cfc2;
+      border-radius: 999px;
+      font-size: 11px;
+      line-height: 1.2;
+      color: #514b44;
+      background: rgba(255, 255, 255, 0.36);
+    }
+
+    .cv-pdf-links {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-end;
+      text-align: right;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 10mm;
+      }
+
+      .cv-pdf-document {
+        width: auto;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  `;
+}
+
+function openCvPrintFallback(copy) {
+  const printWindow = window.open("", "_blank", "noopener,noreferrer");
+  if (!printWindow) {
+    window.print();
+    return;
+  }
+
+  printWindow.document.open();
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html lang="${escapeHtml(state.language)}">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>${escapeHtml(copy.title)}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+        <style>${getCvPdfPrintStyles()}</style>
+      </head>
+      <body>
+        ${renderCvPdfDocument(copy)}
+      </body>
+    </html>
+  `);
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.print();
+}
+
+async function downloadCvPdf() {
+  if (state.pdfExportPending) {
+    return;
+  }
+
+  state.pdfExportPending = true;
+  renderApp();
+
+  const copy = getCopy();
+  let renderShell;
+
+  try {
+    await ensurePdfDependencies();
+
+    renderShell = document.createElement("div");
+    renderShell.className = "cv-pdf-render-shell";
+    renderShell.innerHTML = renderCvPdfDocument(copy);
+    document.body.appendChild(renderShell);
+
+    const renderTarget = renderShell.querySelector(".cv-pdf-document");
+    const canvas = await window.html2canvas(renderTarget, {
+      backgroundColor: "#f6f0e3",
+      scale: Math.min(window.devicePixelRatio || 1, 2),
+      useCORS: true,
+      logging: false,
+    });
+
+    const pdf = new window.jspdf.jsPDF({
+      orientation: "portrait",
+      unit: "pt",
+      format: "a4",
+      compress: true,
+    });
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const margin = 24;
+    const printableWidth = pageWidth - (margin * 2);
+    const printableHeight = pageHeight - (margin * 2);
+    const pixelsPerPage = Math.floor((printableHeight * canvas.width) / printableWidth);
+
+    for (let sourceY = 0, pageIndex = 0; sourceY < canvas.height; sourceY += pixelsPerPage, pageIndex += 1) {
+      const sliceHeight = Math.min(pixelsPerPage, canvas.height - sourceY);
+      const pageCanvas = document.createElement("canvas");
+      pageCanvas.width = canvas.width;
+      pageCanvas.height = sliceHeight;
+
+      const context = pageCanvas.getContext("2d");
+      if (!context) {
+        throw new Error("Canvas 2D context is unavailable.");
+      }
+      context.fillStyle = "#f6f0e3";
+      context.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+      context.drawImage(
+        canvas,
+        0,
+        sourceY,
+        canvas.width,
+        sliceHeight,
+        0,
+        0,
+        pageCanvas.width,
+        pageCanvas.height,
+      );
+
+      if (pageIndex > 0) {
+        pdf.addPage();
+      }
+
+      const pageImageHeight = (sliceHeight * printableWidth) / canvas.width;
+      pdf.addImage(
+        pageCanvas.toDataURL("image/jpeg", 0.92),
+        "JPEG",
+        margin,
+        margin,
+        printableWidth,
+        pageImageHeight,
+        undefined,
+        "FAST",
+      );
+    }
+
+    await savePdfDocument(pdf, getCvPdfFileName());
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      return;
+    }
+
+    console.error("CV PDF export failed, falling back to print.", error);
+    openCvPrintFallback(copy);
+  } finally {
+    renderShell?.remove();
+    state.pdfExportPending = false;
+    renderApp();
+  }
 }
 
 function persistState() {
@@ -1242,6 +1731,13 @@ function renderNav(copy) {
       ${escapeHtml(label)}
     </button>
   `).join("");
+  const downloadButton = isDownloadCvPdfVisible()
+    ? `
+        <button class="nav-download-button" type="button" data-download-cv-pdf="true" ${state.pdfExportPending ? "disabled" : ""}>
+          ${escapeHtml(state.pdfExportPending ? copy.ui.generatingPdf : copy.ui.downloadCvPdf)}
+        </button>
+      `
+    : "";
 
   return `
     <nav class="site-nav">
@@ -1252,6 +1748,7 @@ function renderNav(copy) {
       </button>
       <div class="nav-actions">
         ${navLinks}
+        ${downloadButton}
         <button class="nav-toggle" type="button" id="language-toggle" aria-label="${escapeHtml(copy.ui.languageToggle)}">${state.language}</button>
         <button class="nav-toggle" type="button" id="theme-toggle" aria-label="${escapeHtml(copy.ui.themeToggle)}">${iconTheme()}</button>
       </div>
@@ -1424,6 +1921,12 @@ function bindRuntimeEvents() {
   document.querySelectorAll("button[data-page]").forEach((element) => {
     element.addEventListener("click", () => {
       setPage(element.dataset.page);
+    });
+  });
+
+  document.querySelectorAll("[data-download-cv-pdf]").forEach((element) => {
+    element.addEventListener("click", () => {
+      downloadCvPdf();
     });
   });
 
