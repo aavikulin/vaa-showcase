@@ -1759,7 +1759,7 @@ function renderNav(copy) {
 function renderFooter() {
   return `
     <footer class="site-footer">
-      <span class="footer-copy">© 2025 ${escapeHtml(state.name)}</span>
+      <span class="footer-copy">© 2026 ${escapeHtml(state.name)}</span>
       <div class="footer-links">
         <a class="social-link" href="${escapeHtml(TELEGRAM_URL)}" target="_blank" rel="noopener noreferrer" aria-label="Telegram" data-footer-telegram>
           ${iconTelegram()}
