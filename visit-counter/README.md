@@ -47,10 +47,10 @@ The static site loads `AI Engineer Showcase Design System/visit-counter-client.j
 By default it sends a single page-load hit to:
 
 ```txt
-/_visit?project=vaa-showcase
+https://ai-tools.openweights.space/_visit?project=vaa-showcase
 ```
 
-For GitHub Pages, route this path to the counter service with a reverse proxy or set a full endpoint in `window.VISIT_COUNTER_CONFIG.endpoint`.
+GitHub Pages cannot proxy `/_visit`, so the endpoint must be a full HTTPS URL that routes to the counter service.
 
 ## Environment
 
