@@ -19,6 +19,16 @@
   url.searchParams.set("project", project);
   url.searchParams.set("t", String(Date.now()));
 
+  const sessionKey = `visit-counter:${project}:counted`;
+  try {
+    if (window.sessionStorage.getItem(sessionKey) === "1") {
+      return;
+    }
+    window.sessionStorage.setItem(sessionKey, "1");
+  } catch (_error) {
+    return;
+  }
+
   if (navigator.sendBeacon) {
     try {
       if (navigator.sendBeacon(url.toString(), new Blob([], { type: "text/plain" }))) {
@@ -34,5 +44,9 @@
     mode: "no-cors",
     cache: "no-store",
     keepalive: true,
-  }).catch(() => {});
+  }).catch(() => {
+    try {
+      window.sessionStorage.removeItem(sessionKey);
+    } catch (_error) {}
+  });
 })();
