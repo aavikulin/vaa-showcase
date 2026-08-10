@@ -1,0 +1,15 @@
+[Unit]
+Description=Privacy-preserving web visit counter
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/vaa-showcase/visit-counter
+EnvironmentFile=-/etc/visit-counter.env
+ExecStart=/usr/bin/python3 /root/vaa-showcase/visit-counter/visit_counter.py serve
+Restart=always
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=multi-user.target

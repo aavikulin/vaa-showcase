@@ -1,0 +1,11 @@
+[Unit]
+Description=Send daily web visit report to Telegram
+After=network-online.target visit-counter.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/root/vaa-showcase/visit-counter
+EnvironmentFile=-/etc/visit-counter.env
+ExecStart=/usr/bin/python3 /root/vaa-showcase/visit-counter/visit_counter.py report
+User=root
