@@ -11,7 +11,7 @@ const GITHUB_URL = "https://github.com/aavikulin";
 const HABR_URL = "https://habr.com/ru/users/mVill/";
 const YOUTUBE_URL = "https://www.youtube.com/@ai-asst";
 const AI_ASST_CORE_URL = "https://github.com/aavikulin/ai-asst-core";
-const BASIS_URL = "https://github.com/aavikulin/project-assistant";
+const BASIS_STAND_URL = "https://basis-stand.openweights.space/dashboard";
 const HTML2CANVAS_CDN_URL = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
 const JSPDF_CDN_URL = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
 const SCRIPT_SRC = document.currentScript && document.currentScript.src ? document.currentScript.src : window.location.href;
@@ -162,10 +162,7 @@ const DATA = {
           "Добавил контроль качества данных: автоматическое выявление противоречий, блокеров и расхождений между Jira, Confluence и производными представлениями.",
         ],
         tags: ["knowledge graph", "Atlassian", "BIM/IFC", "evidence-grounded AI", "construction tech"],
-        href: BASIS_URL,
-        cardLinkLabel: "GitHub",
-        cardLinkIcon: "github",
-        modalLinkLabel: "Открыть на GitHub",
+        href: BASIS_STAND_URL,
         external: true,
       },
       {
@@ -472,10 +469,7 @@ const DATA = {
           "Added data quality controls that automatically detect contradictions, blockers, and mismatches across Jira, Confluence, and derived views.",
         ],
         tags: ["knowledge graph", "Atlassian", "BIM/IFC", "evidence-grounded AI", "construction tech"],
-        href: BASIS_URL,
-        cardLinkLabel: "GitHub",
-        cardLinkIcon: "github",
-        modalLinkLabel: "Open on GitHub",
+        href: BASIS_STAND_URL,
         external: true,
       },
       {
