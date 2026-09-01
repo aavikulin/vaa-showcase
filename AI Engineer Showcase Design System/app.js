@@ -730,6 +730,14 @@ function getCopy() {
     [projects[ctoIndex], projects[pdfTranslatorIndex]] = [projects[pdfTranslatorIndex], projects[ctoIndex]];
   }
 
+  const displayedToolsIndex = projects.findIndex((project) => project.title === "AI/ML Tools");
+  const displayedCtoIndex = projects.findIndex((project) => project.title === "CTO Estimate");
+
+  if (displayedToolsIndex !== -1 && displayedCtoIndex !== -1) {
+    [projects[displayedToolsIndex], projects[displayedCtoIndex]] =
+      [projects[displayedCtoIndex], projects[displayedToolsIndex]];
+  }
+
   return { ...copy, projects };
 }
 
