@@ -11,6 +11,7 @@ const GITHUB_URL = "https://github.com/aavikulin";
 const HABR_URL = "https://habr.com/ru/users/mVill/";
 const YOUTUBE_URL = "https://www.youtube.com/@ai-asst";
 const AI_ASST_CORE_URL = "https://github.com/aavikulin/ai-asst-core";
+const BASIS_URL = "https://github.com/aavikulin/project-assistant";
 const HTML2CANVAS_CDN_URL = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
 const JSPDF_CDN_URL = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
 const SCRIPT_SRC = document.currentScript && document.currentScript.src ? document.currentScript.src : window.location.href;
@@ -147,6 +148,26 @@ const DATA = {
       github: "GitHub ↗",
     },
     projects: [
+      {
+        title: "basis_",
+        year: "2026",
+        description: "Knowledge/control layer для строительных проектов: объединяет Jira, Confluence и BIM/IFC в проверяемый граф задач, рисков, изменений, решений и влияний.",
+        role: "AI Engineer",
+        period: "2026",
+        detail: "Разработал воспроизводимый MVP интеллектуального слоя управления строительным проектом поверх Jira, Confluence и BIM/IFC. Система собирает первичные данные в единый граф причин и последствий, выявляет противоречия и превращает их в проверяемые dashboard-сигналы и AI-ответы со ссылками на исходные данные.",
+        impact: [
+          "Построил knowledge graph из 331 узла и 639 связей для цепочек task → risk → change request → decision → impact.",
+          "Объединил executive dashboard, wiki reader, graph workspace и BIM/IFC viewer с 4D- и BOT-семантическими слоями.",
+          "Реализовал evidence-grounded AI-чат, гибридную маршрутизацию по wiki и графу, а также мониторинг LLM-запросов через Langfuse.",
+          "Добавил контроль качества данных: автоматическое выявление противоречий, блокеров и расхождений между Jira, Confluence и производными представлениями.",
+        ],
+        tags: ["knowledge graph", "Atlassian", "BIM/IFC", "evidence-grounded AI", "construction tech"],
+        href: BASIS_URL,
+        cardLinkLabel: "GitHub",
+        cardLinkIcon: "github",
+        modalLinkLabel: "Открыть на GitHub",
+        external: true,
+      },
       {
         title: "AI Assistant Core Platform",
         year: "2025",
@@ -437,6 +458,26 @@ const DATA = {
       github: "GitHub ↗",
     },
     projects: [
+      {
+        title: "basis_",
+        year: "2026",
+        description: "A knowledge and control layer for construction projects that connects Jira, Confluence, and BIM/IFC into a verifiable graph of tasks, risks, changes, decisions, and impacts.",
+        role: "AI Engineer",
+        period: "2026",
+        detail: "Developed a reproducible MVP for an intelligent construction project control layer on top of Jira, Confluence, and BIM/IFC. The system consolidates source data into a causal graph, detects contradictions, and turns them into verifiable dashboard signals and AI answers linked to the underlying evidence.",
+        impact: [
+          "Built a knowledge graph with 331 nodes and 639 edges for task → risk → change request → decision → impact chains.",
+          "Combined an executive dashboard, wiki reader, graph workspace, and BIM/IFC viewer with 4D and BOT semantic layers.",
+          "Implemented evidence-grounded AI chat, hybrid routing across the wiki and graph, and LLM request monitoring through Langfuse.",
+          "Added data quality controls that automatically detect contradictions, blockers, and mismatches across Jira, Confluence, and derived views.",
+        ],
+        tags: ["knowledge graph", "Atlassian", "BIM/IFC", "evidence-grounded AI", "construction tech"],
+        href: BASIS_URL,
+        cardLinkLabel: "GitHub",
+        cardLinkIcon: "github",
+        modalLinkLabel: "Open on GitHub",
+        external: true,
+      },
       {
         title: "AI Assistant Core Platform",
         year: "2025",
