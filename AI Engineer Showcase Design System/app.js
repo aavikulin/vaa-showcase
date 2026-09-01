@@ -270,6 +270,12 @@ const DATA = {
     ],
     posts: [
       {
+        title: "Проект basis_ прошёл экспертизу в Сколково",
+        date: "28 августа 2026",
+        time: "Сколково",
+        tags: ["basis_", "Сколково", "экспертиза"],
+      },
+      {
         title: "Пост в AI & Machine Learning Community — группе с 2 млн подписчиков",
         date: "27 мая 2026",
         time: "LinkedIn",
@@ -294,7 +300,7 @@ const DATA = {
         external: true,
       },
       {
-        title: "Какой AI внедрить в Enterprise и не остановить бизнес",
+        title: "Пост на habr - Какой AI внедрить в Enterprise и не остановить бизнес",
         date: "17 мар 2026",
         time: "Habr",
         tags: ["enterprise AI", "on-prem AI"],
@@ -553,6 +559,12 @@ const DATA = {
       },
     ],
     posts: [
+      {
+        title: "The basis_ project passed the Skolkovo expert review",
+        date: "Aug 28, 2026",
+        time: "Skolkovo",
+        tags: ["basis_", "Skolkovo", "expert review"],
+      },
       {
         title: "Post published in AI & Machine Learning Community, a group with 2M subscribers",
         date: "May 27, 2026",
