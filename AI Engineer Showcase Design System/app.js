@@ -1590,8 +1590,8 @@ function renderProjectModal(copy, projectIndex) {
         </div>
         <p class="modal-role">${escapeHtml(project.role)}</p>
         <p class="modal-copy">${escapeHtml(project.detail || project.description)}</p>
-        ${renderProjectMedia(project, projectIndex)}
         ${renderProjectPostMedia(project)}
+        ${renderProjectMedia(project, projectIndex)}
         <ul class="modal-list">
           ${(project.impact || []).map((item) => renderProjectImpactItem(item)).join("")}
         </ul>
